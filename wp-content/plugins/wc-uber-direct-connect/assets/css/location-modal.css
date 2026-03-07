@@ -1,0 +1,756 @@
+/**
+ * WC Uber Direct Connect - Location Modal Styles
+ *
+ * Estilos para el modal de selección de ubicación
+ */
+
+/* ==========================================================================
+   Modal Overlay
+   ========================================================================== */
+
+.wcudc-location-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.wcudc-location-modal-overlay.wcudc-modal-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==========================================================================
+   Modal Container
+   ========================================================================== */
+
+.wcudc-location-modal {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-20px) scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.wcudc-modal-visible .wcudc-location-modal {
+    transform: translateY(0) scale(1);
+}
+
+/* ==========================================================================
+   Modal Header
+   ========================================================================== */
+
+.wcudc-modal-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wcudc-modal-header h2 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #333;
+    font-weight: 600;
+}
+
+.wcudc-modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.wcudc-modal-close:hover {
+    color: #333;
+}
+
+/* ==========================================================================
+   Modal Body
+   ========================================================================== */
+
+.wcudc-modal-body {
+    padding: 25px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.wcudc-modal-description {
+    margin: 0 0 20px 0;
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Delivery Type Selector
+   ========================================================================== */
+
+.wcudc-delivery-type-selector {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.wcudc-delivery-type-option {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.wcudc-delivery-type-option:hover {
+    border-color: #0073aa;
+    background: #f8fbfd;
+}
+
+.wcudc-delivery-type-option.wcudc-type-selected {
+    border-color: #0073aa;
+    background: #e8f4fc;
+}
+
+.wcudc-type-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.wcudc-type-label {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.wcudc-type-description {
+    font-size: 12px;
+    color: #666;
+}
+
+/* ==========================================================================
+   Search Section
+   ========================================================================== */
+
+.wcudc-modal-search-section {
+    margin-bottom: 15px;
+}
+
+.wcudc-modal-search-container {
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+.wcudc-modal-address-input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s ease;
+}
+
+.wcudc-modal-address-input:focus {
+    outline: none;
+    border-color: #0073aa;
+    box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.1);
+}
+
+.wcudc-modal-locate-btn {
+    padding: 14px 18px;
+    background: #f5f5f5;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wcudc-modal-locate-btn:hover {
+    background: #eee;
+    border-color: #0073aa;
+}
+
+.wcudc-modal-locate-btn.wcudc-locating {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.wcudc-modal-locate-icon {
+    font-size: 20px;
+}
+
+/* ==========================================================================
+   Search Results
+   ========================================================================== */
+
+.wcudc-modal-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 60px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    max-height: 220px;
+    overflow-y: auto;
+    margin-top: 5px;
+    display: none;
+}
+
+.wcudc-modal-search-result-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wcudc-modal-search-result-item:last-child {
+    border-bottom: none;
+}
+
+.wcudc-modal-search-result-item:hover {
+    background: #f5f9fc;
+}
+
+.wcudc-modal-result-icon {
+    font-size: 16px;
+    opacity: 0.6;
+}
+
+.wcudc-modal-result-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+.wcudc-modal-search-loading,
+.wcudc-modal-search-no-results {
+    padding: 15px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Map Container
+   ========================================================================== */
+
+.wcudc-modal-map-container {
+    width: 100%;
+    height: 280px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+    margin-bottom: 15px;
+    background: #e8e8e8;
+}
+
+.wcudc-modal-map-container .leaflet-control-zoom {
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   Coverage Status
+   ========================================================================== */
+
+.wcudc-modal-coverage-status {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wcudc-coverage-checking {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.wcudc-coverage-ok {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.wcudc-coverage-no {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+}
+
+.wcudc-coverage-icon {
+    font-size: 20px;
+}
+
+.wcudc-coverage-text {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Store Pickup Section
+   ========================================================================== */
+
+.wcudc-pickup-stores-section {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.wcudc-pickup-stores-section h4 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+}
+
+.wcudc-pickup-stores-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.wcudc-pickup-store-option {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wcudc-pickup-store-option:hover {
+    border-color: #0073aa;
+    background: #f8fbfd;
+}
+
+.wcudc-pickup-store-option.wcudc-store-selected {
+    border-color: #28a745;
+    background: #e8f5e9;
+}
+
+.wcudc-store-radio {
+    width: 18px;
+    height: 18px;
+    accent-color: #28a745;
+}
+
+.wcudc-store-info {
+    flex: 1;
+}
+
+.wcudc-store-name {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.wcudc-store-address {
+    font-size: 13px;
+    color: #666;
+}
+
+/* ==========================================================================
+   Selected Address Display
+   ========================================================================== */
+
+.wcudc-selected-address-display {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.wcudc-selected-address-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.wcudc-selected-address-text {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Modal Footer
+   ========================================================================== */
+
+.wcudc-modal-footer {
+    padding: 20px 25px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.wcudc-modal-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.wcudc-btn-secondary {
+    background: #f5f5f5;
+    border-color: #ddd;
+    color: #666;
+}
+
+.wcudc-btn-secondary:hover {
+    background: #eee;
+    border-color: #ccc;
+}
+
+.wcudc-btn-primary {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+}
+
+.wcudc-btn-primary:hover {
+    background: #005a87;
+    border-color: #005a87;
+}
+
+.wcudc-btn-primary:disabled {
+    background: #ccc;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Header Location Button
+   ========================================================================== */
+
+.wcudc-header-location-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: #f8f9fa;
+    border: 1px solid #e1e5e8;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.wcudc-header-location-btn:hover {
+    background: #e9ecef;
+    border-color: #d1d5d8;
+    text-decoration: none;
+    color: #333;
+}
+
+.wcudc-header-location-icon {
+    font-size: 16px;
+}
+
+.wcudc-header-location-text {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   Marker Custom Style
+   ========================================================================== */
+
+.wcudc-modal-marker {
+    background: transparent;
+    border: none;
+}
+
+.wcudc-modal-marker-pin {
+    width: 30px;
+    height: 30px;
+    background: #0073aa;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.wcudc-modal-marker-pin-inner {
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes wcudc-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.wcudc-loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ddd;
+    border-top-color: #0073aa;
+    border-radius: 50%;
+    animation: wcudc-spin 0.8s linear infinite;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    .wcudc-location-modal-overlay {
+        padding: 10px;
+        align-items: flex-end;
+    }
+
+    .wcudc-location-modal {
+        max-height: 95vh;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .wcudc-modal-header {
+        padding: 15px 20px;
+    }
+
+    .wcudc-modal-header h2 {
+        font-size: 1.2em;
+    }
+
+    .wcudc-modal-body {
+        padding: 20px;
+    }
+
+    .wcudc-delivery-type-selector {
+        flex-direction: column;
+    }
+
+    .wcudc-modal-search-container {
+        flex-direction: column;
+    }
+
+    .wcudc-modal-locate-btn {
+        justify-content: center;
+    }
+
+    .wcudc-modal-search-results {
+        right: 0;
+    }
+
+    .wcudc-modal-map-container {
+        height: 220px;
+    }
+
+    .wcudc-modal-footer {
+        flex-direction: column;
+        padding: 15px 20px;
+    }
+
+    .wcudc-modal-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .wcudc-header-location-text {
+        max-width: 100px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wcudc-modal-map-container {
+        height: 180px;
+    }
+
+    .wcudc-type-icon {
+        font-size: 24px;
+    }
+
+    .wcudc-delivery-type-option {
+        padding: 12px 15px;
+    }
+}
+
+/* ==========================================================================
+   Dark Mode Support
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .wcudc-location-modal {
+        background: #1e1e1e;
+    }
+
+    .wcudc-modal-header {
+        border-color: #333;
+    }
+
+    .wcudc-modal-header h2 {
+        color: #fff;
+    }
+
+    .wcudc-modal-close {
+        color: #888;
+    }
+
+    .wcudc-modal-close:hover {
+        color: #fff;
+    }
+
+    .wcudc-modal-description {
+        color: #aaa;
+    }
+
+    .wcudc-delivery-type-option {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .wcudc-delivery-type-option:hover {
+        background: #333;
+        border-color: #0073aa;
+    }
+
+    .wcudc-delivery-type-option.wcudc-type-selected {
+        background: #1a3a4a;
+    }
+
+    .wcudc-type-label {
+        color: #fff;
+    }
+
+    .wcudc-type-description {
+        color: #aaa;
+    }
+
+    .wcudc-modal-address-input,
+    .wcudc-modal-locate-btn {
+        background: #2d2d2d;
+        border-color: #444;
+        color: #fff;
+    }
+
+    .wcudc-modal-search-results {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .wcudc-modal-search-result-item {
+        border-color: #444;
+    }
+
+    .wcudc-modal-search-result-item:hover {
+        background: #333;
+    }
+
+    .wcudc-modal-result-text {
+        color: #fff;
+    }
+
+    .wcudc-modal-map-container {
+        border-color: #444;
+    }
+
+    .wcudc-selected-address-display {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .wcudc-selected-address-text {
+        color: #fff;
+    }
+
+    .wcudc-modal-footer {
+        border-color: #333;
+    }
+
+    .wcudc-btn-secondary {
+        background: #333;
+        border-color: #444;
+        color: #ccc;
+    }
+
+    .wcudc-pickup-store-option {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .wcudc-pickup-store-option:hover {
+        background: #333;
+    }
+
+    .wcudc-store-name {
+        color: #fff;
+    }
+
+    .wcudc-store-address {
+        color: #aaa;
+    }
+
+    .wcudc-header-location-btn {
+        background: #2d2d2d;
+        border-color: #444;
+        color: #fff;
+    }
+
+    .wcudc-header-location-btn:hover {
+        background: #333;
+        color: #fff;
+    }
+}

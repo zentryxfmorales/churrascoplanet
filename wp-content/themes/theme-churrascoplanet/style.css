@@ -1,0 +1,26 @@
+/*
+Theme Name: ChurrascoPlanet Theme
+Theme URI: https://www.zentryx.cl
+Author: Zentryx SPA
+Author URI: https://www.zentryx.cl
+Description: Tema personalizado para ChurrascoPlanet - Fast Food de Otro Planeta. Diseño espacial con temática de churrascos.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: churrascoplanet
+Tags: woocommerce, food, restaurant, dark, custom-colors, custom-logo, custom-menu
+
+ChurrascoPlanet - Sabor de Otro Planeta
+Desarrollado por Zentryx SPA
+*/
+
+/*
+ * Los estilos principales se cargan via wp_enqueue_style en functions.php:
+ * - css/main.css (estilos principales)
+ * - css/woocommerce.css (estilos de tienda)
+ *
+ * Este archivo solo contiene la información del tema para WordPress.
+ */

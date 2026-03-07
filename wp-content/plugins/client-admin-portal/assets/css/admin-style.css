@@ -1,0 +1,2891 @@
+/**
+ * Client Admin Portal - Deep Space Dark Theme
+ *
+ * A comprehensive, professional dark mode stylesheet for WordPress admin.
+ * Covers ALL standard WordPress elements including tables, forms, metaboxes,
+ * notices, buttons, and WooCommerce-specific components.
+ *
+ * @package Client_Admin_Portal
+ * @since   1.0.0
+ */
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES (Variables)
+   ========================================================================== */
+
+:root {
+    /* Background Colors */
+    --cap-bg-main: #0a0a14;
+    --cap-bg-card: #161625;
+    --cap-bg-input: #222235;
+    --cap-bg-hover: #1e1e30;
+    --cap-bg-header: #0d0d1a;
+
+    /* Text Colors */
+    --cap-text-main: #e0e0e0;
+    --cap-text-muted: #a0a0b0;
+    --cap-text-faint: #6a6a7a;
+
+    /* Accent Color */
+    --cap-accent: #ff5722;
+    --cap-accent-hover: #ff7043;
+    --cap-accent-glow: rgba(255, 87, 34, 0.35);
+
+    /* Border Colors */
+    --cap-border: #33334d;
+    --cap-border-light: #44446a;
+
+    /* Status Colors */
+    --cap-success: #4caf50;
+    --cap-success-bg: rgba(76, 175, 80, 0.15);
+    --cap-warning: #ff9800;
+    --cap-warning-bg: rgba(255, 152, 0, 0.15);
+    --cap-error: #f44336;
+    --cap-error-bg: rgba(244, 67, 54, 0.15);
+    --cap-info: #2196f3;
+    --cap-info-bg: rgba(33, 150, 243, 0.15);
+
+    /* Order Status Colors */
+    --cap-status-processing: #2196f3;
+    --cap-status-completed: #4caf50;
+    --cap-status-pending: #ff9800;
+    --cap-status-on-hold: #ff5722;
+    --cap-status-cancelled: #f44336;
+    --cap-status-refunded: #9c27b0;
+
+    /* Spacing & Sizing */
+    --cap-radius: 8px;
+    --cap-radius-lg: 12px;
+    --cap-radius-sm: 4px;
+
+    /* Shadows */
+    --cap-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    --cap-shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.4);
+    --cap-shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+
+    /* Transitions */
+    --cap-transition: 0.2s ease;
+    --cap-transition-fast: 0.1s ease;
+
+    /* Font */
+    --cap-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+/* ==========================================================================
+   GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+
+body.cap-dark-theme {
+    background: var(--cap-bg-main) !important;
+    color: var(--cap-text-main) !important;
+    font-family: var(--cap-font) !important;
+}
+
+body.cap-dark-theme #wpwrap {
+    background: var(--cap-bg-main) !important;
+}
+
+body.cap-dark-theme #wpcontent,
+body.cap-dark-theme #wpbody,
+body.cap-dark-theme #wpbody-content {
+    background: var(--cap-bg-main) !important;
+}
+
+/* Global link styles */
+body.cap-dark-theme a {
+    color: var(--cap-accent);
+    transition: color var(--cap-transition);
+}
+
+body.cap-dark-theme a:hover,
+body.cap-dark-theme a:focus {
+    color: var(--cap-accent-hover);
+}
+
+/* Headings */
+body.cap-dark-theme h1,
+body.cap-dark-theme h2,
+body.cap-dark-theme h3,
+body.cap-dark-theme h4,
+body.cap-dark-theme h5,
+body.cap-dark-theme h6 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wrap > h1,
+body.cap-dark-theme .wrap > h2 {
+    color: var(--cap-text-main) !important;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Paragraph & text */
+body.cap-dark-theme p,
+body.cap-dark-theme span,
+body.cap-dark-theme label,
+body.cap-dark-theme li {
+    color: var(--cap-text-main);
+}
+
+body.cap-dark-theme .description,
+body.cap-dark-theme .form-table td p.description {
+    color: var(--cap-text-muted) !important;
+}
+
+/* ==========================================================================
+   ADMIN MENU (Left Sidebar)
+   ========================================================================== */
+
+body.cap-dark-theme #adminmenuback,
+body.cap-dark-theme #adminmenuwrap {
+    background: var(--cap-bg-header) !important;
+}
+
+body.cap-dark-theme #adminmenu,
+body.cap-dark-theme #adminmenu .wp-submenu {
+    background: var(--cap-bg-header) !important;
+}
+
+body.cap-dark-theme #adminmenu a {
+    color: var(--cap-text-muted) !important;
+    transition: var(--cap-transition);
+}
+
+body.cap-dark-theme #adminmenu a:hover {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #adminmenu li.menu-top:hover,
+body.cap-dark-theme #adminmenu li.opensub > a.menu-top,
+body.cap-dark-theme #adminmenu li > a.menu-top:focus {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Current/Active menu */
+body.cap-dark-theme #adminmenu .wp-has-current-submenu > a.wp-has-current-submenu,
+body.cap-dark-theme #adminmenu .current a.menu-top,
+body.cap-dark-theme #adminmenu li.current a.menu-top,
+body.cap-dark-theme #adminmenu a.wp-has-current-submenu:focus + .wp-submenu {
+    background: var(--cap-accent) !important;
+    color: #fff !important;
+}
+
+body.cap-dark-theme #adminmenu .wp-has-current-submenu .wp-submenu,
+body.cap-dark-theme #adminmenu .wp-has-current-submenu.opensub .wp-submenu {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #adminmenu .wp-submenu a {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme #adminmenu .wp-submenu a:hover,
+body.cap-dark-theme #adminmenu .wp-submenu a:focus {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme #adminmenu .wp-submenu li.current a {
+    color: var(--cap-accent) !important;
+}
+
+/* Menu separator */
+body.cap-dark-theme #adminmenu li.wp-menu-separator {
+    background: var(--cap-border) !important;
+    height: 1px;
+}
+
+/* Menu icons */
+body.cap-dark-theme #adminmenu div.wp-menu-image:before {
+    color: var(--cap-text-muted) !important;
+    transition: var(--cap-transition);
+}
+
+body.cap-dark-theme #adminmenu li:hover div.wp-menu-image:before,
+body.cap-dark-theme #adminmenu li.wp-has-current-submenu div.wp-menu-image:before,
+body.cap-dark-theme #adminmenu li.current div.wp-menu-image:before {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #adminmenu .wp-has-current-submenu div.wp-menu-image:before {
+    color: #fff !important;
+}
+
+/* Collapse button */
+body.cap-dark-theme #collapse-button {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme #collapse-button:hover {
+    color: var(--cap-text-main) !important;
+}
+
+/* Update count bubble */
+body.cap-dark-theme #adminmenu .awaiting-mod,
+body.cap-dark-theme #adminmenu .update-plugins {
+    background: var(--cap-accent) !important;
+    color: #fff !important;
+}
+
+/* ==========================================================================
+   ADMIN BAR (Top Bar)
+   ========================================================================== */
+
+body.cap-dark-theme #wpadminbar {
+    background: var(--cap-bg-header) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+body.cap-dark-theme #wpadminbar .ab-item,
+body.cap-dark-theme #wpadminbar a.ab-item,
+body.cap-dark-theme #wpadminbar > #wp-toolbar span.ab-label,
+body.cap-dark-theme #wpadminbar > #wp-toolbar span.noticon {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme #wpadminbar .ab-item:hover,
+body.cap-dark-theme #wpadminbar a.ab-item:hover,
+body.cap-dark-theme #wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item,
+body.cap-dark-theme #wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #wpadminbar .menupop .ab-sub-wrapper,
+body.cap-dark-theme #wpadminbar .shortlink-input {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #wpadminbar .quicklinks .menupop ul.ab-sub-secondary {
+    background: var(--cap-bg-header) !important;
+}
+
+body.cap-dark-theme #wpadminbar .ab-submenu .ab-item,
+body.cap-dark-theme #wpadminbar .quicklinks .menupop ul li a,
+body.cap-dark-theme #wpadminbar .quicklinks .menupop.hover ul li a {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme #wpadminbar .quicklinks .menupop ul li a:hover {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-accent) !important;
+}
+
+/* Admin bar icons */
+body.cap-dark-theme #wpadminbar #wp-admin-bar-site-name > .ab-item:before,
+body.cap-dark-theme #wpadminbar #wp-admin-bar-comments .ab-icon:before,
+body.cap-dark-theme #wpadminbar #wp-admin-bar-new-content .ab-icon:before {
+    color: var(--cap-text-muted) !important;
+}
+
+/* ==========================================================================
+   WORDPRESS TABLES (.wp-list-table, .widefat)
+   ========================================================================== */
+
+body.cap-dark-theme .wp-list-table,
+body.cap-dark-theme .widefat {
+    background: var(--cap-bg-card) !important;
+    border: 1px solid var(--cap-border) !important;
+    border-radius: var(--cap-radius) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden;
+}
+
+/* Table headers */
+body.cap-dark-theme .wp-list-table thead th,
+body.cap-dark-theme .wp-list-table thead td,
+body.cap-dark-theme .widefat thead th,
+body.cap-dark-theme .widefat thead td {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+    border-bottom: 1px solid var(--cap-border) !important;
+    font-weight: 600;
+    padding: 12px 10px;
+}
+
+body.cap-dark-theme .wp-list-table thead th a,
+body.cap-dark-theme .widefat thead th a {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wp-list-table thead th a:hover,
+body.cap-dark-theme .widefat thead th a:hover {
+    color: var(--cap-accent) !important;
+}
+
+/* Table footer */
+body.cap-dark-theme .wp-list-table tfoot th,
+body.cap-dark-theme .wp-list-table tfoot td,
+body.cap-dark-theme .widefat tfoot th,
+body.cap-dark-theme .widefat tfoot td {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+    border-top: 1px solid var(--cap-border) !important;
+}
+
+/* Table body rows */
+body.cap-dark-theme .wp-list-table tbody tr,
+body.cap-dark-theme .widefat tbody tr {
+    background: var(--cap-bg-card) !important;
+}
+
+/* Striped rows - subtle alternation */
+body.cap-dark-theme .wp-list-table.striped > tbody > tr:nth-child(odd),
+body.cap-dark-theme .widefat.striped > tbody > tr:nth-child(odd),
+body.cap-dark-theme .wp-list-table tbody tr:nth-child(odd),
+body.cap-dark-theme .widefat tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+body.cap-dark-theme .wp-list-table tbody tr:nth-child(even),
+body.cap-dark-theme .widefat tbody tr:nth-child(even) {
+    background: var(--cap-bg-card) !important;
+}
+
+/* Hover state */
+body.cap-dark-theme .wp-list-table tbody tr:hover,
+body.cap-dark-theme .widefat tbody tr:hover {
+    background: var(--cap-bg-hover) !important;
+}
+
+/* Table cells */
+body.cap-dark-theme .wp-list-table td,
+body.cap-dark-theme .wp-list-table th,
+body.cap-dark-theme .widefat td,
+body.cap-dark-theme .widefat th {
+    border-bottom: 1px solid var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+    padding: 10px;
+}
+
+body.cap-dark-theme .wp-list-table tbody tr:last-child td,
+body.cap-dark-theme .widefat tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Row titles & links */
+body.cap-dark-theme .wp-list-table .row-title,
+body.cap-dark-theme .wp-list-table strong a,
+body.cap-dark-theme .widefat .row-title {
+    color: var(--cap-text-main) !important;
+    font-weight: 600;
+}
+
+body.cap-dark-theme .wp-list-table .row-title:hover,
+body.cap-dark-theme .wp-list-table strong a:hover {
+    color: var(--cap-accent) !important;
+}
+
+/* Row actions (Edit, Trash, View, etc.) */
+body.cap-dark-theme .wp-list-table .row-actions,
+body.cap-dark-theme .widefat .row-actions {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .wp-list-table .row-actions a,
+body.cap-dark-theme .widefat .row-actions a {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .wp-list-table .row-actions a:hover,
+body.cap-dark-theme .widefat .row-actions a:hover {
+    color: var(--cap-accent-hover) !important;
+}
+
+body.cap-dark-theme .wp-list-table .row-actions .delete a,
+body.cap-dark-theme .wp-list-table .row-actions .trash a {
+    color: var(--cap-error) !important;
+}
+
+/* Checkbox column */
+body.cap-dark-theme .wp-list-table .check-column,
+body.cap-dark-theme .widefat .check-column {
+    background: transparent !important;
+}
+
+body.cap-dark-theme .wp-list-table th.check-column input,
+body.cap-dark-theme .widefat th.check-column input {
+    margin-top: 4px;
+}
+
+/* Sorting indicators */
+body.cap-dark-theme .wp-list-table th.sorted a,
+body.cap-dark-theme .wp-list-table th.sortable a {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wp-list-table th.sorted .sorting-indicators,
+body.cap-dark-theme .wp-list-table th.sortable .sorting-indicators {
+    color: var(--cap-text-muted) !important;
+}
+
+/* Column specific styling */
+body.cap-dark-theme .column-author,
+body.cap-dark-theme .column-date,
+body.cap-dark-theme .column-categories,
+body.cap-dark-theme .column-tags {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .column-author a,
+body.cap-dark-theme .column-categories a,
+body.cap-dark-theme .column-tags a {
+    color: var(--cap-accent) !important;
+}
+
+/* ==========================================================================
+   FORMS & INPUTS
+   ========================================================================== */
+
+body.cap-dark-theme input[type="text"],
+body.cap-dark-theme input[type="password"],
+body.cap-dark-theme input[type="email"],
+body.cap-dark-theme input[type="number"],
+body.cap-dark-theme input[type="search"],
+body.cap-dark-theme input[type="tel"],
+body.cap-dark-theme input[type="url"],
+body.cap-dark-theme input[type="date"],
+body.cap-dark-theme input[type="datetime-local"],
+body.cap-dark-theme input[type="time"],
+body.cap-dark-theme textarea,
+body.cap-dark-theme select,
+body.cap-dark-theme .regular-text,
+body.cap-dark-theme .large-text {
+    background: var(--cap-bg-input) !important;
+    border: 1px solid var(--cap-border) !important;
+    border-radius: var(--cap-radius-sm) !important;
+    color: var(--cap-text-main) !important;
+    padding: 8px 12px;
+    transition: border-color var(--cap-transition), box-shadow var(--cap-transition);
+    box-shadow: var(--cap-shadow-inset);
+}
+
+body.cap-dark-theme input[type="text"]:focus,
+body.cap-dark-theme input[type="password"]:focus,
+body.cap-dark-theme input[type="email"]:focus,
+body.cap-dark-theme input[type="number"]:focus,
+body.cap-dark-theme input[type="search"]:focus,
+body.cap-dark-theme input[type="tel"]:focus,
+body.cap-dark-theme input[type="url"]:focus,
+body.cap-dark-theme input[type="date"]:focus,
+body.cap-dark-theme input[type="datetime-local"]:focus,
+body.cap-dark-theme input[type="time"]:focus,
+body.cap-dark-theme textarea:focus,
+body.cap-dark-theme select:focus {
+    border-color: var(--cap-accent) !important;
+    box-shadow: 0 0 0 2px var(--cap-accent-glow) !important;
+    outline: none !important;
+}
+
+body.cap-dark-theme input::placeholder,
+body.cap-dark-theme textarea::placeholder {
+    color: var(--cap-text-faint) !important;
+}
+
+/* Select dropdown */
+body.cap-dark-theme select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0a0b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    padding-right: 35px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+body.cap-dark-theme select option {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Checkboxes and Radio buttons */
+body.cap-dark-theme input[type="checkbox"],
+body.cap-dark-theme input[type="radio"] {
+    background: var(--cap-bg-input) !important;
+    border: 1px solid var(--cap-border) !important;
+    box-shadow: none !important;
+}
+
+body.cap-dark-theme input[type="checkbox"]:checked,
+body.cap-dark-theme input[type="radio"]:checked {
+    background: var(--cap-accent) !important;
+    border-color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme input[type="checkbox"]:checked:before {
+    color: #fff !important;
+}
+
+body.cap-dark-theme input[type="radio"]:checked:before {
+    background: #fff !important;
+}
+
+/* Disabled inputs */
+body.cap-dark-theme input:disabled,
+body.cap-dark-theme textarea:disabled,
+body.cap-dark-theme select:disabled {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-faint) !important;
+    cursor: not-allowed;
+}
+
+/* Search box (in tables, plugins, etc.) */
+body.cap-dark-theme .search-box input[type="search"],
+body.cap-dark-theme .search-form input[type="search"],
+body.cap-dark-theme #plugin-search-input,
+body.cap-dark-theme .wp-filter-search {
+    background: var(--cap-bg-input) !important;
+    border: 1px solid var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+    border-radius: var(--cap-radius-sm) !important;
+}
+
+/* Form tables */
+body.cap-dark-theme .form-table th {
+    color: var(--cap-text-main) !important;
+    font-weight: 600;
+}
+
+body.cap-dark-theme .form-table td {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .form-table td fieldset label {
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+body.cap-dark-theme .button,
+body.cap-dark-theme .button-secondary {
+    background: var(--cap-bg-input) !important;
+    border: 1px solid var(--cap-border) !important;
+    border-radius: var(--cap-radius-sm) !important;
+    color: var(--cap-text-main) !important;
+    padding: 6px 16px;
+    transition: all var(--cap-transition);
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+body.cap-dark-theme .button:hover,
+body.cap-dark-theme .button-secondary:hover {
+    background: var(--cap-bg-hover) !important;
+    border-color: var(--cap-border-light) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .button:focus,
+body.cap-dark-theme .button-secondary:focus {
+    border-color: var(--cap-accent) !important;
+    box-shadow: 0 0 0 2px var(--cap-accent-glow) !important;
+    outline: none;
+}
+
+/* Primary Button */
+body.cap-dark-theme .button-primary {
+    background: var(--cap-accent) !important;
+    border: none !important;
+    border-radius: var(--cap-radius-sm) !important;
+    color: #fff !important;
+    font-weight: 500;
+    padding: 6px 18px;
+    text-shadow: none !important;
+    box-shadow: 0 2px 8px var(--cap-accent-glow) !important;
+    transition: all var(--cap-transition);
+}
+
+body.cap-dark-theme .button-primary:hover {
+    background: var(--cap-accent-hover) !important;
+    box-shadow: 0 4px 12px var(--cap-accent-glow) !important;
+    transform: translateY(-1px);
+}
+
+body.cap-dark-theme .button-primary:focus {
+    box-shadow: 0 0 0 3px var(--cap-accent-glow) !important;
+    outline: none;
+}
+
+body.cap-dark-theme .button-primary:active {
+    transform: translateY(0);
+}
+
+/* Link button (text button) */
+body.cap-dark-theme .button-link {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .button-link:hover {
+    color: var(--cap-accent-hover) !important;
+}
+
+/* Danger/Delete button */
+body.cap-dark-theme .button-link-delete,
+body.cap-dark-theme .delete a {
+    color: var(--cap-error) !important;
+}
+
+/* Disabled button */
+body.cap-dark-theme .button:disabled,
+body.cap-dark-theme .button-primary:disabled,
+body.cap-dark-theme .button-secondary:disabled {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-faint) !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ==========================================================================
+   METABOXES & CARDS (.postbox, .card)
+   ========================================================================== */
+
+body.cap-dark-theme .postbox,
+body.cap-dark-theme .stuffbox,
+body.cap-dark-theme .card,
+body.cap-dark-theme .metabox-holder .postbox {
+    background: var(--cap-bg-card) !important;
+    border: 1px solid var(--cap-border) !important;
+    border-radius: var(--cap-radius) !important;
+    box-shadow: var(--cap-shadow) !important;
+    overflow: hidden;
+}
+
+body.cap-dark-theme .postbox .postbox-header,
+body.cap-dark-theme .postbox .hndle,
+body.cap-dark-theme .stuffbox .hndle {
+    background: var(--cap-bg-header) !important;
+    border-bottom: 1px solid var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .postbox .postbox-header h2,
+body.cap-dark-theme .postbox h2.hndle,
+body.cap-dark-theme .postbox h3.hndle,
+body.cap-dark-theme .postbox .hndle span,
+body.cap-dark-theme .stuffbox h2,
+body.cap-dark-theme .stuffbox h3 {
+    color: var(--cap-text-main) !important;
+    font-weight: 600;
+}
+
+body.cap-dark-theme .postbox .inside {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .postbox .inside a {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .postbox .inside a:hover {
+    color: var(--cap-accent-hover) !important;
+}
+
+/* Postbox handle icons */
+body.cap-dark-theme .postbox .handle-order-higher,
+body.cap-dark-theme .postbox .handle-order-lower,
+body.cap-dark-theme .postbox .handlediv {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .postbox .handle-order-higher:hover,
+body.cap-dark-theme .postbox .handle-order-lower:hover,
+body.cap-dark-theme .postbox .handlediv:hover {
+    color: var(--cap-accent) !important;
+}
+
+/* Accordion sections */
+body.cap-dark-theme .accordion-section,
+body.cap-dark-theme .accordion-section-content {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .accordion-section-title {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .accordion-section-title:hover {
+    background: var(--cap-bg-hover) !important;
+}
+
+/* ==========================================================================
+   NOTICES & ALERTS
+   ========================================================================== */
+
+body.cap-dark-theme .notice,
+body.cap-dark-theme .updated,
+body.cap-dark-theme .error,
+body.cap-dark-theme .update-nag,
+body.cap-dark-theme div.updated,
+body.cap-dark-theme div.error {
+    background: var(--cap-bg-card) !important;
+    border: 1px solid var(--cap-border) !important;
+    border-left: 4px solid var(--cap-info) !important;
+    border-radius: var(--cap-radius-sm) !important;
+    color: var(--cap-text-main) !important;
+    box-shadow: var(--cap-shadow);
+    padding: 12px 15px;
+    margin: 15px 0;
+}
+
+body.cap-dark-theme .notice p,
+body.cap-dark-theme .updated p,
+body.cap-dark-theme .error p {
+    color: var(--cap-text-main) !important;
+    margin: 0.5em 0;
+}
+
+body.cap-dark-theme .notice a,
+body.cap-dark-theme .updated a,
+body.cap-dark-theme .error a {
+    color: var(--cap-accent) !important;
+}
+
+/* Success notices */
+body.cap-dark-theme .notice-success,
+body.cap-dark-theme .updated:not(.error) {
+    border-left-color: var(--cap-success) !important;
+    background: var(--cap-bg-card) !important;
+}
+
+/* Warning notices */
+body.cap-dark-theme .notice-warning {
+    border-left-color: var(--cap-warning) !important;
+}
+
+/* Error notices */
+body.cap-dark-theme .notice-error,
+body.cap-dark-theme .error {
+    border-left-color: var(--cap-error) !important;
+}
+
+/* Info notices */
+body.cap-dark-theme .notice-info {
+    border-left-color: var(--cap-info) !important;
+}
+
+/* Dismissible notice button */
+body.cap-dark-theme .notice-dismiss,
+body.cap-dark-theme .notice-dismiss:before {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .notice-dismiss:hover,
+body.cap-dark-theme .notice-dismiss:hover:before {
+    color: var(--cap-text-main) !important;
+}
+
+/* Hide notices for restricted users */
+body.cap-restricted-user .notice,
+body.cap-restricted-user .update-nag,
+body.cap-restricted-user .updated,
+body.cap-restricted-user .error:not(.inline),
+body.cap-restricted-user #message {
+    display: none !important;
+}
+
+/* ==========================================================================
+   DASHBOARD WIDGETS
+   ========================================================================== */
+
+body.cap-dark-theme #dashboard-widgets-wrap,
+body.cap-dark-theme .metabox-holder {
+    background: transparent !important;
+}
+
+body.cap-dark-theme #dashboard-widgets .postbox {
+    background: var(--cap-bg-card) !important;
+}
+
+/* Activity widget */
+body.cap-dark-theme #dashboard_activity .subsubsub li a {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme #dashboard_activity .inside h3,
+body.cap-dark-theme #dashboard_activity .inside h4 {
+    color: var(--cap-text-muted) !important;
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #the-comment-list .comment,
+body.cap-dark-theme #the-comment-list .comment .comment-body {
+    background: transparent !important;
+}
+
+body.cap-dark-theme .activity-block {
+    border-color: var(--cap-border) !important;
+}
+
+/* At a Glance widget */
+body.cap-dark-theme #dashboard_right_now .main h3,
+body.cap-dark-theme #dashboard_right_now li a {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme #dashboard_right_now li {
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   PAGINATION & TABLE NAVIGATION
+   ========================================================================== */
+
+body.cap-dark-theme .tablenav {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .tablenav .tablenav-pages {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .tablenav .tablenav-pages a {
+    background: var(--cap-bg-input) !important;
+    border: 1px solid var(--cap-border) !important;
+    border-radius: var(--cap-radius-sm) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .tablenav .tablenav-pages a:hover {
+    background: var(--cap-accent) !important;
+    border-color: var(--cap-accent) !important;
+    color: #fff !important;
+}
+
+body.cap-dark-theme .tablenav .tablenav-pages .current-page {
+    background: var(--cap-bg-input) !important;
+    border: 1px solid var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .tablenav-pages .pagination-links .tablenav-pages-navspan {
+    background: var(--cap-bg-header) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-faint) !important;
+}
+
+/* Bulk actions dropdown */
+body.cap-dark-theme .tablenav .actions select {
+    background: var(--cap-bg-input) !important;
+    border: 1px solid var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Displaying num items */
+body.cap-dark-theme .tablenav .displaying-num {
+    color: var(--cap-text-muted) !important;
+}
+
+/* ==========================================================================
+   SUBSUBSUB FILTERS (All, Published, Draft, etc.)
+   ========================================================================== */
+
+body.cap-dark-theme .subsubsub {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .subsubsub a {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .subsubsub a:hover {
+    color: var(--cap-accent-hover) !important;
+}
+
+body.cap-dark-theme .subsubsub li.all a,
+body.cap-dark-theme .subsubsub li a.current {
+    color: var(--cap-text-main) !important;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   INLINE EDIT (Quick Edit)
+   ========================================================================== */
+
+body.cap-dark-theme .inline-edit-row,
+body.cap-dark-theme .quick-edit-row {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .inline-edit-row fieldset {
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .inline-edit-row label,
+body.cap-dark-theme .inline-edit-row .title {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .inline-edit-row .input-text-wrap input,
+body.cap-dark-theme .inline-edit-row textarea {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   MEDIA UPLOADER
+   ========================================================================== */
+
+body.cap-dark-theme .media-modal,
+body.cap-dark-theme .media-modal-content {
+    background: var(--cap-bg-main) !important;
+}
+
+body.cap-dark-theme .media-frame-title h1 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .media-sidebar {
+    background: var(--cap-bg-card) !important;
+    border-left-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .media-toolbar {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .media-menu .media-menu-item {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .media-menu .media-menu-item:hover,
+body.cap-dark-theme .media-menu .media-menu-item.active {
+    color: var(--cap-text-main) !important;
+    background: var(--cap-bg-hover) !important;
+}
+
+body.cap-dark-theme .attachments-browser .attachments,
+body.cap-dark-theme .attachments-browser .uploader-inline {
+    background: var(--cap-bg-main) !important;
+}
+
+body.cap-dark-theme .attachment {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .attachment.selected {
+    border-color: var(--cap-accent) !important;
+    box-shadow: 0 0 0 2px var(--cap-accent-glow) !important;
+}
+
+body.cap-dark-theme .attachment-details {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .attachment-details label {
+    color: var(--cap-text-muted) !important;
+}
+
+/* ==========================================================================
+   SCREEN OPTIONS & HELP
+   ========================================================================== */
+
+body.cap-dark-theme #screen-meta {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #contextual-help-wrap {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .contextual-help-tabs .active a {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #screen-options-wrap {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #screen-options-wrap legend {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #screen-meta-links .show-settings {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme #screen-meta-links .show-settings:hover {
+    color: var(--cap-accent) !important;
+}
+
+/* ==========================================================================
+   PLUGINS PAGE
+   ========================================================================== */
+
+body.cap-dark-theme .plugins .plugin-title strong,
+body.cap-dark-theme .plugins .plugin-title a {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .plugins .plugin-description {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .plugins tr.active {
+    background: rgba(255, 87, 34, 0.05) !important;
+}
+
+body.cap-dark-theme .plugins tr.active td {
+    border-top-color: var(--cap-border) !important;
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .plugins tr.active th.check-column {
+    border-left: 3px solid var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .plugins .inactive {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .plugin-card {
+    background: var(--cap-bg-card) !important;
+    border: 1px solid var(--cap-border) !important;
+    border-radius: var(--cap-radius) !important;
+}
+
+body.cap-dark-theme .plugin-card .plugin-card-top {
+    background: transparent !important;
+}
+
+body.cap-dark-theme .plugin-card .column-name h3 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .plugin-card .column-description {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .plugin-card .plugin-card-bottom {
+    background: var(--cap-bg-header) !important;
+    border-top-color: var(--cap-border) !important;
+}
+
+/* ==========================================================================
+   WOOCOMMERCE SPECIFIC STYLES
+   ========================================================================== */
+
+/* Order status badges */
+body.cap-dark-theme .order-status {
+    border-radius: 20px !important;
+    padding: 4px 10px !important;
+    font-weight: 500 !important;
+}
+
+body.cap-dark-theme .order-status.status-processing {
+    background: var(--cap-info-bg) !important;
+    color: var(--cap-status-processing) !important;
+}
+
+body.cap-dark-theme .order-status.status-completed {
+    background: var(--cap-success-bg) !important;
+    color: var(--cap-status-completed) !important;
+}
+
+body.cap-dark-theme .order-status.status-pending {
+    background: var(--cap-warning-bg) !important;
+    color: var(--cap-status-pending) !important;
+}
+
+body.cap-dark-theme .order-status.status-on-hold {
+    background: rgba(255, 87, 34, 0.15) !important;
+    color: var(--cap-status-on-hold) !important;
+}
+
+body.cap-dark-theme .order-status.status-cancelled,
+body.cap-dark-theme .order-status.status-failed {
+    background: var(--cap-error-bg) !important;
+    color: var(--cap-status-cancelled) !important;
+}
+
+body.cap-dark-theme .order-status.status-refunded {
+    background: rgba(156, 39, 176, 0.15) !important;
+    color: var(--cap-status-refunded) !important;
+}
+
+/* WooCommerce metaboxes */
+body.cap-dark-theme #woocommerce-order-items,
+body.cap-dark-theme #woocommerce-order-data,
+body.cap-dark-theme #woocommerce-order-notes,
+body.cap-dark-theme #woocommerce-order-actions {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .woocommerce_order_items_wrapper {
+    background: transparent !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .woocommerce_order_items {
+    background: transparent !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .woocommerce_order_items thead th {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .woocommerce_order_items tbody td,
+body.cap-dark-theme #woocommerce-order-items .woocommerce_order_items tfoot td,
+body.cap-dark-theme #woocommerce-order-items .woocommerce_order_items tfoot th {
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .woocommerce_order_items .item {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .wc-order-totals {
+    color: var(--cap-text-main) !important;
+}
+
+/* Order data panels */
+body.cap-dark-theme #order_data .order_data_column {
+    background: transparent !important;
+}
+
+body.cap-dark-theme #order_data h3 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #order_data .order_data_column p {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #order_data .order_data_column .address {
+    color: var(--cap-text-muted) !important;
+}
+
+/* Product thumbnails */
+body.cap-dark-theme .column-thumb img,
+body.cap-dark-theme .product-thumbnail img {
+    border-radius: var(--cap-radius-sm) !important;
+    border: 1px solid var(--cap-border) !important;
+}
+
+/* WooCommerce reports */
+body.cap-dark-theme .woocommerce-reports-wrap {
+    background: transparent !important;
+}
+
+body.cap-dark-theme .chart-legend li {
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+/* ==========================================================================
+   CUSTOM DASHBOARD WIDGETS (Client Admin Portal)
+   ========================================================================== */
+
+/* Store Status Widget */
+.cap-store-status-widget {
+    padding: 15px;
+}
+
+.cap-store-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cap-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.cap-status-badge.cap-status-open {
+    background: var(--cap-success-bg);
+    color: var(--cap-success);
+}
+
+.cap-status-badge.cap-status-closed {
+    background: var(--cap-error-bg);
+    color: var(--cap-error);
+}
+
+.cap-status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: cap-pulse 2s infinite;
+}
+
+.cap-status-open .cap-status-indicator {
+    background: var(--cap-success);
+    box-shadow: 0 0 10px var(--cap-success);
+}
+
+.cap-status-closed .cap-status-indicator {
+    background: var(--cap-error);
+}
+
+@keyframes cap-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.cap-status-time {
+    color: var(--cap-text-faint);
+    font-size: 14px;
+}
+
+/* Metrics Grid */
+.cap-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.cap-metric-card {
+    background: var(--cap-bg-input);
+    border: 1px solid var(--cap-border);
+    border-radius: var(--cap-radius);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: var(--cap-transition);
+}
+
+.cap-metric-card:hover {
+    background: var(--cap-bg-hover);
+    border-color: var(--cap-border-light);
+}
+
+.cap-metric-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--cap-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cap-metric-orders .cap-metric-icon {
+    background: var(--cap-info-bg);
+    color: var(--cap-info);
+}
+
+.cap-metric-sales .cap-metric-icon {
+    background: var(--cap-success-bg);
+    color: var(--cap-success);
+}
+
+.cap-metric-pending .cap-metric-icon {
+    background: var(--cap-warning-bg);
+    color: var(--cap-warning);
+}
+
+.cap-metric-completed .cap-metric-icon {
+    background: var(--cap-success-bg);
+    color: var(--cap-success);
+}
+
+.cap-metric-icon .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.cap-metric-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cap-metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cap-text-main);
+    line-height: 1;
+}
+
+.cap-metric-label {
+    font-size: 12px;
+    color: var(--cap-text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cap-metric-link {
+    font-size: 12px;
+    color: var(--cap-accent) !important;
+    text-decoration: none !important;
+    margin-top: auto;
+}
+
+.cap-metric-link:hover {
+    color: var(--cap-accent-hover) !important;
+}
+
+/* Quick Actions Widget */
+.cap-quick-actions-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.cap-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    background: var(--cap-bg-input);
+    border: 1px solid var(--cap-border);
+    border-radius: var(--cap-radius);
+    color: var(--cap-text-muted) !important;
+    text-decoration: none !important;
+    transition: var(--cap-transition);
+}
+
+.cap-action-btn:hover {
+    background: var(--cap-bg-hover);
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border-light);
+}
+
+.cap-action-btn .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--cap-text-faint);
+}
+
+.cap-action-btn:hover .dashicons {
+    color: var(--cap-accent);
+}
+
+.cap-action-btn.cap-action-highlight {
+    background: var(--cap-accent);
+    border-color: var(--cap-accent);
+    color: #fff !important;
+}
+
+.cap-action-btn.cap-action-highlight .dashicons {
+    color: #fff;
+}
+
+.cap-action-btn.cap-action-highlight:hover {
+    background: var(--cap-accent-hover);
+    box-shadow: 0 4px 15px var(--cap-accent-glow);
+    transform: translateY(-2px);
+}
+
+/* Recent Orders Widget */
+.cap-recent-orders-widget {
+    padding: 5px;
+}
+
+.cap-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cap-orders-table th,
+.cap-orders-table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--cap-border);
+}
+
+.cap-orders-table th {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--cap-text-faint);
+}
+
+.cap-orders-table td {
+    font-size: 13px;
+    color: var(--cap-text-main);
+}
+
+.cap-orders-table td a {
+    color: var(--cap-accent) !important;
+    font-weight: 600;
+}
+
+.cap-orders-table tr:last-child td {
+    border-bottom: none;
+}
+
+.cap-orders-table tr:hover td {
+    background: var(--cap-bg-hover);
+}
+
+/* Order Status Badges (Custom widgets) */
+.cap-order-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.cap-order-status.cap-status-processing {
+    background: var(--cap-info-bg);
+    color: var(--cap-status-processing);
+}
+
+.cap-order-status.cap-status-completed {
+    background: var(--cap-success-bg);
+    color: var(--cap-status-completed);
+}
+
+.cap-order-status.cap-status-pending {
+    background: var(--cap-warning-bg);
+    color: var(--cap-status-pending);
+}
+
+.cap-order-status.cap-status-on-hold {
+    background: rgba(255, 87, 34, 0.15);
+    color: var(--cap-status-on-hold);
+}
+
+.cap-order-status.cap-status-cancelled,
+.cap-order-status.cap-status-failed {
+    background: var(--cap-error-bg);
+    color: var(--cap-status-cancelled);
+}
+
+.cap-order-status.cap-status-refunded {
+    background: rgba(156, 39, 176, 0.15);
+    color: var(--cap-status-refunded);
+}
+
+.cap-view-all-link {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    color: var(--cap-accent) !important;
+    font-weight: 600;
+    border-top: 1px solid var(--cap-border);
+    margin-top: 15px;
+}
+
+.cap-no-orders {
+    text-align: center;
+    padding: 30px;
+    color: var(--cap-text-faint);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+body.cap-dark-theme #wpfooter {
+    background: transparent !important;
+    border-top: 1px solid var(--cap-border);
+    padding: 20px;
+}
+
+body.cap-dark-theme #wpfooter p,
+body.cap-dark-theme #wpfooter a {
+    color: var(--cap-text-faint) !important;
+}
+
+body.cap-dark-theme #wpfooter a:hover {
+    color: var(--cap-accent) !important;
+}
+
+.cap-footer-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   MODAL / THICKBOX
+   ========================================================================== */
+
+body.cap-dark-theme #TB_window {
+    background: var(--cap-bg-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #TB_title {
+    background: var(--cap-bg-header) !important;
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #TB_ajaxWindowTitle {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #TB_closeWindowButton:hover {
+    color: var(--cap-accent) !important;
+}
+
+/* ==========================================================================
+   SCROLLBAR
+   ========================================================================== */
+
+body.cap-dark-theme ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+body.cap-dark-theme ::-webkit-scrollbar-track {
+    background: var(--cap-bg-header);
+}
+
+body.cap-dark-theme ::-webkit-scrollbar-thumb {
+    background: var(--cap-border);
+    border-radius: 5px;
+}
+
+body.cap-dark-theme ::-webkit-scrollbar-thumb:hover {
+    background: var(--cap-border-light);
+}
+
+/* Firefox scrollbar */
+body.cap-dark-theme {
+    scrollbar-width: thin;
+    scrollbar-color: var(--cap-border) var(--cap-bg-header);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media screen and (max-width: 782px) {
+    .cap-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    body.cap-dark-theme #adminmenu,
+    body.cap-dark-theme #adminmenuback,
+    body.cap-dark-theme #adminmenuwrap {
+        background: var(--cap-bg-header) !important;
+    }
+
+    body.cap-dark-theme .auto-fold #adminmenu {
+        background: var(--cap-bg-header) !important;
+    }
+
+    body.cap-dark-theme #wpadminbar {
+        position: fixed !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .cap-store-status-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .cap-orders-table {
+        font-size: 12px;
+    }
+
+    .cap-orders-table th,
+    .cap-orders-table td {
+        padding: 8px 5px;
+    }
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes cap-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cap-store-status-widget,
+.cap-quick-actions-widget,
+.cap-recent-orders-widget {
+    animation: cap-fadeIn 0.3s ease;
+}
+
+/* ==========================================================================
+   MISCELLANEOUS
+   ========================================================================== */
+
+/* List tables column dragging */
+body.cap-dark-theme .wp-list-table .ui-sortable-placeholder {
+    background: var(--cap-bg-hover) !important;
+}
+
+/* Welcome panel */
+body.cap-dark-theme .welcome-panel {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .welcome-panel h2,
+body.cap-dark-theme .welcome-panel h3 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .welcome-panel p {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .welcome-panel .about-description {
+    color: var(--cap-text-main) !important;
+}
+
+/* Tags/Categories inline editor */
+body.cap-dark-theme .tagchecklist span {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .tagchecklist .ntdelbutton {
+    color: var(--cap-error) !important;
+}
+
+/* Code & Pre tags */
+body.cap-dark-theme code,
+body.cap-dark-theme pre {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-accent) !important;
+    border-radius: var(--cap-radius-sm);
+    padding: 2px 6px;
+}
+
+/* HR dividers */
+body.cap-dark-theme hr {
+    border-color: var(--cap-border) !important;
+}
+
+/* Tooltips */
+body.cap-dark-theme .wp-pointer-content {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wp-pointer-content h3 {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wp-pointer-content p {
+    color: var(--cap-text-main) !important;
+}
+
+/* Admin color picker */
+body.cap-dark-theme .wp-picker-container .wp-picker-input-wrap {
+    background: transparent !important;
+}
+
+body.cap-dark-theme .wp-picker-container .iris-picker {
+    border-color: var(--cap-border) !important;
+}
+
+/* Tags input */
+body.cap-dark-theme .tagsdiv .taghint {
+    color: var(--cap-text-faint) !important;
+}
+
+body.cap-dark-theme .tagsdiv .the-tags {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Post format icons */
+body.cap-dark-theme #post-formats-select label {
+    color: var(--cap-text-main) !important;
+}
+
+/* Featured image box */
+body.cap-dark-theme #postimagediv .inside {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #set-post-thumbnail {
+    color: var(--cap-accent) !important;
+}
+
+/* Revisions */
+body.cap-dark-theme .revisions-controls {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .revisions-meta {
+    color: var(--cap-text-main) !important;
+}
+
+/* Privacy policy page */
+body.cap-dark-theme .privacy-settings-accordion {
+    background: var(--cap-bg-card) !important;
+}
+
+/* Updates page */
+body.cap-dark-theme .update-php .notice,
+body.cap-dark-theme .update-core .notice {
+    background: var(--cap-bg-card) !important;
+}
+
+/* Import page */
+body.cap-dark-theme .import-upload-form {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+    border-radius: var(--cap-radius) !important;
+    padding: 20px;
+}
+
+/* ==========================================================================
+   COMPREHENSIVE FALLBACK RULES
+   Ensures ALL areas have dark backgrounds and readable text
+   ========================================================================== */
+
+/* Master background override for main content areas */
+body.cap-dark-theme,
+body.cap-dark-theme #wpwrap,
+body.cap-dark-theme #wpcontent,
+body.cap-dark-theme #wpbody,
+body.cap-dark-theme #wpbody-content,
+body.cap-dark-theme .wrap,
+body.cap-dark-theme #poststuff,
+body.cap-dark-theme #post-body,
+body.cap-dark-theme #post-body-content,
+body.cap-dark-theme .metabox-holder,
+body.cap-dark-theme #postbox-container-1,
+body.cap-dark-theme #postbox-container-2,
+body.cap-dark-theme .edit-form-section,
+body.cap-dark-theme #titlediv,
+body.cap-dark-theme #titlewrap {
+    background: var(--cap-bg-main) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* All div, section, article fallback */
+body.cap-dark-theme div,
+body.cap-dark-theme section,
+body.cap-dark-theme article,
+body.cap-dark-theme aside,
+body.cap-dark-theme main,
+body.cap-dark-theme header,
+body.cap-dark-theme footer,
+body.cap-dark-theme nav {
+    color: var(--cap-text-main);
+}
+
+/* Generic white background override */
+body.cap-dark-theme [style*="background: #fff"],
+body.cap-dark-theme [style*="background:#fff"],
+body.cap-dark-theme [style*="background: white"],
+body.cap-dark-theme [style*="background:white"],
+body.cap-dark-theme [style*="background-color: #fff"],
+body.cap-dark-theme [style*="background-color:#fff"],
+body.cap-dark-theme [style*="background-color: white"],
+body.cap-dark-theme [style*="background-color:white"],
+body.cap-dark-theme [style*="background: rgb(255, 255, 255)"],
+body.cap-dark-theme [style*="background-color: rgb(255, 255, 255)"] {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   WOOCOMMERCE COMPREHENSIVE STYLES
+   ========================================================================== */
+
+/* WooCommerce main wrapper areas */
+body.cap-dark-theme .woocommerce,
+body.cap-dark-theme .woocommerce-page,
+body.cap-dark-theme #woocommerce-product-data,
+body.cap-dark-theme .woocommerce_options_panel,
+body.cap-dark-theme .wc-metaboxes-wrapper,
+body.cap-dark-theme .wc-metabox,
+body.cap-dark-theme .woocommerce-layout,
+body.cap-dark-theme .woocommerce-layout__main,
+body.cap-dark-theme .woocommerce-layout__primary,
+body.cap-dark-theme .woocommerce-layout__secondary {
+    background: var(--cap-bg-main) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce product data tabs */
+body.cap-dark-theme .woocommerce_data_tab,
+body.cap-dark-theme #woocommerce-product-data .hndle,
+body.cap-dark-theme #woocommerce-product-data .inside,
+body.cap-dark-theme .woocommerce_options_panel,
+body.cap-dark-theme .product_data_panels,
+body.cap-dark-theme .wc-tabs-panel {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wc-tabs li a {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .wc-tabs li.active a {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce options panel fields */
+body.cap-dark-theme .woocommerce_options_panel label,
+body.cap-dark-theme .woocommerce_options_panel span.description,
+body.cap-dark-theme .woocommerce_options_panel .description,
+body.cap-dark-theme .woocommerce_options_panel p.form-field label {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .woocommerce_options_panel p.description {
+    color: var(--cap-text-muted) !important;
+}
+
+/* WooCommerce variations */
+body.cap-dark-theme .woocommerce_variation,
+body.cap-dark-theme .wc-metabox-content,
+body.cap-dark-theme .woocommerce_variation .wc-metabox-content {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .woocommerce_variation h3 {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce attributes */
+body.cap-dark-theme .woocommerce_attribute,
+body.cap-dark-theme .woocommerce_attribute .wc-metabox-content {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce HPOS (High-Performance Order Storage) */
+body.cap-dark-theme .woocommerce-layout__header,
+body.cap-dark-theme .woocommerce-layout__header-wrapper {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .woocommerce-order-data__heading,
+body.cap-dark-theme .woocommerce-order-data__meta {
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce Analytics/Reports */
+body.cap-dark-theme .woocommerce-page .woocommerce-card,
+body.cap-dark-theme .woocommerce-card__body,
+body.cap-dark-theme .woocommerce-card__header,
+body.cap-dark-theme .woocommerce-summary,
+body.cap-dark-theme .woocommerce-chart,
+body.cap-dark-theme .woocommerce-table,
+body.cap-dark-theme .woocommerce-table__table {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .woocommerce-summary__item-label,
+body.cap-dark-theme .woocommerce-summary__item-value,
+body.cap-dark-theme .woocommerce-summary__item-delta {
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce Settings page */
+body.cap-dark-theme .woocommerce .form-table,
+body.cap-dark-theme .woocommerce .form-table th,
+body.cap-dark-theme .woocommerce .form-table td {
+    background: transparent !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .woocommerce .form-table th {
+    padding: 20px 10px 20px 0;
+}
+
+body.cap-dark-theme .wc-settings-row,
+body.cap-dark-theme .wc-settings-row td,
+body.cap-dark-theme .wc-settings-row th {
+    background: transparent !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce nav tabs (Settings, etc.) */
+body.cap-dark-theme .woo-nav-tab-wrapper,
+body.cap-dark-theme nav.woo-nav-tab-wrapper {
+    background: transparent !important;
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .nav-tab-wrapper,
+body.cap-dark-theme .wrap .nav-tab-wrapper {
+    background: transparent !important;
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .nav-tab {
+    background: var(--cap-bg-header) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .nav-tab:hover {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .nav-tab-active,
+body.cap-dark-theme .nav-tab-active:focus,
+body.cap-dark-theme .nav-tab-active:hover {
+    background: var(--cap-bg-card) !important;
+    border-bottom-color: var(--cap-bg-card) !important;
+    color: var(--cap-accent) !important;
+}
+
+/* WooCommerce status page */
+body.cap-dark-theme .wc-status-table,
+body.cap-dark-theme .wc_status_table,
+body.cap-dark-theme table.wc_status_table {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .wc_status_table th,
+body.cap-dark-theme .wc_status_table td {
+    background: transparent !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wc_status_table thead th {
+    background: var(--cap-bg-header) !important;
+}
+
+/* WooCommerce shipping zones */
+body.cap-dark-theme .wc-shipping-zone-method-settings,
+body.cap-dark-theme .wc-shipping-zones,
+body.cap-dark-theme .wc-shipping-zone-methods {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wc-shipping-zone-method-title {
+    color: var(--cap-text-main) !important;
+}
+
+/* WooCommerce coupon fields */
+body.cap-dark-theme #coupon_options .options_group,
+body.cap-dark-theme #general_coupon_data,
+body.cap-dark-theme .coupon_data_column {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   SELECT2 DROPDOWNS (Used by WooCommerce)
+   ========================================================================== */
+
+body.cap-dark-theme .select2-container--default .select2-selection--single,
+body.cap-dark-theme .select2-container--default .select2-selection--multiple {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-selection--single .select2-selection__rendered,
+body.cap-dark-theme .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: var(--cap-text-faint) !important;
+}
+
+body.cap-dark-theme .select2-dropdown {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-search--dropdown .select2-search__field {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-results__option {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-results__option--highlighted[aria-selected],
+body.cap-dark-theme .select2-container--default .select2-results__option:hover {
+    background: var(--cap-accent) !important;
+    color: #fff !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-results__option[aria-selected="true"] {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background: var(--cap-bg-hover) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: var(--cap-error) !important;
+}
+
+body.cap-dark-theme .select2-container--default .select2-selection__arrow {
+    color: var(--cap-text-muted) !important;
+}
+
+/* ==========================================================================
+   JQUERY UI COMPONENTS
+   ========================================================================== */
+
+body.cap-dark-theme .ui-widget,
+body.cap-dark-theme .ui-widget-content {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .ui-widget-header {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .ui-state-default,
+body.cap-dark-theme .ui-widget-content .ui-state-default {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .ui-state-hover,
+body.cap-dark-theme .ui-widget-content .ui-state-hover,
+body.cap-dark-theme .ui-state-focus,
+body.cap-dark-theme .ui-widget-content .ui-state-focus {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border-light) !important;
+}
+
+body.cap-dark-theme .ui-state-active,
+body.cap-dark-theme .ui-widget-content .ui-state-active {
+    background: var(--cap-accent) !important;
+    color: #fff !important;
+}
+
+/* jQuery UI Datepicker */
+body.cap-dark-theme .ui-datepicker {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+    padding: 10px;
+    border-radius: var(--cap-radius);
+    box-shadow: var(--cap-shadow-lg);
+}
+
+body.cap-dark-theme .ui-datepicker-header {
+    background: var(--cap-bg-header) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .ui-datepicker-title {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .ui-datepicker-prev,
+body.cap-dark-theme .ui-datepicker-next {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .ui-datepicker-prev:hover,
+body.cap-dark-theme .ui-datepicker-next:hover {
+    background: var(--cap-bg-hover) !important;
+}
+
+body.cap-dark-theme .ui-datepicker th {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .ui-datepicker td {
+    background: transparent !important;
+}
+
+body.cap-dark-theme .ui-datepicker td a,
+body.cap-dark-theme .ui-datepicker td span {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-text-main) !important;
+    border-color: transparent !important;
+}
+
+body.cap-dark-theme .ui-datepicker td a:hover {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .ui-datepicker td a.ui-state-active {
+    background: var(--cap-accent) !important;
+    color: #fff !important;
+}
+
+/* jQuery UI Sortable */
+body.cap-dark-theme .ui-sortable-placeholder {
+    background: var(--cap-bg-hover) !important;
+    border: 2px dashed var(--cap-border) !important;
+}
+
+/* ==========================================================================
+   WORDPRESS EDITOR (Classic & Gutenberg)
+   ========================================================================== */
+
+/* Classic Editor TinyMCE */
+body.cap-dark-theme .wp-editor-wrap,
+body.cap-dark-theme .wp-editor-container,
+body.cap-dark-theme .mce-panel,
+body.cap-dark-theme .mce-toolbar,
+body.cap-dark-theme .mce-toolbar-grp,
+body.cap-dark-theme .mce-edit-area,
+body.cap-dark-theme .mce-statusbar {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .mce-btn,
+body.cap-dark-theme .mce-btn button {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .mce-btn:hover,
+body.cap-dark-theme .mce-btn.mce-active {
+    background: var(--cap-bg-hover) !important;
+}
+
+body.cap-dark-theme .mce-menu,
+body.cap-dark-theme .mce-menu-item {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .mce-menu-item:hover {
+    background: var(--cap-accent) !important;
+    color: #fff !important;
+}
+
+body.cap-dark-theme .wp-switch-editor {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-text-muted) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wp-switch-editor.switch-tmce:focus,
+body.cap-dark-theme .wp-switch-editor.switch-html:focus,
+body.cap-dark-theme .html-active .switch-html,
+body.cap-dark-theme .tmce-active .switch-tmce {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Gutenberg Editor */
+body.cap-dark-theme .block-editor,
+body.cap-dark-theme .block-editor__container,
+body.cap-dark-theme .edit-post-layout,
+body.cap-dark-theme .edit-post-layout__content,
+body.cap-dark-theme .interface-interface-skeleton,
+body.cap-dark-theme .interface-interface-skeleton__body,
+body.cap-dark-theme .interface-interface-skeleton__content,
+body.cap-dark-theme .editor-styles-wrapper {
+    background: var(--cap-bg-main) !important;
+}
+
+body.cap-dark-theme .edit-post-header,
+body.cap-dark-theme .interface-interface-skeleton__header {
+    background: var(--cap-bg-header) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .edit-post-sidebar,
+body.cap-dark-theme .interface-interface-skeleton__sidebar,
+body.cap-dark-theme .interface-complementary-area {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .components-panel,
+body.cap-dark-theme .components-panel__body,
+body.cap-dark-theme .components-panel__header {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .components-panel__body-title .components-button {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .components-base-control__label {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .components-text-control__input,
+body.cap-dark-theme .components-textarea-control__input,
+body.cap-dark-theme .components-select-control__input {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   ADDITIONAL FORM ELEMENTS
+   ========================================================================== */
+
+/* Fieldsets and legends */
+body.cap-dark-theme fieldset {
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme legend {
+    color: var(--cap-text-main) !important;
+}
+
+/* Options groups in WooCommerce */
+body.cap-dark-theme .options_group {
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .options_group label {
+    color: var(--cap-text-main) !important;
+}
+
+/* All paragraphs in forms */
+body.cap-dark-theme p.form-field,
+body.cap-dark-theme .form-field {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .form-field label {
+    color: var(--cap-text-main) !important;
+}
+
+/* Help tips */
+body.cap-dark-theme .woocommerce-help-tip {
+    color: var(--cap-text-muted) !important;
+}
+
+/* ==========================================================================
+   ADDITIONAL TABLE STYLES
+   ========================================================================== */
+
+/* Ensure all tables have dark backgrounds */
+body.cap-dark-theme table {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme table th,
+body.cap-dark-theme table td {
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme table thead th,
+body.cap-dark-theme table thead td {
+    background: var(--cap-bg-header) !important;
+}
+
+body.cap-dark-theme table tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+body.cap-dark-theme table tbody tr:nth-child(even) {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme table tbody tr:hover {
+    background: var(--cap-bg-hover) !important;
+}
+
+/* ==========================================================================
+   WORDPRESS CORE PAGES
+   ========================================================================== */
+
+/* Users page */
+body.cap-dark-theme .users-php .column-username strong a {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .users-php .column-role {
+    color: var(--cap-text-muted) !important;
+}
+
+/* User profile page */
+body.cap-dark-theme #your-profile h2,
+body.cap-dark-theme #your-profile h3 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .user-profile-picture {
+    background: var(--cap-bg-card) !important;
+}
+
+/* Comments page */
+body.cap-dark-theme .comments-box,
+body.cap-dark-theme #replyrow,
+body.cap-dark-theme #edithead,
+body.cap-dark-theme #replycontainer {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .comment-body {
+    color: var(--cap-text-main) !important;
+}
+
+/* Taxonomies (Categories, Tags) */
+body.cap-dark-theme .taxonomy-php .form-wrap,
+body.cap-dark-theme #col-left .form-wrap {
+    background: transparent !important;
+}
+
+body.cap-dark-theme .term-name-wrap,
+body.cap-dark-theme .term-slug-wrap,
+body.cap-dark-theme .term-description-wrap,
+body.cap-dark-theme .term-parent-wrap {
+    color: var(--cap-text-main) !important;
+}
+
+/* Settings pages */
+body.cap-dark-theme .settings_page_options-general .form-table,
+body.cap-dark-theme .options-general-php .form-table,
+body.cap-dark-theme .options-writing-php .form-table,
+body.cap-dark-theme .options-reading-php .form-table,
+body.cap-dark-theme .options-discussion-php .form-table,
+body.cap-dark-theme .options-media-php .form-table,
+body.cap-dark-theme .options-permalink-php .form-table {
+    background: transparent !important;
+}
+
+/* Tools page */
+body.cap-dark-theme .tools-php .card,
+body.cap-dark-theme .site-health .card {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+}
+
+/* ==========================================================================
+   MODAL & OVERLAY STYLES
+   ========================================================================== */
+
+body.cap-dark-theme .ui-dialog,
+body.cap-dark-theme .ui-dialog-content,
+body.cap-dark-theme .wc-backbone-modal-content,
+body.cap-dark-theme .wc-backbone-modal-main {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .ui-dialog-titlebar,
+body.cap-dark-theme .wc-backbone-modal-header {
+    background: var(--cap-bg-header) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wc-backbone-modal-header h1 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wc-backbone-modal-content article {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .wc-backbone-modal-content label {
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   WORDPRESS LINK/URL FIELDS
+   ========================================================================== */
+
+body.cap-dark-theme #link-options,
+body.cap-dark-theme .link-target,
+body.cap-dark-theme .link-preview {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #wp-link .query-results {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #wp-link .query-results li {
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #wp-link .query-results li:hover {
+    background: var(--cap-bg-hover) !important;
+}
+
+/* ==========================================================================
+   ADDITIONAL WOOCOMMERCE FIXES
+   ========================================================================== */
+
+/* Order actions metabox */
+body.cap-dark-theme #woocommerce-order-actions .inside {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #woocommerce-order-actions select {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Order notes */
+body.cap-dark-theme #woocommerce-order-notes .inside {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .order_notes li {
+    background: var(--cap-bg-input) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .order_notes .note_content {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .order_notes .meta {
+    color: var(--cap-text-muted) !important;
+}
+
+/* Order items table */
+body.cap-dark-theme #woocommerce-order-items .inside {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .woocommerce_order_items_wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .wc-order-item-name {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .wc-order-item-sku {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .quantity {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #woocommerce-order-items .line_cost,
+body.cap-dark-theme #woocommerce-order-items .item_cost {
+    color: var(--cap-text-main) !important;
+}
+
+/* Order data metabox */
+body.cap-dark-theme #woocommerce-order-data .inside {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #order_data .order_data_column {
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #order_data .order_data_column h3 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #order_data .order_data_column p strong {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #order_data .order_data_column .wc-customer-user label {
+    color: var(--cap-text-main) !important;
+}
+
+/* Billing and shipping addresses */
+body.cap-dark-theme .order_data_column .address p {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .edit_address {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+}
+
+/* Product gallery */
+body.cap-dark-theme #woocommerce-product-images .inside,
+body.cap-dark-theme #postimagediv .inside {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .product_images li {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+}
+
+/* Downloadable products */
+body.cap-dark-theme .downloadable_files {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .downloadable_files th,
+body.cap-dark-theme .downloadable_files td {
+    background: transparent !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   WC UBER DIRECT CONNECT PLUGIN
+   Dark theme overrides for the WCUDC admin pages
+   ========================================================================== */
+
+/* Tab content area */
+body.cap-dark-theme .wcudc-tab-content {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Reusable section cards */
+body.cap-dark-theme .wcudc-section {
+    background: var(--cap-bg-card) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-section-header {
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wcudc-section-header h2 {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-section-header h2 .dashicons {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .wcudc-section-header .description {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .wcudc-section-footer {
+    border-top-color: var(--cap-border) !important;
+}
+
+/* Schedule grid - Day cards */
+body.cap-dark-theme .wcudc-day-card {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-day-card.is-closed {
+    opacity: 0.5;
+}
+
+body.cap-dark-theme .wcudc-day-name {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-time-field label {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .wcudc-time-field input[type="time"] {
+    background: var(--cap-bg-main) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-time-separator {
+    color: var(--cap-text-faint) !important;
+}
+
+/* Toggle switch dark mode */
+body.cap-dark-theme .wcudc-toggle-slider {
+    background-color: #555 !important;
+}
+
+body.cap-dark-theme .wcudc-toggle input:checked + .wcudc-toggle-slider {
+    background-color: var(--cap-success) !important;
+}
+
+/* Status badges dark mode */
+body.cap-dark-theme .wcudc-status-active {
+    background: var(--cap-success-bg) !important;
+    color: var(--cap-success) !important;
+}
+
+body.cap-dark-theme .wcudc-status-inactive {
+    background: var(--cap-error-bg) !important;
+    color: var(--cap-error) !important;
+}
+
+/* Polygon status dark mode */
+body.cap-dark-theme .wcudc-polygon-set {
+    color: var(--cap-success) !important;
+}
+
+body.cap-dark-theme .wcudc-polygon-missing {
+    color: var(--cap-error) !important;
+}
+
+/* Modal dark mode */
+body.cap-dark-theme .wcudc-modal-content {
+    background-color: var(--cap-bg-card) !important;
+    border: 1px solid var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+    box-shadow: var(--cap-shadow-lg) !important;
+}
+
+body.cap-dark-theme .wcudc-modal-close {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .wcudc-modal-close:hover {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-modal h2 {
+    color: var(--cap-text-main) !important;
+    border-bottom-color: var(--cap-border) !important;
+}
+
+/* Form rows in dark mode */
+body.cap-dark-theme .wcudc-form-row label {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-form-row .description {
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .wcudc-form-actions {
+    border-top-color: var(--cap-border) !important;
+}
+
+/* Special hours table dark mode */
+body.cap-dark-theme .wcudc-special-hours-table,
+body.cap-dark-theme .wcudc-special-hours-table thead th {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wcudc-special-hours-table tbody tr {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme .wcudc-special-hours-table tbody tr:nth-child(odd) {
+    background: var(--cap-bg-input) !important;
+}
+
+body.cap-dark-theme .wcudc-special-hours-table td {
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-special-hours-table input[type="date"],
+body.cap-dark-theme .wcudc-special-hours-table input[type="time"],
+body.cap-dark-theme .wcudc-special-hours-table input[type="text"] {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-past-date {
+    background-color: var(--cap-bg-main) !important;
+}
+
+body.cap-dark-theme .wcudc-past-date td {
+    color: var(--cap-text-faint) !important;
+}
+
+body.cap-dark-theme .wcudc-add-row td {
+    background-color: var(--cap-bg-input) !important;
+}
+
+body.cap-dark-theme .wcudc-special-hours-table .dashicons-update {
+    color: var(--cap-accent) !important;
+}
+
+body.cap-dark-theme .wcudc-special-hours-table .dashicons-trash {
+    color: var(--cap-error) !important;
+}
+
+/* Stores table dark mode */
+body.cap-dark-theme #wcudc-stores-table,
+body.cap-dark-theme #wcudc-stores-table thead th {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+    border-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme #wcudc-stores-table tbody tr {
+    background: var(--cap-bg-card) !important;
+}
+
+body.cap-dark-theme #wcudc-stores-table tbody tr:nth-child(odd) {
+    background: var(--cap-bg-input) !important;
+}
+
+body.cap-dark-theme #wcudc-stores-table td {
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme #wcudc-stores-table .no-stores td {
+    color: var(--cap-text-muted) !important;
+}
+
+/* API tab - form-table dark mode */
+body.cap-dark-theme .wcudc-tab-content .form-table th {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-tab-content .form-table td {
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-tab-content .form-table input[type="text"],
+body.cap-dark-theme .wcudc-tab-content .form-table input[type="password"] {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* API tab - Notice card dark mode */
+body.cap-dark-theme .wcudc-tab-content .notice {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-tab-content .notice.notice-info {
+    border-left-color: var(--cap-info) !important;
+}
+
+body.cap-dark-theme .wcudc-tab-content .notice code {
+    background: var(--cap-bg-main) !important;
+    color: var(--cap-accent) !important;
+}
+
+/* Map dark mode */
+body.cap-dark-theme .wcudc-map {
+    border-color: var(--cap-border) !important;
+}
+
+/* Nav tabs for WCUDC page */
+body.cap-dark-theme .wcudc-admin-wrap .nav-tab-wrapper {
+    border-bottom-color: var(--cap-border) !important;
+}
+
+body.cap-dark-theme .wcudc-admin-wrap .nav-tab {
+    background: var(--cap-bg-input) !important;
+    border-color: var(--cap-border) !important;
+    color: var(--cap-text-muted) !important;
+}
+
+body.cap-dark-theme .wcudc-admin-wrap .nav-tab:hover {
+    background: var(--cap-bg-hover) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .wcudc-admin-wrap .nav-tab-active {
+    background: var(--cap-bg-card) !important;
+    border-bottom-color: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* ==========================================================================
+   FINAL CATCH-ALL RULES
+   These ensure any remaining white elements are styled
+   ========================================================================== */
+
+/* Any remaining white backgrounds */
+body.cap-dark-theme .white-bg,
+body.cap-dark-theme .bg-white,
+body.cap-dark-theme [class*="white"],
+body.cap-dark-theme [class*="light-bg"] {
+    background: var(--cap-bg-card) !important;
+    color: var(--cap-text-main) !important;
+}
+
+/* Ensure all text is readable */
+body.cap-dark-theme *:not(a):not(.button):not(.button-primary):not([class*="status"]) {
+    color: inherit;
+}
+
+/* Links that might be missed */
+body.cap-dark-theme a:not(.button):not(.button-primary):not(.nav-tab):not(.page-title-action) {
+    color: var(--cap-accent);
+}
+
+/* Fix any inline white text on dark elements */
+body.cap-dark-theme .has-text-color {
+    color: inherit !important;
+}
+
+/* Ensure dashicons are visible */
+body.cap-dark-theme .dashicons,
+body.cap-dark-theme .dashicons-before:before {
+    color: inherit;
+}
+
+/* Fix WooCommerce admin icons */
+body.cap-dark-theme .woocommerce-message,
+body.cap-dark-theme .woocommerce-info {
+    background: var(--cap-bg-card) !important;
+    border-left-color: var(--cap-info) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .woocommerce-message::before,
+body.cap-dark-theme .woocommerce-info::before {
+    color: var(--cap-info) !important;
+}
+
+body.cap-dark-theme .woocommerce-error {
+    background: var(--cap-bg-card) !important;
+    border-left-color: var(--cap-error) !important;
+    color: var(--cap-text-main) !important;
+}
+
+body.cap-dark-theme .woocommerce-error::before {
+    color: var(--cap-error) !important;
+}

@@ -1,0 +1,673 @@
+/**
+ * Auth Modal - Estilos del modal de login/registro
+ *
+ * Dark theme matching ChurrascoPlanet design system
+ * Fonts: Orbitron (title), Poppins (body)
+ * Accent: #ffb268 (--color-orange)
+ */
+
+/* ================================================
+   OVERLAY
+   ================================================ */
+
+.restohub-auth-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.75);
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.restohub-auth-overlay.restohub-auth-visible {
+	opacity: 1;
+	visibility: visible;
+}
+
+body.restohub-auth-modal-open {
+	overflow: hidden;
+}
+
+/* ================================================
+   MODAL CONTAINER
+   ================================================ */
+
+.restohub-auth-modal {
+	background: #111111;
+	border: 1px solid rgba(255, 178, 104, 0.2);
+	border-radius: 12px;
+	width: 100%;
+	max-width: 420px;
+	max-height: 90vh;
+	overflow-y: auto;
+	transform: translateY(20px);
+	transition: transform 0.3s ease;
+	box-shadow: 0 0 40px rgba(255, 178, 104, 0.15), 0 20px 60px rgba(0, 0, 0, 0.8);
+	position: relative;
+}
+
+.restohub-auth-visible .restohub-auth-modal {
+	transform: translateY(0);
+}
+
+/* Shake animation */
+.restohub-auth-shake {
+	animation: restohub-shake 0.5s ease-in-out;
+}
+
+@keyframes restohub-shake {
+	0%, 100% { transform: translateX(0); }
+	10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+	20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ================================================
+   ACCENT BAR
+   ================================================ */
+
+.restohub-auth-accent-bar {
+	height: 4px;
+	background: linear-gradient(90deg, #ffb268, #ffde59);
+	border-radius: 12px 12px 0 0;
+}
+
+/* ================================================
+   HEADER
+   ================================================ */
+
+.restohub-auth-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px 24px 8px;
+}
+
+.restohub-auth-greeting {
+	font-family: 'Poppins', sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	color: #ffffff;
+	margin: 0;
+	line-height: 1.4;
+}
+
+.restohub-auth-close {
+	background: none;
+	border: none;
+	font-size: 28px;
+	color: rgba(255, 255, 255, 0.35);
+	cursor: pointer;
+	padding: 0;
+	line-height: 1;
+	transition: color 0.2s;
+	flex-shrink: 0;
+	margin-left: 12px;
+}
+
+.restohub-auth-close:hover {
+	color: #ffffff;
+}
+
+/* ================================================
+   BODY
+   ================================================ */
+
+.restohub-auth-body {
+	padding: 0 24px;
+}
+
+/* ================================================
+   VIEWS
+   ================================================ */
+
+.restohub-auth-view {
+	/* Controlled via JS display */
+}
+
+/* ================================================
+   TITLE
+   ================================================ */
+
+.restohub-auth-title {
+	font-family: 'Orbitron', sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	color: #ffffff;
+	text-align: center;
+	margin: 16px 0 24px;
+	letter-spacing: 0.5px;
+}
+
+/* ================================================
+   GOOGLE BUTTON
+   ================================================ */
+
+.restohub-auth-google-section {
+	margin-bottom: 12px;
+}
+
+.restohub-google-btn-container {
+	display: flex;
+	justify-content: center;
+}
+
+.restohub-google-btn-container > div {
+	width: 100% !important;
+}
+
+/* ================================================
+   GUEST BUTTON
+   ================================================ */
+
+.restohub-auth-btn-guest {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+	padding: 12px 20px;
+	background: #ffb268;
+	color: #000000;
+	border: none;
+	border-radius: 24px;
+	font-family: 'Poppins', sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.8px;
+	cursor: pointer;
+	transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.restohub-auth-btn-guest:hover {
+	background: #e09050;
+	color: #000000;
+}
+
+.restohub-auth-btn-guest:active {
+	transform: scale(0.98);
+}
+
+.restohub-auth-btn-guest svg {
+	flex-shrink: 0;
+}
+
+/* ================================================
+   SEPARATOR
+   ================================================ */
+
+.restohub-auth-separator {
+	display: flex;
+	align-items: center;
+	margin: 22px 0;
+	gap: 12px;
+}
+
+.restohub-auth-separator::before,
+.restohub-auth-separator::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.restohub-auth-separator span {
+	font-family: 'Poppins', sans-serif;
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.35);
+	white-space: nowrap;
+}
+
+/* ================================================
+   MATERIAL INPUT FIELDS
+   ================================================ */
+
+.restohub-auth-form {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.restohub-auth-field-material {
+	position: relative;
+	margin-bottom: 16px;
+}
+
+.restohub-auth-field-material input {
+	width: 100%;
+	padding: 14px 0 8px;
+	font-family: 'Poppins', sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 0;
+	outline: none;
+	transition: border-color 0.3s ease;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.restohub-auth-field-material input:-webkit-autofill,
+.restohub-auth-field-material input:-webkit-autofill:hover,
+.restohub-auth-field-material input:-webkit-autofill:focus {
+	-webkit-box-shadow: 0 0 0 1000px #111111 inset;
+	-webkit-text-fill-color: #ffffff;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+.restohub-auth-field-material input:focus {
+	border-bottom-color: #ffb268;
+	box-shadow: 0 1px 0 0 #ffb268;
+}
+
+.restohub-auth-field-material label {
+	position: absolute;
+	top: 14px;
+	left: 0;
+	font-family: 'Poppins', sans-serif;
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.4);
+	pointer-events: none;
+	transition: all 0.2s ease;
+}
+
+/* Floating label: move up on focus or when input has content */
+.restohub-auth-field-material input:focus + label,
+.restohub-auth-field-material input:not(:placeholder-shown) + label {
+	top: -4px;
+	font-size: 11px;
+	color: #ffb268;
+}
+
+/* ================================================
+   BUTTONS
+   ================================================ */
+
+.restohub-auth-btn {
+	position: relative;
+	border: none;
+	border-radius: 24px;
+	padding: 13px 20px;
+	font-family: 'Poppins', sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.restohub-auth-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.restohub-auth-btn:active:not(:disabled) {
+	transform: scale(0.98);
+}
+
+.restohub-auth-btn-primary {
+	background: #ffb268;
+	color: #000000;
+}
+
+.restohub-auth-btn-primary:hover:not(:disabled) {
+	background: #e09050;
+}
+
+/* ================================================
+   LINKS
+   ================================================ */
+
+.restohub-auth-links {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin-top: 24px;
+	padding-bottom: 8px;
+}
+
+.restohub-auth-link {
+	font-family: 'Poppins', sans-serif;
+	font-size: 13px;
+	color: #ffb268;
+	text-decoration: none;
+	cursor: pointer;
+	transition: color 0.2s ease;
+}
+
+.restohub-auth-link:hover {
+	color: #ffde59;
+}
+
+.restohub-auth-link-btn {
+	background: none;
+	border: none;
+	padding: 0;
+	font-family: 'Poppins', sans-serif;
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.5);
+	cursor: pointer;
+	transition: color 0.2s ease;
+}
+
+.restohub-auth-link-btn:hover {
+	color: #ffffff;
+}
+
+.restohub-auth-link-btn strong {
+	font-weight: 700;
+	color: #ffb268;
+}
+
+.restohub-auth-link-btn:hover strong {
+	color: #ffde59;
+}
+
+/* ================================================
+   BACK BUTTON
+   ================================================ */
+
+.restohub-auth-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: none;
+	border: none;
+	font-family: 'Poppins', sans-serif;
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.4);
+	cursor: pointer;
+	padding: 4px 0;
+	margin-bottom: 4px;
+	transition: color 0.2s ease;
+}
+
+.restohub-auth-back:hover {
+	color: #ffffff;
+}
+
+.restohub-auth-back svg {
+	flex-shrink: 0;
+}
+
+/* ================================================
+   SPINNER
+   ================================================ */
+
+.restohub-auth-spinner {
+	width: 20px;
+	height: 20px;
+	border: 2px solid rgba(0, 0, 0, 0.3);
+	border-top-color: #000000;
+	border-radius: 50%;
+	animation: restohub-spin 0.6s linear infinite;
+	position: absolute;
+}
+
+@keyframes restohub-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* ================================================
+   ERROR MESSAGES
+   ================================================ */
+
+.restohub-auth-error {
+	font-family: 'Poppins', sans-serif;
+	font-size: 13px;
+	color: #ff6b6b;
+	background: rgba(239, 83, 80, 0.12);
+	border: 1px solid rgba(239, 83, 80, 0.3);
+	border-radius: 8px;
+	padding: 10px 14px;
+	line-height: 1.4;
+	margin-top: 8px;
+}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+
+.restohub-auth-footer {
+	text-align: center;
+	padding: 20px 24px;
+	border-top: 1px solid rgba(255, 178, 104, 0.12);
+	margin-top: 24px;
+}
+
+.restohub-auth-footer span {
+	font-family: 'Poppins', sans-serif;
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.3);
+}
+
+.restohub-auth-footer strong {
+	font-family: 'Orbitron', sans-serif;
+	font-size: 13px;
+	color: #ffb268;
+	font-weight: 700;
+	margin-left: 4px;
+	letter-spacing: 0.5px;
+}
+
+/* ================================================
+   PHONE FIELD (registro)
+   ================================================ */
+
+.restohub-auth-field-phone {
+	margin-bottom: 16px;
+}
+
+.restohub-auth-field-phone .restohub-field-label {
+	display: block;
+	font-family: 'Poppins', sans-serif;
+	font-size: 11px;
+	color: #ffb268;
+	margin-bottom: 4px;
+}
+
+.restohub-phone-row {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	transition: border-color 0.3s ease;
+}
+
+.restohub-phone-row:focus-within {
+	border-bottom-color: #ffb268;
+	box-shadow: 0 1px 0 0 #ffb268;
+}
+
+.restohub-phone-country {
+	flex-shrink: 0;
+	border: none;
+	background: transparent;
+	font-family: 'Poppins', sans-serif;
+	font-size: 13px;
+	color: #ffffff;
+	padding: 10px 8px 10px 0;
+	cursor: pointer;
+	outline: none;
+	-webkit-appearance: none;
+	appearance: none;
+	max-width: 110px;
+}
+
+.restohub-phone-number {
+	flex: 1;
+	border: none;
+	background: transparent;
+	font-family: 'Poppins', sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	padding: 10px 0;
+	outline: none;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.restohub-phone-number::placeholder {
+	color: rgba(255, 255, 255, 0.25);
+}
+
+/* ================================================
+   PASSWORD TOGGLE (registro)
+   ================================================ */
+
+.restohub-auth-field-material.restohub-pw-field input {
+	padding-right: 36px;
+}
+
+.restohub-pw-toggle {
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	color: rgba(255, 255, 255, 0.3);
+	line-height: 0;
+	transition: color 0.2s ease;
+}
+
+.restohub-pw-toggle:hover {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+/* ================================================
+   PASSWORD STRENGTH BAR (registro)
+   ================================================ */
+
+.restohub-pw-strength {
+	margin-top: -8px;
+	margin-bottom: 16px;
+}
+
+.restohub-pw-strength-track {
+	height: 4px;
+	background: rgba(255, 255, 255, 0.08);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.restohub-pw-strength-bar {
+	height: 100%;
+	width: 0%;
+	border-radius: 2px;
+	transition: width 0.3s ease, background 0.3s ease;
+}
+
+.restohub-pw-strength-label {
+	display: block;
+	font-family: 'Poppins', sans-serif;
+	font-size: 11px;
+	color: rgba(255, 255, 255, 0.4);
+	margin-top: 4px;
+	min-height: 16px;
+	transition: color 0.3s ease;
+}
+
+/* ================================================
+   PASSWORD SECTION (slide down)
+   ================================================ */
+
+#restohub-password-section {
+	overflow: hidden;
+}
+
+#restohub-password-section .restohub-auth-field-material {
+	margin-top: 4px;
+}
+
+#restohub-password-section .restohub-auth-btn {
+	margin-top: 8px;
+}
+
+/* ================================================
+   RESPONSIVE - Mobile bottom sheet
+   ================================================ */
+
+@media (max-width: 480px) {
+	.restohub-auth-overlay {
+		padding: 0;
+		align-items: flex-end;
+	}
+
+	.restohub-auth-modal {
+		max-width: 100%;
+		max-height: 95vh;
+		border-radius: 16px 16px 0 0;
+		border-left: none;
+		border-right: none;
+		border-bottom: none;
+		transform: translateY(100%);
+	}
+
+	.restohub-auth-visible .restohub-auth-modal {
+		transform: translateY(0);
+	}
+
+	.restohub-auth-accent-bar {
+		border-radius: 16px 16px 0 0;
+	}
+
+	.restohub-auth-header {
+		padding: 16px 20px 8px;
+	}
+
+	.restohub-auth-greeting {
+		font-size: 15px;
+	}
+
+	.restohub-auth-body {
+		padding: 0 20px;
+	}
+
+	.restohub-auth-title {
+		font-size: 16px;
+		margin: 12px 0 20px;
+	}
+
+	.restohub-auth-footer {
+		padding: 16px 20px;
+		margin-top: 20px;
+	}
+}
+
+/* ================================================
+   SCROLLBAR
+   ================================================ */
+
+.restohub-auth-modal::-webkit-scrollbar {
+	width: 6px;
+}
+
+.restohub-auth-modal::-webkit-scrollbar-track {
+	background: #0a0a0a;
+}
+
+.restohub-auth-modal::-webkit-scrollbar-thumb {
+	background: rgba(255, 178, 104, 0.4);
+	border-radius: 3px;
+}
+
+.restohub-auth-modal::-webkit-scrollbar-thumb:hover {
+	background: #ffb268;
+}

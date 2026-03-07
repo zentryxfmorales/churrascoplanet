@@ -1,0 +1,405 @@
+/**
+ * RestoHub — Delivery UI
+ *
+ * Estilos para el tracking de Uber Direct:
+ *  - Bloque de estado (thank you + ver pedido)
+ *  - Tarjetas de entrega (Mi Cuenta → Mis Entregas)
+ *  - Estado vacío
+ *
+ * Convenciones:
+ *  - Prefijo: .restohub-
+ *  - Dark mode: fondos oscuros rgba(), bordes rgba(255,255,255,0.1)
+ *  - Acento naranja: #ff9800
+ *  - Transiciones: 0.2s ease
+ */
+
+/* ==========================================================================
+   BLOQUE DE TRACKING (thank you page + view order page)
+   ========================================================================== */
+
+.restohub-tracking-block {
+    margin: 24px 0;
+    padding: 24px 28px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.restohub-tracking-block__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.restohub-tracking-block__icon {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.restohub-tracking-block__title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.2px;
+}
+
+.restohub-tracking-block__status {
+    margin-bottom: 20px;
+}
+
+.restohub-tracking-block__cta {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.restohub-tracking-block__notice {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+}
+
+/* Botón de rastreo principal */
+.restohub-tracking-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: #ff9800;
+    color: #000000;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 12px rgba(255, 152, 0, 0.3);
+}
+
+.restohub-tracking-btn:hover {
+    background: #e65100;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(255, 152, 0, 0.45);
+    text-decoration: none;
+}
+
+.restohub-tracking-btn:active {
+    transform: translateY(0);
+}
+
+.restohub-tracking-btn:focus-visible {
+    outline: 2px solid #ff9800;
+    outline-offset: 3px;
+}
+
+/* ==========================================================================
+   BADGES DE ESTADO
+   ========================================================================== */
+
+.restohub-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Buscando repartidor (pulse animation) */
+.restohub-status-badge--searching {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.25);
+    animation: restohub-pulse 2s ease-in-out infinite;
+}
+
+/* Repartidor asignado */
+.restohub-status-badge--assigned {
+    background: rgba(99, 102, 241, 0.12);
+    color: #818cf8;
+    border-color: rgba(99, 102, 241, 0.25);
+}
+
+/* Llegando al local */
+.restohub-status-badge--approaching {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.25);
+    animation: restohub-pulse 1.5s ease-in-out infinite;
+}
+
+/* Pedido recogido */
+.restohub-status-badge--pickup {
+    background: rgba(139, 92, 246, 0.12);
+    color: #a78bfa;
+    border-color: rgba(139, 92, 246, 0.25);
+}
+
+/* En camino al cliente */
+.restohub-status-badge--dropoff {
+    background: rgba(6, 182, 212, 0.12);
+    color: #22d3ee;
+    border-color: rgba(6, 182, 212, 0.25);
+    animation: restohub-pulse 1.8s ease-in-out infinite;
+}
+
+/* Entregado */
+.restohub-status-badge--delivered {
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border-color: rgba(34, 197, 94, 0.25);
+}
+
+/* Fallido / cancelado */
+.restohub-status-badge--failed {
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+@keyframes restohub-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.65; }
+}
+
+/* ==========================================================================
+   PÁGINA "MIS ENTREGAS" — Mi Cuenta
+   ========================================================================== */
+
+.restohub-deliveries-page {
+    padding: 4px 0;
+}
+
+.restohub-deliveries-page__header {
+    margin-bottom: 28px;
+}
+
+.restohub-deliveries-page__title {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.restohub-deliveries-page__subtitle {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Grid de tarjetas */
+.restohub-delivery-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+/* Tarjeta individual */
+.restohub-delivery-card {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.restohub-delivery-card:hover {
+    border-color: rgba(255, 152, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estado entregado: borde sutil verde */
+.restohub-delivery-card--delivered {
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
+/* Estado fallido: borde rojo tenue */
+.restohub-delivery-card--failed {
+    border-color: rgba(239, 68, 68, 0.2);
+    opacity: 0.85;
+}
+
+.restohub-delivery-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.restohub-delivery-card__order-num {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.restohub-delivery-card__total {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ff9800;
+    white-space: nowrap;
+}
+
+.restohub-delivery-card__status {
+    display: flex;
+    align-items: center;
+}
+
+.restohub-delivery-card__footer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+/* ==========================================================================
+   ESTADO VACÍO
+   ========================================================================== */
+
+.restohub-deliveries-empty {
+    padding: 60px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+}
+
+.restohub-deliveries-empty__icon {
+    font-size: 52px;
+    line-height: 1;
+    opacity: 0.6;
+}
+
+.restohub-deliveries-empty__title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.restohub-deliveries-empty__text {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 340px;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   BOTONES REUTILIZABLES
+   ========================================================================== */
+
+.restohub-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.restohub-btn:focus-visible {
+    outline: 2px solid #ff9800;
+    outline-offset: 2px;
+}
+
+/* Primario (naranja) */
+.restohub-btn--primary {
+    background: #ff9800;
+    color: #000000;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.25);
+}
+
+.restohub-btn--primary:hover {
+    background: #e65100;
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(255, 152, 0, 0.35);
+}
+
+/* Fantasma (borde) */
+.restohub-btn--ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.restohub-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.25);
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .restohub-tracking-block {
+        padding: 18px 20px;
+    }
+
+    .restohub-tracking-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 15px 20px;
+    }
+
+    .restohub-tracking-block__cta {
+        justify-content: center;
+    }
+
+    .restohub-delivery-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .restohub-delivery-card__footer {
+        flex-direction: column;
+    }
+
+    .restohub-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .restohub-tracking-block__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .restohub-deliveries-empty {
+        padding: 40px 16px;
+    }
+
+    .restohub-deliveries-empty__icon {
+        font-size: 40px;
+    }
+}

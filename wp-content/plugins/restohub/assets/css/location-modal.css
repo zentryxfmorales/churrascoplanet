@@ -1,0 +1,1249 @@
+/**
+ * RestoHub - Location Modal Styles
+ * Estilo Rappi/PedidosYa
+ */
+
+/* ==========================================================================
+   CSS Variables
+   ========================================================================== */
+
+:root {
+    --restohub-black: #000000;
+    --restohub-white: #ffffff;
+    --restohub-gray-100: #f7f7f7;
+    --restohub-gray-200: #eeeeee;
+    --restohub-gray-300: #e0e0e0;
+    --restohub-gray-400: #bdbdbd;
+    --restohub-gray-500: #9e9e9e;
+    --restohub-gray-600: #757575;
+    --restohub-gray-700: #616161;
+    --restohub-gray-800: #424242;
+    --restohub-gray-900: #212121;
+    --restohub-green: #4caf50;
+    --restohub-green-light: #e8f5e9;
+    --restohub-red: #f44336;
+    --restohub-red-light: #ffebee;
+    --restohub-yellow: #ff9800;
+    --restohub-yellow-light: #fff3e0;
+    --restohub-radius-sm: 4px;
+    --restohub-radius-md: 8px;
+    --restohub-radius-lg: 12px;
+    --restohub-radius-pill: 50px;
+    --restohub-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    --restohub-shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.2);
+    --restohub-transition: 0.2s ease;
+}
+
+/* ==========================================================================
+   Modal Overlay
+   ========================================================================== */
+
+.restohub-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999999;
+    display: none; /* Oculto por defecto */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Cuando se abre el modal (via JS se agrega .restohub-modal-visible) */
+.restohub-modal-overlay.restohub-modal-visible {
+    display: flex !important;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Modal Container
+   ========================================================================== */
+
+.restohub-modal-container {
+    background: var(--restohub-white);
+    border-radius: var(--restohub-radius-lg);
+    box-shadow: var(--restohub-shadow-lg);
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-20px) scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.restohub-modal-overlay:not([style*="display: none"]) .restohub-modal-container {
+    transform: translateY(0) scale(1);
+}
+
+/* ==========================================================================
+   Modal Header
+   ========================================================================== */
+
+.restohub-modal-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--restohub-gray-200);
+}
+
+.restohub-modal-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--restohub-gray-900);
+}
+
+.restohub-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--restohub-gray-500);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color var(--restohub-transition);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.restohub-modal-close:hover {
+    color: var(--restohub-gray-900);
+    background: var(--restohub-gray-100);
+}
+
+/* ==========================================================================
+   Modal Body
+   ========================================================================== */
+
+.restohub-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* ==========================================================================
+   Mode Toggle (Delivery / Retiro)
+   ========================================================================== */
+
+.restohub-mode-toggle {
+    display: flex;
+    background: var(--restohub-gray-100);
+    border-radius: var(--restohub-radius-pill);
+    padding: 4px;
+    margin-bottom: 24px;
+}
+
+.restohub-mode-toggle-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--restohub-radius-pill);
+    background: transparent;
+    color: var(--restohub-gray-600);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--restohub-transition);
+}
+
+.restohub-mode-toggle-btn:hover:not(.active) {
+    background: var(--restohub-gray-200);
+    color: var(--restohub-gray-800);
+}
+
+.restohub-mode-toggle-btn.active {
+    background: var(--restohub-black);
+    color: var(--restohub-white);
+}
+
+.restohub-mode-icon {
+    font-size: 18px;
+}
+
+.restohub-mode-label {
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Views (Delivery / Pickup)
+   ========================================================================== */
+
+.restohub-view {
+    display: none;
+}
+
+.restohub-view.active {
+    display: block;
+}
+
+/* ==========================================================================
+   Delivery States
+   ========================================================================== */
+
+.restohub-delivery-state {
+    display: none;
+}
+
+.restohub-delivery-state.active {
+    display: block;
+}
+
+/* ==========================================================================
+   Address Input (Delivery Search)
+   ========================================================================== */
+
+.restohub-address-input-wrapper {
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1000;
+}
+
+.restohub-input-label {
+    display: block;
+    font-size: 12px;
+    color: var(--restohub-gray-600);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.restohub-address-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--restohub-gray-300);
+    border-radius: var(--restohub-radius-md);
+    background: var(--restohub-white);
+    transition: border-color var(--restohub-transition), box-shadow var(--restohub-transition);
+}
+
+.restohub-address-input-container:focus-within {
+    border-color: var(--restohub-black);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.restohub-address-icon {
+    padding: 0 12px;
+    font-size: 18px;
+    color: var(--restohub-gray-500);
+}
+
+.restohub-address-input {
+    flex: 1;
+    padding: 14px 12px 14px 0;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color: var(--restohub-gray-900);
+    outline: none;
+    width: 100%;
+}
+
+.restohub-address-input::placeholder {
+    color: var(--restohub-gray-400);
+}
+
+.restohub-geolocate-btn {
+    padding: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--restohub-gray-500);
+    transition: color var(--restohub-transition);
+}
+
+.restohub-geolocate-btn:hover {
+    color: var(--restohub-black);
+}
+
+.restohub-geolocate-icon {
+    font-size: 18px;
+}
+
+/* Address Search Results */
+.restohub-address-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--restohub-white);
+    border: 1px solid var(--restohub-gray-300);
+    border-radius: var(--restohub-radius-md);
+    box-shadow: var(--restohub-shadow-lg);
+    z-index: 9999;
+    max-height: 280px;
+    overflow-y: auto;
+    margin-top: 4px;
+    display: none;
+}
+
+.restohub-address-results.show {
+    display: block;
+}
+
+/* Resultados en estado de confirmación - sobre el mapa */
+#restohub-address-results-confirm {
+    z-index: 99999;
+}
+
+.restohub-address-result-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--restohub-gray-100);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: background var(--restohub-transition);
+}
+
+.restohub-address-result-item:last-child {
+    border-bottom: none;
+}
+
+.restohub-address-result-item:hover {
+    background: var(--restohub-gray-100);
+}
+
+.restohub-result-icon {
+    font-size: 16px;
+    color: var(--restohub-gray-500);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.restohub-result-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.restohub-result-main {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--restohub-gray-900);
+    line-height: 1.3;
+}
+
+.restohub-result-secondary {
+    font-size: 12px;
+    color: var(--restohub-gray-500);
+    line-height: 1.3;
+}
+
+.restohub-result-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--restohub-gray-800);
+}
+
+/* Icono de edición en el input */
+.restohub-input-edit-icon {
+    padding: 0 12px;
+    font-size: 14px;
+    color: var(--restohub-gray-400);
+    cursor: pointer;
+    transition: color var(--restohub-transition);
+}
+
+.restohub-input-edit-icon:hover {
+    color: var(--restohub-gray-700);
+}
+
+.restohub-address-results-loading,
+.restohub-address-results-empty {
+    padding: 16px;
+    text-align: center;
+    color: var(--restohub-gray-500);
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Map Wrapper (Confirm State)
+   ========================================================================== */
+
+.restohub-map-wrapper {
+    position: relative;
+    margin-bottom: 12px;
+    z-index: 1;
+}
+
+.restohub-confirm-map {
+    width: 100%;
+    height: 200px;
+    border-radius: var(--restohub-radius-md);
+    overflow: hidden;
+    background: var(--restohub-gray-200);
+}
+
+.restohub-adjust-btn {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--restohub-black);
+    color: var(--restohub-white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--restohub-radius-pill);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--restohub-transition), transform var(--restohub-transition);
+    white-space: nowrap;
+}
+
+.restohub-adjust-btn:hover {
+    background: var(--restohub-gray-800);
+    transform: translateX(-50%) scale(1.02);
+}
+
+/* Full Address Text */
+.restohub-full-address {
+    margin: 0 0 16px;
+    font-size: 13px;
+    color: var(--restohub-gray-600);
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Coverage Status
+   ========================================================================== */
+
+.restohub-coverage-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: var(--restohub-radius-md);
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.restohub-coverage-status.coverage-ok {
+    background: var(--restohub-green-light);
+    color: #2e7d32;
+}
+
+.restohub-coverage-status.coverage-no {
+    background: var(--restohub-yellow-light);
+    color: #e65100;
+}
+
+.restohub-coverage-icon {
+    font-size: 18px;
+}
+
+.restohub-coverage-text {
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Address Extras (Tags + Detail Input)
+   ========================================================================== */
+
+.restohub-address-extras {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--restohub-gray-200);
+}
+
+.restohub-extras-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--restohub-gray-800);
+    margin-bottom: 12px;
+}
+
+.restohub-address-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.restohub-address-tag {
+    padding: 8px 16px;
+    border: 1px solid var(--restohub-gray-300);
+    border-radius: var(--restohub-radius-pill);
+    background: var(--restohub-white);
+    color: var(--restohub-gray-700);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--restohub-transition);
+}
+
+.restohub-address-tag:hover {
+    border-color: var(--restohub-gray-500);
+    background: var(--restohub-gray-100);
+}
+
+.restohub-address-tag.selected {
+    border-color: var(--restohub-black);
+    background: var(--restohub-gray-100);
+    color: var(--restohub-black);
+    font-weight: 600;
+}
+
+.restohub-address-detail-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--restohub-gray-300);
+    border-radius: var(--restohub-radius-md);
+    font-size: 15px;
+    color: var(--restohub-gray-900);
+    background: var(--restohub-white);
+    transition: border-color var(--restohub-transition), box-shadow var(--restohub-transition);
+    box-sizing: border-box;
+}
+
+.restohub-address-detail-input:focus {
+    outline: none;
+    border-color: var(--restohub-black);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.restohub-address-detail-input::placeholder {
+    color: var(--restohub-gray-400);
+}
+
+/* ==========================================================================
+   Store Search (Pickup View)
+   ========================================================================== */
+
+.restohub-store-search-wrapper {
+    margin-bottom: 16px;
+}
+
+.restohub-store-search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--restohub-gray-300);
+    border-radius: var(--restohub-radius-md);
+    background: var(--restohub-white);
+    padding: 0 12px;
+}
+
+.restohub-store-search-icon {
+    font-size: 16px;
+    color: var(--restohub-gray-500);
+    margin-right: 8px;
+}
+
+.restohub-store-search-input {
+    flex: 1;
+    padding: 14px 0;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color: var(--restohub-gray-900);
+    outline: none;
+}
+
+.restohub-store-search-input::placeholder {
+    color: var(--restohub-gray-400);
+}
+
+/* ==========================================================================
+   Store List (Pickup View)
+   ========================================================================== */
+
+.restohub-store-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.restohub-store-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--restohub-gray-300);
+    border-radius: var(--restohub-radius-md);
+    background: var(--restohub-white);
+    cursor: pointer;
+    transition: border-color var(--restohub-transition), background var(--restohub-transition);
+}
+
+.restohub-store-card:hover {
+    border-color: var(--restohub-gray-500);
+    background: var(--restohub-gray-100);
+}
+
+.restohub-store-card.selected {
+    border-color: var(--restohub-green);
+    background: var(--restohub-green-light);
+}
+
+.restohub-store-card.hidden {
+    display: none;
+}
+
+/* Store Card Radio */
+.restohub-store-card-radio {
+    flex-shrink: 0;
+}
+
+.restohub-radio-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--restohub-gray-400);
+    border-radius: 50%;
+    background: var(--restohub-white);
+    transition: all var(--restohub-transition);
+}
+
+.restohub-radio-circle.checked {
+    border-color: var(--restohub-green);
+    background: var(--restohub-green);
+    color: var(--restohub-white);
+}
+
+.restohub-radio-circle svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Store Card Info */
+.restohub-store-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.restohub-store-card-name {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--restohub-gray-900);
+    margin-bottom: 4px;
+}
+
+.restohub-store-card-address {
+    display: block;
+    font-size: 13px;
+    color: var(--restohub-gray-600);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Store Card Mini Map */
+.restohub-store-card-map {
+    flex-shrink: 0;
+    width: 80px;
+    height: 60px;
+    border-radius: var(--restohub-radius-sm);
+    overflow: hidden;
+    background: var(--restohub-gray-200);
+}
+
+.restohub-store-minimap {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* No Stores Message */
+.restohub-no-stores {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--restohub-gray-500);
+}
+
+/* ==========================================================================
+   Modal Footer
+   ========================================================================== */
+
+.restohub-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--restohub-gray-200);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    background: var(--restohub-white);
+}
+
+.restohub-btn-secondary,
+.restohub-btn-primary {
+    padding: 14px 28px;
+    border-radius: var(--restohub-radius-pill);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--restohub-transition);
+    border: none;
+}
+
+.restohub-btn-secondary {
+    background: transparent;
+    color: var(--restohub-gray-700);
+}
+
+.restohub-btn-secondary:hover {
+    background: var(--restohub-gray-100);
+    color: var(--restohub-gray-900);
+}
+
+.restohub-btn-primary {
+    background: var(--restohub-black);
+    color: var(--restohub-white);
+}
+
+.restohub-btn-primary:hover:not(:disabled) {
+    background: var(--restohub-gray-800);
+}
+
+.restohub-btn-primary:disabled {
+    background: var(--restohub-gray-300);
+    color: var(--restohub-gray-500);
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Header Bar (Post-selection)
+   NOTA: Oculto por defecto ya que el tema tiene su propio botón Delivery
+   ========================================================================== */
+
+.restohub-header-bar {
+    display: none !important; /* Oculto - el tema usa .btn-delivery */
+}
+
+/* Si se quiere mostrar el header bar del plugin, descomentar esto:
+.restohub-header-bar {
+    position: fixed;
+    top: 32px;
+    right: 20px;
+    z-index: 99999;
+    background: var(--restohub-white);
+    border-radius: var(--restohub-radius-lg);
+    box-shadow: var(--restohub-shadow);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 280px;
+}
+*/
+
+body:not(.admin-bar) .restohub-header-bar {
+    top: 20px;
+}
+
+.restohub-header-top {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.restohub-header-mode {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--restohub-black);
+    color: var(--restohub-white);
+    border: none;
+    border-radius: var(--restohub-radius-pill);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--restohub-transition);
+}
+
+.restohub-header-mode:hover {
+    background: var(--restohub-gray-800);
+}
+
+.restohub-header-mode-icon {
+    font-size: 14px;
+}
+
+.restohub-header-separator {
+    width: 1px;
+    height: 20px;
+    background: var(--restohub-gray-300);
+    margin: 0 4px;
+}
+
+.restohub-header-schedule {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    color: var(--restohub-gray-700);
+    cursor: pointer;
+    border-radius: var(--restohub-radius-md);
+    transition: background var(--restohub-transition);
+}
+
+.restohub-header-schedule:hover {
+    background: var(--restohub-gray-100);
+}
+
+.restohub-header-schedule-icon {
+    font-size: 14px;
+}
+
+.restohub-header-arrow {
+    font-size: 10px;
+    color: var(--restohub-gray-500);
+}
+
+.restohub-header-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    color: var(--restohub-gray-800);
+    cursor: pointer;
+    border-radius: var(--restohub-radius-md);
+    text-align: left;
+    width: 100%;
+    transition: background var(--restohub-transition);
+}
+
+.restohub-header-location:hover {
+    background: var(--restohub-gray-100);
+}
+
+.restohub-header-location-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.restohub-header-location-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* Header bar when no location */
+.restohub-header-bar.no-location .restohub-header-top {
+    display: none;
+}
+
+.restohub-header-bar.no-location .restohub-header-location {
+    background: var(--restohub-black);
+    color: var(--restohub-white);
+    border-radius: var(--restohub-radius-pill);
+}
+
+.restohub-header-bar.no-location .restohub-header-location:hover {
+    background: var(--restohub-gray-800);
+}
+
+.restohub-header-bar.no-location .restohub-header-arrow {
+    display: none;
+}
+
+/* ==========================================================================
+   Loading & Animations
+   ========================================================================== */
+
+@keyframes restohub-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.restohub-loading-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--restohub-gray-300);
+    border-top-color: var(--restohub-black);
+    border-radius: 50%;
+    animation: restohub-spin 0.8s linear infinite;
+}
+
+/* Body lock when modal open */
+body.restohub-modal-open {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Toast Notifications
+   ========================================================================== */
+
+.restohub-toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    padding: 14px 28px;
+    background: var(--restohub-gray-900);
+    color: var(--restohub-white);
+    border-radius: var(--restohub-radius-pill);
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    box-shadow: var(--restohub-shadow);
+}
+
+.restohub-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   Map Markers
+   ========================================================================== */
+
+.restohub-user-marker {
+    background: transparent;
+    border: none;
+}
+
+.restohub-user-marker-pin {
+    width: 32px;
+    height: 32px;
+    background: var(--restohub-red);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.restohub-user-marker-inner {
+    width: 12px;
+    height: 12px;
+    background: var(--restohub-white);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.restohub-store-marker-icon {
+    font-size: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    .restohub-modal-overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .restohub-modal-container {
+        max-width: 100%;
+        max-height: 95vh;
+        border-radius: var(--restohub-radius-lg) var(--restohub-radius-lg) 0 0;
+    }
+
+    .restohub-modal-header {
+        padding: 16px 20px;
+    }
+
+    .restohub-modal-body {
+        padding: 20px;
+    }
+
+    .restohub-header-bar {
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+    }
+
+    .restohub-address-tags {
+        gap: 6px;
+    }
+
+    .restohub-address-tag {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .restohub-store-card-map {
+        width: 70px;
+        height: 50px;
+    }
+
+    .restohub-confirm-map {
+        height: 180px;
+    }
+
+    .restohub-modal-footer {
+        flex-direction: column;
+        padding: 16px 20px;
+    }
+
+    .restohub-btn-secondary,
+    .restohub-btn-primary {
+        width: 100%;
+        text-align: center;
+    }
+
+    .restohub-btn-secondary {
+        order: 2;
+    }
+
+    .restohub-btn-primary {
+        order: 1;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .restohub-header-bar {
+        top: auto;
+        bottom: 80px;
+        left: 10px;
+        right: 10px;
+    }
+
+    body:not(.admin-bar) .restohub-header-bar {
+        top: auto;
+    }
+
+    .restohub-mode-toggle-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .restohub-mode-icon {
+        font-size: 16px;
+    }
+
+    .restohub-store-list {
+        max-height: 300px;
+    }
+}
+
+/* ==========================================================================
+   Dark Mode Support
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .restohub-modal-container {
+        background: #1e1e1e;
+    }
+
+    .restohub-modal-header {
+        border-color: #333;
+    }
+
+    .restohub-modal-title {
+        color: #fff;
+    }
+
+    .restohub-modal-close {
+        color: #888;
+    }
+
+    .restohub-modal-close:hover {
+        color: #fff;
+        background: #333;
+    }
+
+    .restohub-mode-toggle {
+        background: #2d2d2d;
+    }
+
+    .restohub-mode-toggle-btn {
+        color: #aaa;
+    }
+
+    .restohub-mode-toggle-btn:hover:not(.active) {
+        background: #3d3d3d;
+        color: #fff;
+    }
+
+    .restohub-mode-toggle-btn.active {
+        background: #fff;
+        color: #000;
+    }
+
+    .restohub-address-input-container,
+    .restohub-store-search-container {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .restohub-address-input,
+    .restohub-store-search-input,
+    .restohub-address-detail-input {
+        color: #fff;
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .restohub-input-label,
+    .restohub-extras-label {
+        color: #bbb;
+    }
+
+    .restohub-address-results {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .restohub-address-result-item {
+        border-color: #444;
+    }
+
+    .restohub-address-result-item:hover {
+        background: #3d3d3d;
+    }
+
+    .restohub-result-text,
+    .restohub-result-main {
+        color: #fff;
+    }
+
+    .restohub-result-secondary {
+        color: #888;
+    }
+
+    .restohub-input-edit-icon {
+        color: #666;
+    }
+
+    .restohub-input-edit-icon:hover {
+        color: #fff;
+    }
+
+    .restohub-full-address {
+        color: #999;
+    }
+
+    .restohub-address-extras {
+        border-color: #333;
+    }
+
+    .restohub-address-tag {
+        background: #2d2d2d;
+        border-color: #444;
+        color: #ccc;
+    }
+
+    .restohub-address-tag:hover {
+        background: #3d3d3d;
+        border-color: #666;
+    }
+
+    .restohub-address-tag.selected {
+        background: #3d3d3d;
+        border-color: #fff;
+        color: #fff;
+    }
+
+    .restohub-store-card {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .restohub-store-card:hover {
+        background: #3d3d3d;
+        border-color: #666;
+    }
+
+    .restohub-store-card.selected {
+        background: #1a3d1a;
+        border-color: var(--restohub-green);
+    }
+
+    .restohub-store-card-name {
+        color: #fff;
+    }
+
+    .restohub-store-card-address {
+        color: #999;
+    }
+
+    .restohub-radio-circle {
+        background: #2d2d2d;
+        border-color: #666;
+    }
+
+    .restohub-modal-footer {
+        border-color: #333;
+        background: #1e1e1e;
+    }
+
+    .restohub-btn-secondary {
+        color: #ccc;
+    }
+
+    .restohub-btn-secondary:hover {
+        background: #333;
+        color: #fff;
+    }
+
+    .restohub-header-bar {
+        background: #1e1e1e;
+    }
+
+    .restohub-header-mode {
+        background: #fff;
+        color: #000;
+    }
+
+    .restohub-header-separator {
+        background: #444;
+    }
+
+    .restohub-header-schedule {
+        color: #ccc;
+    }
+
+    .restohub-header-schedule:hover {
+        background: #333;
+    }
+
+    .restohub-header-location {
+        color: #fff;
+    }
+
+    .restohub-header-location:hover {
+        background: #333;
+    }
+
+    .restohub-header-bar.no-location .restohub-header-location {
+        background: #fff;
+        color: #000;
+    }
+}

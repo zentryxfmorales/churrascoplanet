@@ -1,0 +1,73 @@
+# ============================================================
+# WORDPRESS CORE — No rastrear (código público de WP)
+# ============================================================
+/wp-admin/
+/wp-includes/
+
+# Archivos raíz de WordPress core
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-config-sample.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php
+index.php
+license.txt
+readme.html
+
+# ============================================================
+# ARCHIVOS SENSIBLES — NUNCA subir al repo
+# ============================================================
+wp-config.php
+wp-config-docker.php
+.env
+*.env
+.htaccess
+
+# ============================================================
+# WP-CONTENT — Ignorar lo que no es código propio
+# ============================================================
+
+# Uploads (contenido de usuario)
+wp-content/uploads/
+
+# Cache y temporales de WordPress
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/db.php
+
+# Plugins de terceros
+wp-content/plugins/woocommerce/
+wp-content/plugins/akismet/
+wp-content/plugins/hello.php
+wp-content/plugins/index.php
+
+# Empaquetados (ya instalados en servidor)
+wp-content/plugins/*.zip
+wp-content/plugins/*.rar
+
+# Themes predeterminados de WordPress
+wp-content/themes/twentytwenty*/
+wp-content/themes/index.php
+
+# ============================================================
+# SISTEMA Y EDITORES
+# ============================================================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+.idea/
+.vscode/
+node_modules/

@@ -1,0 +1,695 @@
+/**
+ * ChurrascoPlanet - Admin Options Styles
+ * Estilos para el panel "Aspecto PlanetaChurrascos"
+ */
+
+/* Variables */
+:root {
+    --cp-primary: #ffb268;
+    --cp-secondary: #ffde59;
+    --cp-dark: #1a1a1a;
+    --cp-darker: #0a0a0a;
+    --cp-gray: #2a2a2a;
+    --cp-text: #ffffff;
+    --cp-text-muted: rgba(255, 255, 255, 0.7);
+}
+
+/* Wrapper Principal */
+.churrascoplanet-admin-wrap {
+    margin: 20px 20px 20px 0;
+}
+
+/* Header */
+.churrascoplanet-admin-header {
+    background: linear-gradient(135deg, var(--cp-dark), var(--cp-darker));
+    padding: 30px;
+    border-radius: 12px 12px 0 0;
+    border: 1px solid rgba(255, 178, 104, 0.2);
+    border-bottom: none;
+}
+
+.churrascoplanet-admin-header h1 {
+    color: var(--cp-text);
+    font-size: 28px;
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.churrascoplanet-admin-header h1 i {
+    color: var(--cp-primary);
+}
+
+.churrascoplanet-admin-header .description {
+    color: var(--cp-text-muted);
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Tabs Container */
+.churrascoplanet-admin-tabs {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-top: none;
+}
+
+/* Nav Tabs */
+.churrascoplanet-admin-tabs .nav-tab-wrapper {
+    background: #f0f0f1;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.churrascoplanet-admin-tabs .nav-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 25px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #50575e;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.churrascoplanet-admin-tabs .nav-tab:hover {
+    background: #e5e5e5;
+    color: #1d2327;
+}
+
+.churrascoplanet-admin-tabs .nav-tab-active,
+.churrascoplanet-admin-tabs .nav-tab-active:hover {
+    background: #fff;
+    color: var(--cp-dark);
+    border-bottom-color: var(--cp-primary);
+}
+
+.churrascoplanet-admin-tabs .nav-tab i {
+    font-size: 16px;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    padding: 30px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Options Section */
+.options-section {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.options-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d2327;
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--cp-primary);
+}
+
+.section-title i {
+    color: var(--cp-primary);
+}
+
+/* Options Grid */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.option-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.option-field label {
+    font-weight: 600;
+    color: #1d2327;
+    font-size: 13px;
+}
+
+.option-field input.regular-text {
+    width: 100%;
+    max-width: 100%;
+}
+
+.option-field .description {
+    color: #646970;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Color Field */
+.color-field {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.color-field .wp-picker-container {
+    display: flex;
+    align-items: center;
+}
+
+.color-field .wp-color-result {
+    margin: 0 !important;
+}
+
+/* Icon Field */
+.icon-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-field .icon-preview {
+    width: 40px;
+    height: 40px;
+    background: var(--cp-dark);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icon-field .icon-preview i {
+    color: var(--cp-primary);
+    font-size: 18px;
+}
+
+.icon-field .icon-input {
+    flex: 1;
+}
+
+/* Input with Icon */
+.input-with-icon {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.input-with-icon .icon-field {
+    flex-shrink: 0;
+}
+
+.input-with-icon input {
+    flex: 1;
+}
+
+/* Image Field */
+.image-field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.image-preview {
+    position: relative;
+    max-width: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #e0e0e0;
+}
+
+.image-preview img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.image-preview .remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    background: #dc3232;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.image-preview .remove-image:hover {
+    background: #a00;
+    transform: scale(1.1);
+}
+
+.select-image {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Repeater Field */
+.repeater-field {
+    margin-top: 10px;
+}
+
+.repeater-items {
+    margin-bottom: 15px;
+}
+
+.repeater-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.repeater-item:hover {
+    border-color: var(--cp-primary);
+}
+
+.repeater-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+
+.repeater-item-header .drag-handle {
+    color: #999;
+    cursor: grab;
+}
+
+.repeater-item-header .drag-handle:active {
+    cursor: grabbing;
+}
+
+.repeater-item-header .item-title {
+    flex: 1;
+    font-weight: 500;
+    color: #1d2327;
+}
+
+.repeater-item-header .remove-item {
+    color: #dc3232;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.repeater-item-header .remove-item:hover {
+    color: #a00;
+    transform: scale(1.1);
+}
+
+.repeater-item-content {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.repeater-item-content .option-field {
+    margin-bottom: 0;
+}
+
+.add-repeater-item {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Sortable */
+.repeater-items.ui-sortable .repeater-item {
+    cursor: default;
+}
+
+.repeater-item.ui-sortable-helper {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.repeater-item.ui-sortable-placeholder {
+    border: 2px dashed var(--cp-primary);
+    background: rgba(255, 178, 104, 0.1);
+    visibility: visible !important;
+}
+
+/* Info Box */
+.info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: #e7f3ff;
+    border: 1px solid #72aee6;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-top: 20px;
+}
+
+.info-box i {
+    color: #0073aa;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.info-box p {
+    margin: 0;
+    color: #1d2327;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Colors Grid */
+.colors-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Footer */
+.churrascoplanet-admin-footer {
+    background: #f0f0f1;
+    padding: 20px 30px;
+    border: 1px solid #c3c4c7;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.churrascoplanet-admin-footer .button-hero {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.save-status {
+    font-size: 14px;
+    color: #00a32a;
+    display: none;
+}
+
+.save-status.error {
+    color: #dc3232;
+}
+
+.save-status.visible {
+    display: inline;
+}
+
+/* TinyMCE Editor Adjustments */
+.option-field .wp-editor-wrap {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.option-field .wp-editor-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.option-field .mce-panel {
+    border-color: #e0e0e0 !important;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .colors-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 782px) {
+    .churrascoplanet-admin-wrap {
+        margin: 10px;
+    }
+
+    .churrascoplanet-admin-header {
+        padding: 20px;
+    }
+
+    .churrascoplanet-admin-header h1 {
+        font-size: 22px;
+    }
+
+    .churrascoplanet-admin-tabs .nav-tab {
+        padding: 12px 15px;
+        font-size: 12px;
+    }
+
+    .churrascoplanet-admin-tabs .nav-tab span {
+        display: none;
+    }
+
+    .tab-content {
+        padding: 20px;
+    }
+
+    .options-section {
+        padding: 15px;
+    }
+
+    .repeater-item-content {
+        grid-template-columns: 1fr;
+    }
+
+    .colors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .icon-field {
+        flex-wrap: wrap;
+    }
+
+    .input-with-icon {
+        flex-direction: column;
+    }
+}
+
+/* Animation for save button */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+#save-options.saving {
+    animation: pulse 1s ease infinite;
+}
+
+/* Loading overlay */
+.churrascoplanet-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.churrascoplanet-loading i {
+    font-size: 40px;
+    color: var(--cp-primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Dark theme for icon preview */
+.icon-preview {
+    background: linear-gradient(135deg, var(--cp-dark), var(--cp-darker)) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effects */
+.option-field input:focus,
+.option-field select:focus,
+.option-field textarea:focus {
+    border-color: var(--cp-primary);
+    box-shadow: 0 0 0 1px var(--cp-primary);
+}
+
+/* Better button styles */
+.button {
+    transition: all 0.3s ease !important;
+}
+
+.button:hover {
+    transform: translateY(-1px);
+}
+
+.button-primary {
+    background: linear-gradient(135deg, var(--cp-primary), var(--cp-secondary)) !important;
+    border-color: var(--cp-primary) !important;
+    color: #000 !important;
+    text-shadow: none !important;
+}
+
+.button-primary:hover {
+    filter: brightness(1.1);
+}
+
+/* Extras Group Styles */
+.extras-group-content {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.extras-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.extras-item-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.extras-item-row:hover {
+    border-color: var(--cp-primary);
+}
+
+.drag-handle-sm {
+    color: #ccc;
+    cursor: grab;
+    font-size: 12px;
+}
+
+.drag-handle-sm:active {
+    cursor: grabbing;
+}
+
+.extras-item-row input.regular-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.extras-price-input {
+    width: 90px !important;
+    text-align: right;
+}
+
+.extras-price-label {
+    color: #666;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.remove-extras-item {
+    color: #dc3232 !important;
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-extras-item:hover {
+    color: #a00 !important;
+    transform: scale(1.2);
+}
+
+.extras-item-placeholder {
+    border: 2px dashed var(--cp-primary);
+    background: rgba(255, 178, 104, 0.05);
+    height: 42px;
+    border-radius: 6px;
+}
+
+/* Badges */
+.item-badge-hidden {
+    color: #999;
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.item-badge-required {
+    background: #fce4e4;
+    color: #cc0000;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.item-badge-optional {
+    background: #e4f0fc;
+    color: #0066cc;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+@media (max-width: 1200px) {
+    .extras-group-content {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 782px) {
+    .extras-group-content {
+        grid-template-columns: 1fr !important;
+    }
+
+    .extras-item-row {
+        flex-wrap: wrap;
+    }
+
+    .extras-item-row input.regular-text {
+        width: 100% !important;
+    }
+}

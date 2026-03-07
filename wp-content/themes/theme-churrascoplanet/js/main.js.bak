@@ -1,0 +1,1077 @@
+/* ============================================
+   ChurrascoPlanet - Main JavaScript v1.3.12
+   Funcionalidades interactivas con WooCommerce AJAX
+   ============================================ */
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ============================================
+    // UTILIDADES GLOBALES — definidas primero
+    // ============================================
+
+    function getAjaxUrl() {
+        if (typeof churrascoplanet_ajax !== 'undefined' && churrascoplanet_ajax.ajax_url) {
+            return churrascoplanet_ajax.ajax_url;
+        }
+        return window.location.protocol + '//' + window.location.host + '/wp-admin/admin-ajax.php';
+    }
+
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Fetch robusto: devuelve parsed JSON o null (sin lanzar excepciones)
+    function fetchJson(url, options) {
+        return fetch(url, options)
+            .then(function(r) { return r.text(); })
+            .then(function(text) {
+                try { return JSON.parse(text); } catch (e) { return null; }
+            })
+            .catch(function() { return null; });
+    }
+
+    // ============================================
+    // HEADER SCROLL
+    // ============================================
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+        if (!header) return;
+        header.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // ============================================
+    // MOBILE MENU
+    // ============================================
+    const hamburger    = document.getElementById('hamburger');
+    const navMenu      = document.querySelector('.nav-menu');
+    const headerHeight = header ? header.offsetHeight : 80;
+
+    function smoothScrollTo(targetId) {
+        const target = document.querySelector(targetId);
+        if (!target) return;
+        const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+    }
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+    }
+
+    document.querySelectorAll('.nav-menu a, .nav-menu .nav-link').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (navMenu) navMenu.classList.remove('active');
+            if (hamburger) hamburger.classList.remove('active');
+            document.body.classList.remove('menu-open');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                setTimeout(function() { smoothScrollTo(href); }, 300);
+            }
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!navMenu || !navMenu.classList.contains('active')) return;
+        if (!navMenu.contains(e.target) && hamburger && !hamburger.contains(e.target)) {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+    });
+
+    // Smooth scroll para anchors fuera del menú
+    document.querySelectorAll('a[href^="#"]:not(.nav-menu a)').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                smoothScrollTo(href);
+            }
+        });
+    });
+
+    // ============================================
+    // ACTIVE NAV LINK en scroll
+    // ============================================
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', function() {
+        let current = '';
+        sections.forEach(function(section) {
+            if (window.scrollY >= section.offsetTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(function(link) {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+    });
+
+    // ============================================
+    // CART SIDEBAR
+    // ============================================
+    const cartSidebar = document.getElementById('cartSidebar');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const closeCart   = document.getElementById('closeCart');
+    const cartBtn     = document.querySelector('.btn-cart');
+
+    const isCartOrCheckout = document.body.classList.contains('woocommerce-cart')
+                          || document.body.classList.contains('woocommerce-checkout');
+
+    function openCartSidebar() {
+        if (isCartOrCheckout || !cartSidebar) return;
+        cartSidebar.classList.add('active');
+        if (cartOverlay) cartOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCartSidebar() {
+        if (cartSidebar) cartSidebar.classList.remove('active');
+        if (cartOverlay) cartOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (cartBtn) cartBtn.addEventListener('click', openCartSidebar);
+    if (closeCart) closeCart.addEventListener('click', closeCartSidebar);
+    if (cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
+
+    // ============================================
+    // CART DATA — funciones de actualización de UI
+    // ============================================
+
+    function applyCartData(data) {
+        if (!data) return;
+        if (data.cart_items_html) {
+            const container = document.getElementById('cartItems');
+            if (container) {
+                const temp = document.createElement('div');
+                temp.innerHTML = data.cart_items_html;
+                const newEl = temp.firstElementChild;
+                if (newEl) container.replaceWith(newEl);
+            }
+        }
+        if (typeof data.cart_count !== 'undefined') {
+            document.querySelectorAll('.cart-count').forEach(function(el) {
+                el.textContent = data.cart_count;
+            });
+        }
+        if (data.cart_total) {
+            const totalEl = document.getElementById('cartTotalAmount');
+            if (totalEl) totalEl.innerHTML = data.cart_total;
+        }
+        if (data.coupon_wrap_html) {
+            const couponWrap = document.getElementById('cartCouponWrap');
+            if (couponWrap) {
+                const temp = document.createElement('div');
+                temp.innerHTML = data.coupon_wrap_html.trim();
+                const newWrap = temp.firstElementChild;
+                if (newWrap) couponWrap.replaceWith(newWrap);
+                else couponWrap.innerHTML = data.coupon_wrap_html;
+            }
+        }
+        if (typeof jQuery !== 'undefined' && document.body.classList.contains('woocommerce-checkout')) {
+            setTimeout(function() { jQuery('body').trigger('update_checkout'); }, 300);
+        }
+    }
+
+    function updateCartFragments(fragments) {
+        if (!fragments) return;
+        if (fragments['#cartItems']) {
+            const container = document.getElementById('cartItems');
+            if (container) {
+                const temp = document.createElement('div');
+                temp.innerHTML = fragments['#cartItems'];
+                const newEl = temp.firstElementChild;
+                if (newEl) container.replaceWith(newEl);
+            }
+        }
+        if (fragments['.cart-count']) {
+            const temp = document.createElement('div');
+            temp.innerHTML = fragments['.cart-count'];
+            const newCount = temp.firstElementChild ? temp.firstElementChild.textContent : '';
+            document.querySelectorAll('.cart-count').forEach(function(el) { el.textContent = newCount.trim(); });
+        }
+        if (fragments['.total-amount']) {
+            const temp = document.createElement('div');
+            temp.innerHTML = fragments['.total-amount'];
+            const newHtml = temp.firstElementChild ? temp.firstElementChild.innerHTML : fragments['.total-amount'];
+            const totalEl = document.getElementById('cartTotalAmount');
+            if (totalEl) totalEl.innerHTML = newHtml;
+        }
+        if (fragments['#cartCouponWrap']) {
+            const couponWrap = document.getElementById('cartCouponWrap');
+            if (couponWrap) {
+                const temp = document.createElement('div');
+                temp.innerHTML = fragments['#cartCouponWrap'].trim();
+                const newWrap = temp.firstElementChild;
+                if (newWrap) couponWrap.replaceWith(newWrap);
+                else couponWrap.innerHTML = fragments['#cartCouponWrap'];
+            }
+        }
+        if (fragments['#couponCount']) {
+            const temp = document.createElement('div');
+            temp.innerHTML = fragments['#couponCount'];
+            const newBadge = temp.firstElementChild;
+            const badge = document.getElementById('couponCount');
+            if (badge && newBadge) {
+                badge.textContent = newBadge.textContent;
+                badge.style.display = newBadge.style.display;
+            }
+        }
+    }
+
+    // Refrescar carrito desde el servidor (bfcache / focus / fallback)
+    function refreshCartFromServer() {
+        const fd = new FormData();
+        fd.append('action', 'churrascoplanet_get_cart_state');
+        fetchJson(getAjaxUrl(), { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(data) {
+                if (!data || !data.success || !data.data) return;
+                const d = data.data;
+                if (d.fragments) updateCartFragments(d.fragments);
+                const modalBody = document.getElementById('couponModalBody');
+                if (modalBody && d.modal_body) modalBody.innerHTML = d.modal_body;
+                const badge = document.getElementById('couponCount');
+                if (badge && typeof d.coupon_count !== 'undefined') {
+                    const count = parseInt(d.coupon_count, 10) || 0;
+                    badge.textContent = count;
+                    badge.style.display = count > 0 ? '' : 'none';
+                }
+            });
+    }
+
+    // Actualizar carrito cuando se vuelve de bfcache o de otra pestaña
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) refreshCartFromServer();
+    });
+    let lastFocusTime = Date.now();
+    window.addEventListener('focus', function() {
+        if (Date.now() - lastFocusTime > 5000) refreshCartFromServer();
+        lastFocusTime = Date.now();
+    });
+
+    // ============================================
+    // CART ITEM ACTIONS — cantidad y eliminar
+    // ============================================
+
+    function updateCartItemQuantity(cartItemKey, quantity) {
+        const cartItem = document.querySelector('.cart-item[data-key="' + cartItemKey + '"]');
+        if (cartItem) cartItem.style.opacity = '0.5';
+        const fd = new FormData();
+        fd.append('action', 'churrascoplanet_update_quantity');
+        fd.append('cart_item_key', cartItemKey);
+        fd.append('quantity', quantity);
+        fetchJson(getAjaxUrl(), { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(data) {
+                if (cartItem) cartItem.style.opacity = '1';
+                if (data && data.success) applyCartData(data.data);
+            });
+    }
+
+    function removeCartItem(cartItemKey) {
+        const cartItem = document.querySelector('.cart-item[data-key="' + cartItemKey + '"]');
+        if (cartItem) {
+            cartItem.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+            cartItem.style.transform = 'translateX(60px)';
+            cartItem.style.opacity = '0';
+        }
+        const fd = new FormData();
+        fd.append('action', 'churrascoplanet_remove_item');
+        fd.append('cart_item_key', cartItemKey);
+        fetchJson(getAjaxUrl(), { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(data) {
+                if (data && data.success) {
+                    applyCartData(data.data);
+                } else {
+                    if (cartItem) { cartItem.style.transform = ''; cartItem.style.opacity = '1'; }
+                }
+            });
+    }
+
+    // ============================================
+    // COUPON MODAL
+    // ============================================
+    const couponModal        = document.getElementById('couponModal');
+    const couponModalOverlay = document.getElementById('couponModalOverlay');
+    const closeCouponModal   = document.getElementById('closeCouponModal');
+    const openCouponBtn      = document.getElementById('openCouponModal');
+
+    function openCouponModalFn() {
+        if (!couponModal) return;
+        couponModal.classList.add('active');
+        if (couponModalOverlay) couponModalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCouponModalFn() {
+        if (!couponModal) return;
+        couponModal.classList.remove('active');
+        if (couponModalOverlay) couponModalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (openCouponBtn)      openCouponBtn.addEventListener('click', openCouponModalFn);
+    if (closeCouponModal)   closeCouponModal.addEventListener('click', closeCouponModalFn);
+    if (couponModalOverlay) couponModalOverlay.addEventListener('click', closeCouponModalFn);
+
+    // ============================================
+    // COUPON APPLY / REMOVE
+    // ============================================
+
+    function syncCouponUI(data) {
+        if (!data) return;
+        // Items del carrito
+        if (data.cart_items_html) {
+            const container = document.getElementById('cartItems');
+            if (container) {
+                const temp = document.createElement('div');
+                temp.innerHTML = data.cart_items_html;
+                const newEl = temp.firstElementChild;
+                if (newEl) container.replaceWith(newEl);
+            }
+        }
+        // Total
+        if (data.cart_total) {
+            const totalEl = document.getElementById('cartTotalAmount');
+            if (totalEl) totalEl.innerHTML = data.cart_total;
+        }
+        if (data.total) {
+            const totalEl = document.getElementById('cartTotalAmount');
+            if (totalEl) totalEl.innerHTML = data.total;
+        }
+        // Sidebar cupón
+        if (data.sidebar_html || data.coupon_wrap_html) {
+            const html = data.sidebar_html || data.coupon_wrap_html;
+            const couponWrap = document.getElementById('cartCouponWrap');
+            if (couponWrap) {
+                const temp = document.createElement('div');
+                temp.innerHTML = html.trim();
+                const newWrap = temp.firstElementChild;
+                if (newWrap) couponWrap.replaceWith(newWrap);
+                else couponWrap.innerHTML = html;
+            }
+        }
+        // Modal body
+        if (data.modal_body) {
+            const modalBody = document.getElementById('couponModalBody');
+            if (modalBody) modalBody.innerHTML = data.modal_body;
+        }
+        // Badge
+        if (typeof data.coupon_count !== 'undefined') {
+            const badge = document.getElementById('couponCount');
+            if (badge) {
+                const count = parseInt(data.coupon_count, 10) || 0;
+                badge.textContent = count;
+                badge.style.display = count > 0 ? '' : 'none';
+            }
+        }
+        // WooCommerce native update en /cart/ y /checkout/
+        if (typeof jQuery !== 'undefined') {
+            if (document.body.classList.contains('woocommerce-checkout')) {
+                setTimeout(function() { jQuery('body').trigger('update_checkout'); }, 300);
+            } else if (document.body.classList.contains('woocommerce-cart')) {
+                setTimeout(function() { jQuery('body').trigger('wc_update_cart'); }, 300);
+            }
+        }
+    }
+
+    function applyCouponAjax(code, msgEl, afterSuccess) {
+        if (!code) {
+            if (msgEl) msgEl.innerHTML = '<span class="coupon-msg-error">Ingresa un código.</span>';
+            return;
+        }
+        const fd = new FormData();
+        fd.append('action', 'churrascoplanet_apply_coupon');
+        fd.append('coupon_code', code);
+
+        const controller = new AbortController();
+        const timeout = setTimeout(function() { controller.abort(); }, 15000);
+
+        fetch(getAjaxUrl(), { method: 'POST', body: fd, credentials: 'same-origin', signal: controller.signal })
+            .then(function(r) { return r.text(); })
+            .then(function(text) {
+                clearTimeout(timeout);
+                var data;
+                try { data = JSON.parse(text); } catch (e) {
+                    if (msgEl) msgEl.innerHTML = '<span class="coupon-msg-error">Error al conectar. Intenta de nuevo.</span>';
+                    _restoreCouponBtns();
+                    return;
+                }
+                if (data && data.success) {
+                    if (msgEl) msgEl.innerHTML = '<span class="coupon-msg-success"><i class="fas fa-check-circle"></i> ' + data.data.message + '</span>';
+                    syncCouponUI(data.data);
+                    if (typeof afterSuccess === 'function') afterSuccess(data.data);
+                } else {
+                    const msg = (data && data.data && data.data.message) ? data.data.message : 'Error al aplicar cupón';
+                    if (msgEl) msgEl.innerHTML = '<span class="coupon-msg-error"><i class="fas fa-times-circle"></i> ' + msg + '</span>';
+                    if (data && data.data && (data.data.sidebar_html || data.data.cart_items_html)) syncCouponUI(data.data);
+                    _restoreCouponBtns();
+                }
+            })
+            .catch(function(err) {
+                clearTimeout(timeout);
+                const msg = err && err.name === 'AbortError'
+                    ? 'Tiempo de espera agotado. Intenta de nuevo.'
+                    : 'Error al conectar. Intenta de nuevo.';
+                if (msgEl) msgEl.innerHTML = '<span class="coupon-msg-error">' + msg + '</span>';
+                _restoreCouponBtns();
+                refreshCartFromServer();
+            });
+    }
+
+    function _restoreCouponBtns() {
+        document.querySelectorAll('.coupon-ticket-apply').forEach(function(btn) {
+            if (btn.disabled) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-tag"></i> Aplicar cupón';
+            }
+        });
+    }
+
+    function removeCouponAjax(code, removeBtn) {
+        const fd = new FormData();
+        fd.append('action', 'churrascoplanet_remove_coupon');
+        fd.append('coupon_code', code);
+        fetchJson(getAjaxUrl(), { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(data) {
+                if (data && data.success) {
+                    syncCouponUI(data.data);
+                } else if (data && data.data && data.data.sidebar_html) {
+                    syncCouponUI(data.data);
+                } else {
+                    refreshCartFromServer();
+                }
+            });
+    }
+
+    // Input manual de cupón en modal
+    const couponManualApply = document.getElementById('couponManualApply');
+    if (couponManualApply) {
+        couponManualApply.addEventListener('click', function() {
+            const input = document.getElementById('couponManualInput');
+            const code  = input ? input.value.trim() : '';
+            const msgEl = document.getElementById('couponModalMsg');
+            applyCouponAjax(code, msgEl, function() {
+                if (input) input.value = '';
+                setTimeout(function() { closeCouponModalFn(); openCartSidebar(); }, 900);
+            });
+        });
+        const couponManualInput = document.getElementById('couponManualInput');
+        if (couponManualInput) {
+            couponManualInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') { e.preventDefault(); couponManualApply.click(); }
+            });
+        }
+    }
+
+    // ============================================
+    // PRODUCT MODAL
+    // ============================================
+    const productModal        = document.getElementById('productModal');
+    const productModalOverlay = document.getElementById('productModalOverlay');
+    const closeProductModal   = document.getElementById('closeProductModal');
+    const modalLoading        = document.getElementById('productModalLoading');
+    const modalContent        = document.getElementById('productModalContent');
+
+    let currentModalProduct = null;
+    let modalQuantity       = 1;
+
+    function closeProductModalFn() {
+        if (productModal)        productModal.classList.remove('active');
+        if (productModalOverlay) productModalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        currentModalProduct = null;
+    }
+
+    if (closeProductModal)   closeProductModal.addEventListener('click', closeProductModalFn);
+    if (productModalOverlay) productModalOverlay.addEventListener('click', closeProductModalFn);
+
+    function openProductModal(productId) {
+        if (!productModal) return;
+        productModal.classList.add('active');
+        if (productModalOverlay) productModalOverlay.classList.add('active');
+        if (modalLoading) modalLoading.style.display = 'flex';
+        if (modalContent) modalContent.style.display = 'none';
+        document.body.style.overflow = 'hidden';
+        modalQuantity = 1;
+
+        const fd = new FormData();
+        fd.append('action', 'churrascoplanet_get_product_data');
+        fd.append('product_id', productId);
+
+        fetchJson(getAjaxUrl(), { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(response) {
+                if (!response || !response.success) { closeProductModalFn(); return; }
+                const data = response.data;
+                currentModalProduct = data;
+
+                document.getElementById('modalProductImage').src       = data.image;
+                document.getElementById('modalProductImage').alt       = data.name;
+                document.getElementById('modalProductName').textContent    = data.name;
+                document.getElementById('modalProductCategory').textContent = data.category;
+                document.getElementById('modalProductDescription').innerHTML = data.description || '';
+                document.getElementById('modalProductPrice').innerHTML  = data.price_html;
+                document.getElementById('modalQtyValue').textContent   = '1';
+
+                renderModalExtras(data.extras || []);
+                updateModalTotal();
+
+                if (modalLoading) modalLoading.style.display = 'none';
+                if (modalContent) modalContent.style.display = 'flex';
+            });
+    }
+
+    function renderModalExtras(extras) {
+        const container = document.getElementById('modalProductExtras');
+        if (!container) return;
+        container.innerHTML = '';
+        if (!extras || extras.length === 0) return;
+
+        extras.forEach(function(group) {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'modal-extras-group extras-collapsed';
+            groupDiv.dataset.groupIndex = group.index;
+            groupDiv.dataset.required   = group.requerido ? '1' : '0';
+            groupDiv.dataset.min        = group.min;
+            groupDiv.dataset.max        = group.max;
+            groupDiv.dataset.tipo       = group.tipo_seleccion;
+
+            let html = '<div class="modal-extras-header extras-toggle">'
+                + '<div class="extras-header-left"><h4>' + escapeHtml(group.nombre) + '</h4>'
+                + (group.requerido
+                    ? '<span class="extras-badge-required">Requerido</span>'
+                    : '<span class="extras-badge-optional">Opcional</span>')
+                + '</div>'
+                + '<div class="extras-header-right"><span class="extras-selected-count"></span>'
+                + '<i class="fas fa-chevron-down extras-toggle-icon"></i></div></div>'
+                + '<div class="modal-extras-content">';
+
+            if (group.instruccion) {
+                html += '<p class="modal-extras-instruction">' + escapeHtml(group.instruccion) + '</p>';
+            }
+            html += '<div class="modal-extras-items">';
+            group.items.forEach(function(item, itemIdx) {
+                const inputType = group.tipo_seleccion === 'radio' ? 'radio' : 'checkbox';
+                const inputName = inputType === 'radio'
+                    ? 'extras_group_' + group.index
+                    : 'extras_group_' + group.index + '_' + itemIdx;
+                html += '<label class="modal-extras-option">'
+                    + '<input type="' + inputType + '" name="' + inputName + '" value="' + itemIdx
+                    + '" data-group="' + group.index + '" data-price="' + item.precio + '" class="extras-input">'
+                    + '<span class="extras-option-check"><i class="fas fa-check"></i></span>'
+                    + '<span class="extras-option-name">' + escapeHtml(item.nombre) + '</span>'
+                    + (item.precio > 0
+                        ? '<span class="extras-option-price">+$' + formatNumber(item.precio) + '</span>'
+                        : '<span class="extras-option-price extras-price-free">Incluido</span>')
+                    + '</label>';
+            });
+            html += '</div><p class="modal-extras-validation" style="display:none;"></p></div>';
+
+            groupDiv.innerHTML = html;
+            container.appendChild(groupDiv);
+        });
+
+        // Toggle acordeón
+        container.querySelectorAll('.extras-toggle').forEach(function(hdr) {
+            hdr.addEventListener('click', function(e) {
+                if (e.target.tagName === 'INPUT') return;
+                this.closest('.modal-extras-group').classList.toggle('extras-collapsed');
+            });
+        });
+
+        // Cambio en inputs de extras
+        container.querySelectorAll('.extras-input').forEach(function(input) {
+            input.addEventListener('change', function() {
+                const groupDiv = this.closest('.modal-extras-group');
+                enforceGroupLimits(groupDiv, this);
+                updateModalTotal();
+                validateExtras();
+                updateExtrasSelectedCount(groupDiv);
+            });
+        });
+    }
+
+    function updateExtrasSelectedCount(groupDiv) {
+        const countSpan = groupDiv.querySelector('.extras-selected-count');
+        if (!countSpan) return;
+        const checked = groupDiv.querySelectorAll('.extras-input:checked').length;
+        countSpan.textContent = checked > 0 ? checked + ' seleccionado' + (checked > 1 ? 's' : '') : '';
+        countSpan.style.display = checked > 0 ? 'inline' : 'none';
+    }
+
+    function enforceGroupLimits(groupDiv, changedInput) {
+        const max  = parseInt(groupDiv.dataset.max) || 0;
+        const tipo = groupDiv.dataset.tipo;
+        if (tipo === 'checkbox' && max > 0) {
+            const checked = groupDiv.querySelectorAll('.extras-input:checked');
+            if (checked.length > max) changedInput.checked = false;
+        }
+    }
+
+    function validateExtras() {
+        let valid = true;
+        document.querySelectorAll('.modal-extras-group').forEach(function(groupDiv) {
+            const required = groupDiv.dataset.required === '1';
+            const min      = parseInt(groupDiv.dataset.min) || 0;
+            const checked  = groupDiv.querySelectorAll('.extras-input:checked').length;
+            const msg      = groupDiv.querySelector('.modal-extras-validation');
+            if (required && checked === 0) {
+                if (msg) { msg.textContent = 'Debes seleccionar al menos una opción'; msg.style.display = 'block'; }
+                groupDiv.classList.add('extras-group-error');
+                valid = false;
+            } else if (min > 0 && checked > 0 && checked < min) {
+                if (msg) { msg.textContent = 'Selecciona al menos ' + min + ' opciones'; msg.style.display = 'block'; }
+                groupDiv.classList.add('extras-group-error');
+                valid = false;
+            } else {
+                if (msg) msg.style.display = 'none';
+                groupDiv.classList.remove('extras-group-error');
+            }
+        });
+        return valid;
+    }
+
+    function updateModalTotal() {
+        if (!currentModalProduct) return;
+        let extrasTotal = 0;
+        document.querySelectorAll('#modalProductExtras .extras-input:checked').forEach(function(input) {
+            extrasTotal += parseInt(input.dataset.price) || 0;
+        });
+        const total = ((parseInt(currentModalProduct.price) || 0) + extrasTotal) * modalQuantity;
+        const el = document.getElementById('modalTotalPrice');
+        if (el) el.textContent = '$' + formatNumber(total);
+    }
+
+    // Controles de cantidad del modal
+    const modalQtyMinus = document.getElementById('modalQtyMinus');
+    const modalQtyPlus  = document.getElementById('modalQtyPlus');
+    if (modalQtyMinus) {
+        modalQtyMinus.addEventListener('click', function() {
+            if (modalQuantity > 1) {
+                modalQuantity--;
+                const el = document.getElementById('modalQtyValue');
+                if (el) el.textContent = modalQuantity;
+                updateModalTotal();
+            }
+        });
+    }
+    if (modalQtyPlus) {
+        modalQtyPlus.addEventListener('click', function() {
+            modalQuantity++;
+            const el = document.getElementById('modalQtyValue');
+            if (el) el.textContent = modalQuantity;
+            updateModalTotal();
+        });
+    }
+
+    // Agregar al carrito desde modal de producto
+    const modalAddBtn = document.getElementById('modalAddToCart');
+    if (modalAddBtn) {
+        modalAddBtn.addEventListener('click', function() {
+            if (!currentModalProduct) return;
+            if (!validateExtras()) return;
+
+            const extrasData = {};
+            document.querySelectorAll('#modalProductExtras .modal-extras-group').forEach(function(groupDiv) {
+                const groupIndex = groupDiv.dataset.groupIndex;
+                const checked    = groupDiv.querySelectorAll('.extras-input:checked');
+                if (checked.length > 0) {
+                    extrasData[groupIndex] = [];
+                    checked.forEach(function(input) { extrasData[groupIndex].push(input.value); });
+                }
+            });
+
+            const originalContent = modalAddBtn.innerHTML;
+            modalAddBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Agregando...';
+            modalAddBtn.disabled  = true;
+
+            const fd = new FormData();
+            fd.append('action', 'churrascoplanet_add_to_cart_with_extras');
+            fd.append('product_id', currentModalProduct.id);
+            fd.append('quantity', modalQuantity);
+            Object.keys(extrasData).forEach(function(groupIndex) {
+                extrasData[groupIndex].forEach(function(itemIndex) {
+                    fd.append('extras[' + groupIndex + '][]', itemIndex);
+                });
+            });
+
+            fetchJson(getAjaxUrl(), { method: 'POST', body: fd, credentials: 'same-origin' })
+                .then(function(data) {
+                    if (!data || data.error || data.success === false) {
+                        const msg = (data && data.data && data.data.message) ? data.data.message : 'Error al agregar';
+                        modalAddBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + msg;
+                        setTimeout(function() { modalAddBtn.innerHTML = originalContent; modalAddBtn.disabled = false; }, 2000);
+                        return;
+                    }
+                    if (data.success && data.data) applyCartData(data.data);
+                    else if (data.fragments)        updateCartFragments(data.fragments);
+
+                    modalAddBtn.innerHTML = '<i class="fas fa-check"></i> Agregado';
+                    modalAddBtn.style.background = '#4CAF50';
+                    setTimeout(function() {
+                        modalAddBtn.innerHTML = originalContent;
+                        modalAddBtn.style.background = '';
+                        modalAddBtn.disabled = false;
+                        closeProductModalFn();
+                        openCartSidebar();
+                    }, 1200);
+                });
+        });
+    }
+
+    // ============================================
+    // DELEGATED CLICK HANDLER ÚNICO
+    // Maneja en orden de prioridad:
+    //   1. Cerrar modal de producto (overlay/close)  — ya tiene listeners directos
+    //   2. Abrir modal de producto (.btn-open-modal) — máxima prioridad de producto
+    //   3. Remove coupon (.cart-coupon-remove)
+    //   4. Apply coupon ticket (.coupon-ticket-apply)
+    //   5. Cart sidebar coupon apply (#cartCouponApply)
+    //   6. Cart item qty (+/-) y remove (.remove-item)
+    //   7. Abrir cart sidebar (.btn-cart ya tiene listener directo)
+    // ============================================
+    document.addEventListener('click', function(e) {
+
+        // 1. Botón abrir modal de producto — máxima prioridad
+        const openModalBtn = e.target.closest('.btn-open-modal');
+        if (openModalBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const productId = openModalBtn.dataset.productId || openModalBtn.dataset.product_id;
+            if (productId) openProductModal(productId);
+            return;
+        }
+
+        // 2. Click en tarjeta de producto (no en btn ni link)
+        const card = e.target.closest('.product-card');
+        if (card && !e.target.closest('.btn-open-modal, .btn-add-cart, .add_to_cart_button, a')) {
+            const productId = card.dataset.productId;
+            if (productId) { e.preventDefault(); openProductModal(productId); }
+            return;
+        }
+
+        // 3. Remove coupon en sidebar
+        const removeCouponBtn = e.target.closest('.cart-coupon-remove');
+        if (removeCouponBtn) {
+            e.preventDefault();
+            let code = removeCouponBtn.dataset.coupon;
+            if (!code) {
+                const strong = removeCouponBtn.closest('.cart-coupon-applied')
+                    && removeCouponBtn.closest('.cart-coupon-applied').querySelector('strong');
+                code = strong ? strong.textContent.trim().toLowerCase() : '';
+            }
+            if (!code) return;
+            removeCouponBtn.disabled = true;
+            removeCouponBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            removeCouponAjax(code, removeCouponBtn);
+            return;
+        }
+
+        // 4. Apply coupon ticket en modal
+        const ticketApplyBtn = e.target.closest('.coupon-ticket-apply');
+        if (ticketApplyBtn) {
+            e.preventDefault();
+            if (ticketApplyBtn.disabled) return;
+            const code  = ticketApplyBtn.dataset.coupon;
+            const msgEl = document.getElementById('couponModalMsg');
+            ticketApplyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            ticketApplyBtn.disabled  = true;
+            applyCouponAjax(code, msgEl, function() {
+                if (!isCartOrCheckout) {
+                    setTimeout(function() { closeCouponModalFn(); openCartSidebar(); }, 900);
+                }
+            });
+            return;
+        }
+
+        // 5. Apply coupon desde sidebar
+        const cartCouponApply = e.target.closest('#cartCouponApply');
+        if (cartCouponApply) {
+            e.preventDefault();
+            const input = document.getElementById('cartCouponInput');
+            const code  = input ? input.value.trim() : '';
+            const msgEl = document.getElementById('cartCouponMsg');
+            applyCouponAjax(code, msgEl, null);
+            return;
+        }
+
+        // 6. Cart item: botones de cantidad
+        const qtyBtn = e.target.closest('.cart-item .qty-btn');
+        if (qtyBtn) {
+            e.preventDefault();
+            const cartItemKey = qtyBtn.dataset.key;
+            const isPlus      = qtyBtn.classList.contains('plus');
+            const qtySpan     = qtyBtn.parentElement && qtyBtn.parentElement.querySelector('.qty-value');
+            let currentQty    = parseInt(qtySpan ? qtySpan.textContent : '1') || 1;
+            currentQty        = isPlus ? currentQty + 1 : Math.max(0, currentQty - 1);
+            updateCartItemQuantity(cartItemKey, currentQty);
+            return;
+        }
+
+        // 7. Cart item: eliminar producto
+        const removeItemBtn = e.target.closest('.cart-item .remove-item');
+        if (removeItemBtn) {
+            e.preventDefault();
+            const cartItemKey = removeItemBtn.dataset.key;
+            if (cartItemKey) {
+                removeItemBtn.disabled = true;
+                removeItemBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                removeCartItem(cartItemKey);
+            }
+            return;
+        }
+
+    }); // fin delegated handler
+
+    // Tecla Enter en coupon sidebar input
+    document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && e.target.id === 'cartCouponInput') {
+            e.preventDefault();
+            const applyBtn = document.getElementById('cartCouponApply');
+            if (applyBtn) applyBtn.click();
+        }
+    });
+
+    // Escape para cerrar modales
+    document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Escape') return;
+        if (productModal && productModal.classList.contains('active')) {
+            closeProductModalFn();
+        } else if (couponModal && couponModal.classList.contains('active')) {
+            closeCouponModalFn();
+        }
+    });
+
+    // ============================================
+    // WooCommerce ADD TO CART (botones directos, sin modal)
+    // ============================================
+    document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('.btn-add-cart, .add_to_cart_button');
+        if (!btn) return;
+        // Si abre modal, ya se maneja arriba
+        if (btn.classList.contains('btn-open-modal')) return;
+        if (btn.classList.contains('disabled')) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (typeof wc_add_to_cart_params === 'undefined') return;
+        const productId = btn.dataset.product_id;
+        if (!productId) return;
+
+        btn.classList.add('loading');
+        const original = btn.innerHTML;
+        btn.innerHTML  = '<i class="fas fa-spinner fa-spin"></i>';
+
+        const fd = new FormData();
+        fd.append('product_id', productId);
+        fd.append('quantity', 1);
+
+        fetchJson(wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'), {
+            method: 'POST', body: fd, credentials: 'same-origin'
+        }).then(function(data) {
+            if (!data || data.error) {
+                btn.innerHTML = original;
+                btn.classList.remove('loading');
+                return;
+            }
+            if (data.fragments) updateCartFragments(data.fragments);
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.style.background = '#4CAF50';
+            setTimeout(function() {
+                btn.innerHTML = original;
+                btn.style.background = '';
+                btn.classList.remove('loading');
+            }, 1500);
+            openCartSidebar();
+            document.body.dispatchEvent(new CustomEvent('added_to_cart', {
+                detail: { fragments: data.fragments, cart_hash: data.cart_hash }
+            }));
+        });
+    });
+
+    // Escuchar eventos nativos WooCommerce via jQuery
+    if (typeof jQuery !== 'undefined') {
+        jQuery(document.body).on('added_to_cart removed_from_cart', function(e, fragments) {
+            if (fragments) updateCartFragments(fragments);
+        });
+    }
+
+    // En /cart/ y /checkout/: sincronizar modal de cupones con cambios nativos WC
+    if (isCartOrCheckout) {
+        let chpRefreshing = false;
+        const chpDoRefresh = function() {
+            if (chpRefreshing) return;
+            chpRefreshing = true;
+            refreshCartFromServer();
+            setTimeout(function() { chpRefreshing = false; }, 2000);
+        };
+        const wcObserverTargets = [
+            document.querySelector('.cart_totals'),
+            document.querySelector('.woocommerce-checkout-review-order-table'),
+            document.querySelector('form.woocommerce-cart-form'),
+        ].filter(Boolean);
+        if (wcObserverTargets.length > 0) {
+            let refreshTimer = null;
+            const observer = new MutationObserver(function() {
+                clearTimeout(refreshTimer);
+                refreshTimer = setTimeout(chpDoRefresh, 800);
+            });
+            wcObserverTargets.forEach(function(target) {
+                observer.observe(target.parentElement || target, { childList: true, subtree: true });
+            });
+        }
+        if (typeof jQuery !== 'undefined') {
+            jQuery(document.body).on(
+                'updated_wc_div updated_cart_totals applied_coupon removed_coupon applied_coupon_in_checkout removed_coupon_in_checkout',
+                function() { setTimeout(chpDoRefresh, 800); }
+            );
+        }
+    }
+
+    // ============================================
+    // MENU FILTER (página inicio)
+    // ============================================
+    const filterBtns  = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const filter = this.dataset.filter;
+            filterBtns.forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            productCards.forEach(function(card) {
+                const show = filter === 'all' || card.dataset.category === filter;
+                card.classList.toggle('hidden', !show);
+                if (show) card.style.animation = 'fadeInUp 0.5s ease forwards';
+            });
+        });
+    });
+
+    // ============================================
+    // CATEGORY CARDS CLICK (página inicio)
+    // ============================================
+    document.querySelectorAll('.category-card').forEach(function(card) {
+        card.addEventListener('click', function(e) {
+            if (this.tagName === 'A') return;
+            const category = this.dataset.category;
+            const menuSection = document.getElementById('menu');
+            if (menuSection) menuSection.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(function() {
+                const filterBtn = document.querySelector('.filter-btn[data-filter="' + category + '"]');
+                if (filterBtn) filterBtn.click();
+            }, 500);
+        });
+    });
+
+    // ============================================
+    // CATEGORY NAVIGATION (página tienda)
+    // ============================================
+    const categoryNavSticky = document.getElementById('categoryNavSticky');
+    const categoryBtns      = document.querySelectorAll('.category-nav-btn');
+    const categorySections  = document.querySelectorAll('.category-section');
+
+    if (categoryBtns.length > 0) {
+        categoryBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                categoryBtns.forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+                const target = this.dataset.target;
+                if (target === 'all') {
+                    const shopProducts = document.querySelector('.shop-products');
+                    if (shopProducts) {
+                        window.scrollTo({ top: shopProducts.getBoundingClientRect().top + window.pageYOffset - headerHeight - 80, behavior: 'smooth' });
+                    }
+                } else {
+                    const section = document.getElementById(target);
+                    if (section) {
+                        window.scrollTo({ top: section.getBoundingClientRect().top + window.pageYOffset - headerHeight - 80, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            if (categorySections.length === 0) return;
+            let current = 'all';
+            const shopProducts = document.querySelector('.shop-products');
+            categorySections.forEach(function(section) {
+                if (window.pageYOffset >= section.offsetTop - headerHeight - 120) {
+                    current = section.getAttribute('id');
+                }
+            });
+            if (shopProducts && window.pageYOffset < shopProducts.offsetTop - headerHeight - 50) {
+                current = 'all';
+            }
+            categoryBtns.forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.target === current);
+            });
+            if (categoryNavSticky) {
+                categoryNavSticky.classList.toggle('is-stuck', categoryNavSticky.getBoundingClientRect().top <= headerHeight);
+            }
+        });
+    }
+
+    // ============================================
+    // INTERSECTION OBSERVER (animaciones)
+    // ============================================
+    const animationStyle = document.createElement('style');
+    animationStyle.textContent = '.animate-in { opacity: 1 !important; transform: translateY(0) !important; }';
+    document.head.appendChild(animationStyle);
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) entry.target.classList.add('animate-in');
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.product-card, .promo-card, .category-card, .location-card').forEach(function(el) {
+        el.style.opacity   = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease';
+        observer.observe(el);
+    });
+
+    // ============================================
+    // DELIVERY BUTTON
+    // ============================================
+    const deliveryBtn = document.querySelector('.btn-delivery');
+    if (deliveryBtn) {
+        deliveryBtn.addEventListener('click', function(e) {
+            if (document.getElementById('wcudc-location-modal')) return; // el plugin maneja
+            e.preventDefault();
+            window.location.href = '/tienda';
+        });
+    }
+
+    // ============================================
+    // ACCOUNT BUTTON — abrir auth modal
+    // ============================================
+    const btnOpenAuth = document.getElementById('btn-open-auth-modal');
+    if (btnOpenAuth) {
+        btnOpenAuth.addEventListener('click', function() {
+            if (typeof jQuery !== 'undefined') {
+                jQuery(document).trigger('restohub:openAuth');
+            }
+        });
+    }
+
+    // ============================================
+    // WELCOME LOG
+    // ============================================
+    console.log('%c ChurrascoPlanet ',
+        'background: linear-gradient(135deg, #ffb268, #ffde59); color: #000; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 10px;'
+    );
+
+});

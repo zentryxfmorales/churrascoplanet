@@ -1,0 +1,264 @@
+/**
+ * RestoHub SumUp Checkout — Widget Styles
+ *
+ * Dark theme: fondo oscuro, acento #ff9800, bordes rgba(255,255,255,0.12).
+ * Compatible con el tema churrascoplanet y WooCommerce classic checkout.
+ *
+ * @package RestoHub
+ */
+
+/* ============================================================================
+   Variables de tema
+   ========================================================================== */
+
+:root {
+    --rh-sumup-accent:         #ff9800;
+    --rh-sumup-accent-dim:     rgba(255, 152, 0, 0.15);
+    --rh-sumup-accent-border:  rgba(255, 152, 0, 0.4);
+    --rh-sumup-bg:             rgba(255, 255, 255, 0.03);
+    --rh-sumup-border:         rgba(255, 255, 255, 0.12);
+    --rh-sumup-border-radius:  10px;
+    --rh-sumup-text:           inherit;
+    --rh-sumup-text-muted:     rgba(255, 255, 255, 0.55);
+    --rh-sumup-error-bg:       rgba(229, 57, 53, 0.12);
+    --rh-sumup-error-text:     #ef9a9a;
+    --rh-sumup-error-border:   rgba(229, 57, 53, 0.4);
+    --rh-sumup-cancel-bg:      rgba(255, 255, 255, 0.06);
+    --rh-sumup-cancel-hover:   rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================================
+   Descripción del método de pago
+   ========================================================================== */
+
+.restohub-sumup-desc {
+    margin: 0 0 12px;
+    font-size: 0.875rem;
+    color: var(--rh-sumup-text-muted);
+    line-height: 1.5;
+}
+
+/* ============================================================================
+   Iconos de tarjetas (VISA / MC / AMEX)
+   ========================================================================== */
+
+.restohub-sumup-cards {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 16px;
+    flex-wrap: wrap;
+}
+
+.restohub-sumup-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border: 1px solid var(--rh-sumup-border);
+    border-radius: 4px;
+    background: var(--rh-sumup-bg);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--rh-sumup-text-muted);
+    min-width: 40px;
+    text-align: center;
+    user-select: none;
+    line-height: 1.4;
+}
+
+/* ============================================================================
+   Contenedor del widget SumUpCard
+   ========================================================================== */
+
+#restohub-sumup-widget-wrap {
+    margin-top: 16px;
+    border: 1px solid var(--rh-sumup-accent-border);
+    border-radius: var(--rh-sumup-border-radius);
+    background: var(--rh-sumup-accent-dim);
+    overflow: hidden;
+    animation: rh-sumup-fade-in 0.25s ease;
+}
+
+/* ── Badge de seguridad (aparece justo arriba del iframe de la tarjeta) ─── */
+#restohub-sumup-widget-wrap::before {
+    content: '\01F512\00A0 Conexi\00F3n encriptada de extremo a extremo';
+    display: block;
+    text-align: center;
+    padding: 9px 16px 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: rgba(52, 211, 153, 0.85);      /* verde esmeralda suave */
+    background: rgba(52, 211, 153, 0.06); /* tinte verde muy tenue */
+    border-bottom: 1px solid rgba(52, 211, 153, 0.15);
+}
+
+@keyframes rh-sumup-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Mount target del SDK: el iframe de SumUp se inyecta aquí.
+   min-height previene layout shifts mientras el SDK carga el iframe. */
+#restohub-sumup-card {
+    min-height: 400px;
+    width: 100%;
+    display: block;
+    /* Contener el layout para que cambios de altura del iframe no
+       provoquen reflow en el resto de la página */
+    contain: layout;
+}
+
+/* Asegurar que el iframe del SDK ocupe el ancho completo */
+#restohub-sumup-card iframe {
+    width: 100% !important;
+    border: none !important;
+    display: block;
+}
+
+/* ============================================================================
+   Mensaje de error inline (dentro del widget)
+   ========================================================================== */
+
+#restohub-sumup-widget-error,
+.restohub-sumup-error {
+    display: none;
+    margin: 12px 16px 12px;
+    padding: 10px 14px;
+    background: var(--rh-sumup-error-bg);
+    border: 1px solid var(--rh-sumup-error-border);
+    border-radius: 6px;
+    color: var(--rh-sumup-error-text);
+    font-size: 0.875rem;
+    line-height: 1.45;
+}
+
+/* ============================================================================
+   Estado de carga (spinner)
+   ========================================================================== */
+
+#restohub-sumup-loading {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 0 8px;
+    color: var(--rh-sumup-text-muted);
+    font-size: 0.875rem;
+    /* Activado vía JS: $loadingEl().css('display', 'flex') */
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+
+.restohub-sumup-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 152, 0, 0.25);
+    border-top-color: var(--rh-sumup-accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: rh-sumup-spin 0.7s linear infinite;
+}
+
+@keyframes rh-sumup-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   Botón cancelar
+   ========================================================================== */
+
+#restohub-sumup-cancel-btn,
+.restohub-sumup-cancel {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 11px 20px;
+    background: var(--rh-sumup-cancel-bg);
+    border: 1px solid var(--rh-sumup-border);
+    border-radius: var(--rh-sumup-border-radius);
+    color: var(--rh-sumup-text-muted) !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    line-height: 1.4;
+    /* Anular estilos del tema que aplican a <button> */
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+#restohub-sumup-cancel-btn:hover,
+.restohub-sumup-cancel:hover {
+    background: var(--rh-sumup-cancel-hover);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: inherit !important;
+}
+
+#restohub-sumup-cancel-btn:focus,
+.restohub-sumup-cancel:focus {
+    outline: 2px solid var(--rh-sumup-accent);
+    outline-offset: 2px;
+}
+
+/* ============================================================================
+   Botón "Pagar" en estado loading
+   ========================================================================== */
+
+#place_order.restohub-sumup-btn-loading {
+    opacity: 0.65;
+    cursor: not-allowed;
+    position: relative;
+}
+
+#place_order.restohub-sumup-btn-loading::after {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    vertical-align: middle;
+    animation: rh-sumup-spin 0.7s linear infinite;
+}
+
+/* ============================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 480px) {
+    /* Reducir min-height en móviles pero mantener suficiente para el iframe */
+    #restohub-sumup-card {
+        min-height: 360px;
+    }
+
+    /* Centrar logos de tarjeta en pantallas pequeñas */
+    .restohub-sumup-cards {
+        gap: 4px;
+        justify-content: center;
+    }
+
+    .restohub-sumup-card-icon {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+    }
+
+    /* Badge de seguridad: fuente ligeramente menor en móvil */
+    #restohub-sumup-widget-wrap::before {
+        font-size: 0.68rem;
+        padding: 8px 12px 7px;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Pantallas muy pequeñas (ej: Galaxy A series): reducir min-height
+       pero no menos de 320px para que el iframe de SumUp sea operable */
+    #restohub-sumup-card {
+        min-height: 320px;
+    }
+}

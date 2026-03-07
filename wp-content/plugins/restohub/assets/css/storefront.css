@@ -1,0 +1,1084 @@
+/**
+ * RestoHub - Storefront Styles
+ *
+ * Estilos para la interfaz estilo app de delivery
+ */
+
+/* ==========================================================================
+   CSS Variables
+   ========================================================================== */
+
+:root {
+    --restohub-primary: #ff4757;
+    --restohub-primary-dark: #e63946;
+    --restohub-secondary: #2d3436;
+    --restohub-success: #00b894;
+    --restohub-warning: #fdcb6e;
+    --restohub-danger: #d63031;
+    --restohub-text: #2d3436;
+    --restohub-text-light: #636e72;
+    --restohub-border: #dfe6e9;
+    --restohub-bg: #f8f9fa;
+    --restohub-white: #ffffff;
+    --restohub-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --restohub-shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+    --restohub-radius: 12px;
+    --restohub-radius-sm: 8px;
+    --restohub-transition: 0.2s ease;
+    --restohub-header-height: 70px;
+    --restohub-nav-height: 50px;
+}
+
+/* ==========================================================================
+   Global Resets for Delivery App
+   ========================================================================== */
+
+body.restohub-delivery-app {
+    padding-top: calc(var(--restohub-header-height) + var(--restohub-nav-height) + 20px);
+    background: var(--restohub-bg);
+}
+
+body.restohub-delivery-app .site-header,
+body.restohub-delivery-app .storefront-primary-navigation,
+body.restohub-delivery-app .storefront-secondary-navigation {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Delivery Header
+   ========================================================================== */
+
+.restohub-delivery-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: var(--restohub-white);
+    box-shadow: var(--restohub-shadow);
+    height: var(--restohub-header-height);
+}
+
+.restohub-delivery-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Header Brand/Logo */
+.restohub-header-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.restohub-header-logo {
+    max-height: 45px;
+    width: auto;
+}
+
+.restohub-header-site-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--restohub-primary);
+}
+
+/* Location Selector */
+.restohub-header-location {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: var(--restohub-bg);
+    border: 2px solid var(--restohub-border);
+    border-radius: var(--restohub-radius);
+    cursor: pointer;
+    transition: all var(--restohub-transition);
+    text-align: left;
+}
+
+.restohub-header-location:hover {
+    border-color: var(--restohub-primary);
+    background: #fff5f6;
+}
+
+.restohub-location-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.restohub-location-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.restohub-location-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--restohub-text-light);
+    font-weight: 600;
+}
+
+.restohub-location-address {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--restohub-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.restohub-location-arrow {
+    font-size: 0.7rem;
+    color: var(--restohub-text-light);
+    transition: transform var(--restohub-transition);
+}
+
+.restohub-header-location:hover .restohub-location-arrow {
+    transform: translateY(2px);
+}
+
+/* Store Status Badge */
+.restohub-header-status {
+    flex-shrink: 0;
+}
+
+.restohub-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.restohub-status-open {
+    background: #d4edda;
+    color: #155724;
+}
+
+.restohub-status-closed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.restohub-status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--restohub-success);
+    border-radius: 50%;
+    animation: restohub-pulse 2s infinite;
+}
+
+@keyframes restohub-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ==========================================================================
+   Category Navigation
+   ========================================================================== */
+
+.restohub-category-nav {
+    position: fixed;
+    top: var(--restohub-header-height);
+    left: 0;
+    right: 0;
+    z-index: 9998;
+    background: var(--restohub-white);
+    border-bottom: 1px solid var(--restohub-border);
+    height: var(--restohub-nav-height);
+}
+
+.restohub-category-nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.restohub-category-nav-inner::-webkit-scrollbar {
+    display: none;
+}
+
+.restohub-category-item {
+    flex-shrink: 0;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--restohub-text-light);
+    text-decoration: none;
+    transition: all var(--restohub-transition);
+    white-space: nowrap;
+}
+
+.restohub-category-item:hover {
+    background: var(--restohub-bg);
+    color: var(--restohub-text);
+}
+
+.restohub-category-item.active {
+    background: var(--restohub-primary);
+    color: var(--restohub-white);
+}
+
+/* ==========================================================================
+   Products Grid
+   ========================================================================== */
+
+body.restohub-delivery-app .woocommerce ul.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+body.restohub-delivery-app .woocommerce ul.products::before,
+body.restohub-delivery-app .woocommerce ul.products::after {
+    display: none;
+}
+
+body.restohub-delivery-app .woocommerce ul.products li.product {
+    float: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   Product Card
+   ========================================================================== */
+
+.restohub-product-card {
+    position: relative;
+    background: var(--restohub-white);
+    border-radius: var(--restohub-radius);
+    box-shadow: var(--restohub-shadow);
+    overflow: hidden;
+    transition: all var(--restohub-transition);
+}
+
+.restohub-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--restohub-shadow-lg);
+}
+
+.restohub-product-card.out-of-stock {
+    opacity: 0.7;
+}
+
+.restohub-product-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Product Image */
+.restohub-product-image-wrapper {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: var(--restohub-bg);
+}
+
+.restohub-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--restohub-transition);
+}
+
+.restohub-product-card:hover .restohub-product-image {
+    transform: scale(1.05);
+}
+
+/* Product Badges */
+.restohub-product-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.restohub-badge-sale {
+    background: var(--restohub-primary);
+    color: var(--restohub-white);
+}
+
+.restohub-badge-out-of-stock {
+    background: var(--restohub-secondary);
+    color: var(--restohub-white);
+}
+
+/* Product Info */
+.restohub-product-info {
+    padding: 15px;
+}
+
+.restohub-product-title {
+    margin: 0 0 8px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--restohub-text);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.restohub-product-description {
+    margin: 0 0 10px 0;
+    font-size: 0.85rem;
+    color: var(--restohub-text-light);
+    line-height: 1.4;
+}
+
+.restohub-product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.restohub-product-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--restohub-primary);
+}
+
+.restohub-product-price del {
+    font-size: 0.85rem;
+    color: var(--restohub-text-light);
+    font-weight: 400;
+}
+
+.restohub-product-price ins {
+    text-decoration: none;
+}
+
+/* Add to Cart Button */
+.restohub-add-to-cart-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--restohub-primary);
+    color: var(--restohub-white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: all var(--restohub-transition);
+    box-shadow: 0 2px 10px rgba(255, 71, 87, 0.4);
+    z-index: 2;
+}
+
+.restohub-add-to-cart-btn:hover {
+    background: var(--restohub-primary-dark);
+    transform: scale(1.1);
+}
+
+.restohub-add-to-cart-btn.added {
+    background: var(--restohub-success);
+    box-shadow: 0 2px 10px rgba(0, 184, 148, 0.4);
+}
+
+.restohub-add-to-cart-btn.loading {
+    pointer-events: none;
+}
+
+.restohub-add-to-cart-btn.loading .restohub-add-icon {
+    animation: restohub-spin 0.8s linear infinite;
+}
+
+@keyframes restohub-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Floating Cart
+   ========================================================================== */
+
+.restohub-floating-cart {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    z-index: 9997;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.restohub-floating-cart.has-items {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.restohub-floating-cart-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    background: var(--restohub-primary);
+    color: var(--restohub-white);
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(255, 71, 87, 0.4);
+    transition: all var(--restohub-transition);
+}
+
+.restohub-floating-cart-btn:hover {
+    background: var(--restohub-primary-dark);
+    transform: scale(1.02);
+    color: var(--restohub-white);
+}
+
+.restohub-cart-icon {
+    position: relative;
+    font-size: 1.5rem;
+}
+
+.restohub-cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--restohub-white);
+    color: var(--restohub-primary);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.restohub-cart-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.restohub-cart-label {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.restohub-cart-total {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.restohub-cart-arrow {
+    font-size: 1.2rem;
+    transition: transform var(--restohub-transition);
+}
+
+.restohub-floating-cart-btn:hover .restohub-cart-arrow {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Cart Drawer
+   ========================================================================== */
+
+.restohub-cart-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* Usar 100dvh (dynamic viewport height) para que la barra de navegación
+       del browser en iOS/Android no tape el contenido. El fallback 100%
+       cubre browsers sin soporte dvh. */
+    height: 100%;
+    height: 100dvh;
+    z-index: 99999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.restohub-cart-drawer.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.restohub-cart-drawer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.restohub-cart-drawer-content {
+    position: absolute;
+    right: -400px;
+    top: 0;
+    /* Llenar el alto del padre (que ya usa 100dvh) sin depender de bottom: 0 */
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    background: var(--restohub-white);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Evita que el contenido interno desborde el panel */
+    transition: right 0.3s ease;
+}
+
+.restohub-cart-drawer.open .restohub-cart-drawer-content {
+    right: 0;
+}
+
+.restohub-cart-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid var(--restohub-border);
+}
+
+.restohub-cart-drawer-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.restohub-cart-drawer-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--restohub-text-light);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.restohub-cart-drawer-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+/* Cart Empty State */
+.restohub-cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 40px;
+}
+
+.restohub-cart-empty-icon {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 15px;
+}
+
+.restohub-cart-empty p {
+    color: var(--restohub-text-light);
+    margin: 0;
+}
+
+/* Cart Item */
+.restohub-cart-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--restohub-bg);
+    border-radius: var(--restohub-radius-sm);
+    margin-bottom: 10px;
+}
+
+.restohub-cart-item-image {
+    flex-shrink: 0;
+}
+
+.restohub-cart-item-image img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--restohub-radius-sm);
+}
+
+.restohub-cart-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.restohub-cart-item-name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--restohub-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.restohub-cart-item-price {
+    font-size: 0.85rem;
+    color: var(--restohub-primary);
+    font-weight: 600;
+}
+
+.restohub-cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.restohub-qty-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--restohub-white);
+    border: 1px solid var(--restohub-border);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all var(--restohub-transition);
+}
+
+.restohub-qty-btn:hover {
+    background: var(--restohub-primary);
+    border-color: var(--restohub-primary);
+    color: var(--restohub-white);
+}
+
+.restohub-qty-value {
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Cart Footer */
+.restohub-cart-drawer-footer {
+    padding: 20px;
+    /* Espacio extra en la parte inferior para el notch de iOS y la barra
+       de gestos de Android. env() hace fallback a 0 en browsers sin soporte. */
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--restohub-border);
+    background: var(--restohub-white);
+    /* Nunca encogerse — el footer siempre visible aunque el drawer sea pequeño */
+    flex-shrink: 0;
+}
+
+.restohub-cart-drawer-subtotal {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.restohub-cart-drawer-subtotal span:last-child {
+    font-weight: 600;
+}
+
+.restohub-checkout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 25px;
+    background: var(--restohub-primary);
+    color: var(--restohub-white);
+    border: none;
+    border-radius: var(--restohub-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3; /* Evita que el texto se corte en fuentes escaladas */
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--restohub-transition);
+}
+
+.restohub-checkout-btn:hover {
+    background: var(--restohub-primary-dark);
+    color: var(--restohub-white);
+}
+
+/* ==========================================================================
+   Store Closed Banner
+   ========================================================================== */
+
+.restohub-store-closed-banner {
+    position: fixed;
+    top: calc(var(--restohub-header-height) + var(--restohub-nav-height));
+    left: 0;
+    right: 0;
+    z-index: 9996;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--restohub-warning);
+    color: #856404;
+    font-weight: 500;
+}
+
+body.restohub-store-closed {
+    padding-top: calc(var(--restohub-header-height) + var(--restohub-nav-height) + 50px);
+}
+
+body.restohub-store-closed .restohub-add-to-cart-btn {
+    display: none;
+}
+
+/* ==========================================================================
+   Toast Notifications
+   ========================================================================== */
+
+.restohub-toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    padding: 12px 24px;
+    background: var(--restohub-secondary);
+    color: var(--restohub-white);
+    border-radius: var(--restohub-radius);
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 99999;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.restohub-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* User Marker Styles */
+.restohub-user-marker {
+    background: transparent;
+    border: none;
+}
+
+.restohub-user-marker-pin {
+    width: 30px;
+    height: 30px;
+    background: var(--restohub-primary);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.restohub-user-marker-inner {
+    width: 12px;
+    height: 12px;
+    background: var(--restohub-white);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.restohub-user-marker-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 71, 87, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: restohub-marker-pulse 2s infinite;
+}
+
+@keyframes restohub-marker-pulse {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+/* Store Marker */
+.restohub-store-marker {
+    background: transparent;
+    border: none;
+}
+
+.restohub-store-marker-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    :root {
+        --restohub-header-height: 60px;
+        --restohub-nav-height: 45px;
+    }
+
+    .restohub-delivery-header-inner {
+        padding: 0 15px;
+        gap: 10px;
+    }
+
+    .restohub-header-brand {
+        display: none;
+    }
+
+    .restohub-header-location {
+        max-width: none;
+        flex: 1;
+    }
+
+    .restohub-header-status {
+        display: none;
+    }
+
+    .restohub-category-nav-inner {
+        padding: 0 15px;
+    }
+
+    .restohub-category-item {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+
+    body.restohub-delivery-app .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .restohub-product-card {
+        border-radius: var(--restohub-radius-sm);
+    }
+
+    .restohub-product-info {
+        padding: 10px;
+    }
+
+    .restohub-product-title {
+        font-size: 0.9rem;
+    }
+
+    .restohub-product-description {
+        display: none;
+    }
+
+    .restohub-product-price {
+        font-size: 1rem;
+    }
+
+    .restohub-add-to-cart-btn {
+        width: 35px;
+        height: 35px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 1.3rem;
+    }
+
+    .restohub-floating-cart {
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        transform: translateX(0) translateY(100px);
+    }
+
+    .restohub-floating-cart.has-items {
+        transform: translateX(0) translateY(0);
+    }
+
+    .restohub-floating-cart-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+    }
+
+    .restohub-cart-drawer-content {
+        max-width: none;
+        width: 100%;
+        right: -100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body.restohub-delivery-app .woocommerce ul.products {
+        grid-template-columns: 1fr;
+    }
+
+    .restohub-product-card {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .restohub-product-image-wrapper {
+        width: 120px;
+        flex-shrink: 0;
+        aspect-ratio: 1;
+    }
+
+    .restohub-product-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .restohub-add-to-cart-btn {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        margin-top: 10px;
+        width: 100%;
+        border-radius: var(--restohub-radius-sm);
+    }
+
+    .restohub-add-to-cart-btn .restohub-add-icon::after {
+        content: ' Agregar';
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+}
+
+/* ==========================================================================
+   WooCommerce Overrides
+   ========================================================================== */
+
+body.restohub-delivery-app .woocommerce-result-count,
+body.restohub-delivery-app .woocommerce-ordering {
+    display: none;
+}
+
+body.restohub-delivery-app .woocommerce-breadcrumb {
+    display: none;
+}
+
+body.restohub-delivery-app .woocommerce-pagination {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Hide default WooCommerce elements replaced by our components */
+body.restohub-delivery-app .onsale {
+    display: none !important;
+}
+
+body.restohub-delivery-app .star-rating {
+    display: none !important;
+}
+
+body.restohub-delivery-app .price {
+    display: none !important;
+}
+
+body.restohub-delivery-app .button.add_to_cart_button {
+    display: none !important;
+}
+
+/* Ensure our price displays */
+.restohub-product-price {
+    display: block !important;
+}
+
+/* ==========================================================================
+   Special Hours Banner
+   ========================================================================== */
+
+.restohub-store-special-banner {
+    position: fixed;
+    top: calc(var(--restohub-header-height) + var(--restohub-nav-height));
+    left: 0;
+    right: 0;
+    z-index: 9996;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--restohub-white);
+    font-weight: 500;
+}
+
+.restohub-store-closed-banner.is-special-day {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: var(--restohub-white);
+}
+
+.restohub-special-icon,
+.restohub-closed-icon {
+    font-size: 1.2rem;
+}
+
+.restohub-special-text,
+.restohub-closed-text {
+    font-size: 0.9rem;
+}
+
+/* Adjust body padding when special banner is shown */
+body.restohub-delivery-app.has-special-banner {
+    padding-top: calc(var(--restohub-header-height) + var(--restohub-nav-height) + 50px);
+}
+
+@media screen and (max-width: 768px) {
+    .restohub-store-special-banner,
+    .restohub-store-closed-banner {
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+
+    .restohub-special-icon,
+    .restohub-closed-icon {
+        font-size: 1rem;
+    }
+
+    .restohub-special-text,
+    .restohub-closed-text {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+}

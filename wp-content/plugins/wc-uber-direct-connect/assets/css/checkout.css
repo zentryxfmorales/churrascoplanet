@@ -1,0 +1,406 @@
+/**
+ * WC Uber Direct Connect - Checkout Map Styles
+ *
+ * Estilos para el mapa de OpenStreetMap en el checkout
+ */
+
+/* ==========================================================================
+   Sección del Mapa
+   ========================================================================== */
+
+.wcudc-checkout-map-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border: 1px solid #e1e5e8;
+    border-radius: 8px;
+}
+
+.wcudc-checkout-map-section h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.wcudc-map-description {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 0.95em;
+}
+
+/* ==========================================================================
+   Contenedor de Búsqueda
+   ========================================================================== */
+
+.wcudc-search-container {
+    position: relative;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.wcudc-address-search {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.2s ease;
+}
+
+.wcudc-address-search:focus {
+    outline: none;
+    border-color: #0073aa;
+    box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.1);
+}
+
+.wcudc-locate-btn {
+    padding: 12px 15px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wcudc-locate-btn:hover {
+    background: #f5f5f5;
+    border-color: #0073aa;
+}
+
+.wcudc-locate-btn.wcudc-locating {
+    background: #f0f0f0;
+    pointer-events: none;
+}
+
+.wcudc-locate-btn.wcudc-locating .wcudc-locate-icon {
+    animation: wcudc-pulse 1s infinite;
+}
+
+.wcudc-locate-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   Resultados de Búsqueda
+   ========================================================================== */
+
+.wcudc-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 50px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    max-height: 250px;
+    overflow-y: auto;
+    display: none;
+}
+
+.wcudc-search-result-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.15s ease;
+}
+
+.wcudc-search-result-item:last-child {
+    border-bottom: none;
+}
+
+.wcudc-search-result-item:hover {
+    background: #f5f9fc;
+}
+
+.wcudc-result-icon {
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+.wcudc-result-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wcudc-search-loading,
+.wcudc-search-no-results,
+.wcudc-search-error {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.wcudc-search-error {
+    color: #dc3545;
+}
+
+/* ==========================================================================
+   Mapa
+   ========================================================================== */
+
+.wcudc-delivery-map {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    overflow: hidden;
+    background: #e8e8e8;
+}
+
+/* Asegurar que los controles de Leaflet se vean bien */
+.wcudc-delivery-map .leaflet-control-zoom {
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.wcudc-delivery-map .leaflet-control-zoom a {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 18px;
+}
+
+/* ==========================================================================
+   Marcador Personalizado
+   ========================================================================== */
+
+.wcudc-marker-icon {
+    background: transparent;
+    border: none;
+}
+
+.wcudc-marker-pin {
+    width: 30px;
+    height: 30px;
+    background: #0073aa;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    animation: wcudc-marker-bounce 0.3s ease;
+}
+
+.wcudc-marker-pin-inner {
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.wcudc-marker-pulse {
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 115, 170, 0.3);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    left: 5px;
+    animation: wcudc-pulse 2s infinite;
+}
+
+@keyframes wcudc-marker-bounce {
+    0% {
+        transform: rotate(-45deg) translateY(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(-45deg) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes wcudc-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   Ubicación Seleccionada
+   ========================================================================== */
+
+.wcudc-selected-location {
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wcudc-location-icon {
+    color: #28a745;
+    font-size: 18px;
+}
+
+.wcudc-selected-address {
+    flex: 1;
+    font-size: 14px;
+    color: #155724;
+}
+
+/* ==========================================================================
+   Estado de Cobertura
+   ========================================================================== */
+
+.wcudc-coverage-status {
+    margin-top: 12px;
+}
+
+.wcudc-coverage-ok {
+    padding: 10px 15px;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    color: #155724;
+    font-size: 14px;
+}
+
+.wcudc-coverage-warning {
+    padding: 10px 15px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+    color: #856404;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Campos Ocultos (por si acaso)
+   ========================================================================== */
+
+.wcudc-coordinate-field {
+    display: none !important;
+}
+
+#billing_latitude_field,
+#billing_longitude_field,
+#shipping_latitude_field,
+#shipping_longitude_field {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    .wcudc-checkout-map-section {
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    .wcudc-delivery-map {
+        height: 250px;
+    }
+
+    .wcudc-search-container {
+        flex-direction: column;
+    }
+
+    .wcudc-locate-btn {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .wcudc-locate-btn::after {
+        content: 'Usar mi ubicación';
+        font-size: 14px;
+    }
+
+    .wcudc-search-results {
+        right: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wcudc-delivery-map {
+        height: 220px;
+    }
+
+    .wcudc-checkout-map-section h3 {
+        font-size: 1.1em;
+    }
+
+    .wcudc-map-description {
+        font-size: 0.9em;
+    }
+}
+
+/* ==========================================================================
+   Tema Oscuro (si WooCommerce/theme lo soporta)
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .wcudc-checkout-map-section {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .wcudc-checkout-map-section h3 {
+        color: #fff;
+    }
+
+    .wcudc-map-description {
+        color: #aaa;
+    }
+
+    .wcudc-address-search,
+    .wcudc-locate-btn {
+        background: #3d3d3d;
+        border-color: #555;
+        color: #fff;
+    }
+
+    .wcudc-search-results {
+        background: #3d3d3d;
+        border-color: #555;
+    }
+
+    .wcudc-search-result-item {
+        border-color: #555;
+    }
+
+    .wcudc-search-result-item:hover {
+        background: #4d4d4d;
+    }
+
+    .wcudc-result-text {
+        color: #fff;
+    }
+
+    .wcudc-delivery-map {
+        border-color: #555;
+    }
+}

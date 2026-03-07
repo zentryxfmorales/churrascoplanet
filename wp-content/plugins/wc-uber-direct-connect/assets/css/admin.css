@@ -1,0 +1,369 @@
+/**
+ * WC Uber Direct Connect - Admin Styles
+ *
+ * Estilos para la página de administración del plugin
+ * Incluye estilos para el modal de tiendas y el mapa Leaflet
+ */
+
+/* ==========================================================================
+   Layout General
+   ========================================================================== */
+
+.wcudc-admin-wrap {
+    max-width: 1200px;
+}
+
+.wcudc-tab-content {
+    margin-top: 20px;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+/* ==========================================================================
+   Tabla de Tiendas
+   ========================================================================== */
+
+.wcudc-stores-container {
+    position: relative;
+}
+
+.wcudc-stores-list h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#wcudc-stores-table {
+    margin-top: 15px;
+}
+
+#wcudc-stores-table .column-name {
+    width: 20%;
+}
+
+#wcudc-stores-table .column-address {
+    width: 30%;
+}
+
+#wcudc-stores-table .column-status {
+    width: 10%;
+}
+
+#wcudc-stores-table .column-polygon {
+    width: 15%;
+}
+
+#wcudc-stores-table .column-actions {
+    width: 25%;
+}
+
+#wcudc-stores-table .no-stores td {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Status badges */
+.wcudc-status {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.wcudc-status-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.wcudc-status-inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Polygon status */
+.wcudc-polygon-set {
+    color: #28a745;
+}
+
+.wcudc-polygon-missing {
+    color: #dc3545;
+    font-style: italic;
+}
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.wcudc-modal {
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wcudc-modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 4px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+}
+
+.wcudc-modal-close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.wcudc-modal-close:hover {
+    color: #000;
+}
+
+.wcudc-modal h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+/* ==========================================================================
+   Formulario de Tienda
+   ========================================================================== */
+
+#wcudc-store-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.wcudc-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.wcudc-form-row label {
+    font-weight: 600;
+    color: #23282d;
+}
+
+.wcudc-form-row label .required {
+    color: #dc3545;
+}
+
+.wcudc-form-row input[type="text"],
+.wcudc-form-row input[type="tel"] {
+    width: 100%;
+    max-width: 100%;
+}
+
+.wcudc-form-row .description {
+    color: #666;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.wcudc-form-row-half {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.wcudc-form-row-half > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.wcudc-form-row-half input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Checkbox inline label */
+.wcudc-form-row-half label:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    font-weight: normal;
+}
+
+/* ==========================================================================
+   Mapa Leaflet
+   ========================================================================== */
+
+.wcudc-map {
+    width: 100%;
+    height: 400px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+    background: #f0f0f0;
+}
+
+/* Fix para el z-index de Leaflet dentro del modal */
+.wcudc-modal .leaflet-pane,
+.wcudc-modal .leaflet-control {
+    z-index: 100001;
+}
+
+.wcudc-modal .leaflet-top,
+.wcudc-modal .leaflet-bottom {
+    z-index: 100002;
+}
+
+/* Estilos del polígono */
+.leaflet-draw-toolbar a {
+    background-color: #fff;
+}
+
+/* ==========================================================================
+   Acciones del Formulario
+   ========================================================================== */
+
+.wcudc-form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.wcudc-form-actions .button-primary {
+    min-width: 150px;
+}
+
+/* ==========================================================================
+   Notificaciones / Alertas
+   ========================================================================== */
+
+.wcudc-notice {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.wcudc-notice-success {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+}
+
+.wcudc-notice-error {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+.wcudc-notice-warning {
+    background: #fff3cd;
+    border-color: #ffc107;
+    color: #856404;
+}
+
+/* ==========================================================================
+   Loading State
+   ========================================================================== */
+
+.wcudc-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.wcudc-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0073aa;
+    border-radius: 50%;
+    animation: wcudc-spin 1s linear infinite;
+}
+
+@keyframes wcudc-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media screen and (max-width: 782px) {
+    .wcudc-form-row-half {
+        grid-template-columns: 1fr;
+    }
+
+    .wcudc-modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .wcudc-map {
+        height: 300px;
+    }
+
+    #wcudc-stores-table .column-address {
+        display: none;
+    }
+
+    #wcudc-stores-table .column-polygon {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   Store marker en el mapa
+   ========================================================================== */
+
+.wcudc-store-marker {
+    background: #0073aa;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Tooltips de Leaflet personalizados
+   ========================================================================== */
+
+.wcudc-tooltip {
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.wcudc-tooltip::before {
+    border-top-color: #333;
+}

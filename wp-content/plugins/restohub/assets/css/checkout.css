@@ -1,0 +1,1231 @@
+/**
+ * RestoHub - Checkout Map Styles
+ *
+ * Estilos para el mapa de OpenStreetMap en el checkout
+ */
+
+/* ==========================================================================
+   Toggle Delivery / Retiro en Tienda
+   ========================================================================== */
+
+.restohub-checkout-toggle {
+    margin-bottom: 24px;
+}
+
+/* Switch de modo */
+.restohub-checkout-mode-switch {
+    display: flex;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 16px;
+}
+
+.restohub-checkout-mode-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+}
+
+.restohub-checkout-mode-btn:hover {
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.restohub-checkout-mode-btn.active {
+    background: #ff9800;
+    color: #000;
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+}
+
+.restohub-checkout-mode-icon {
+    font-size: 18px;
+}
+
+.restohub-checkout-mode-label {
+    font-size: 14px;
+}
+
+/* Display de dirección */
+.restohub-checkout-address-display,
+.restohub-checkout-store-select {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.restohub-checkout-address-display.restohub-no-address {
+    border-color: #ff9800;
+    background: rgba(255, 152, 0, 0.05);
+}
+
+.restohub-checkout-address-icon,
+.restohub-checkout-store-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.restohub-checkout-address-text,
+.restohub-checkout-store-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.restohub-checkout-address-label,
+.restohub-checkout-store-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+}
+
+.restohub-checkout-address-value {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.restohub-checkout-address-check,
+.restohub-checkout-store-check {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.restohub-checkout-address-warning {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Store dropdown */
+.restohub-checkout-store-dropdown {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.restohub-checkout-store-dropdown option {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.restohub-checkout-no-stores {
+    padding: 12px;
+    text-align: center;
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+/* Ocultar campos de dirección en modo pickup */
+.restohub-pickup-mode .restohub-unified-address,
+.restohub-pickup-mode .restohub-address-selector,
+.restohub-pickup-mode .restohub-checkout-map-section,
+.restohub-pickup-mode #billing_address_1_field,
+.restohub-pickup-mode #billing_address_2_field,
+.restohub-pickup-mode #billing_city_field,
+.restohub-pickup-mode #billing_state_field,
+.restohub-pickup-mode #billing_postcode_field {
+    display: none !important;
+}
+
+@media screen and (max-width: 480px) {
+    .restohub-checkout-mode-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .restohub-checkout-mode-icon {
+        font-size: 16px;
+    }
+}
+
+/* ==========================================================================
+   Sección del Mapa (wrapper)
+   ========================================================================== */
+
+.restohub-checkout-map-section {
+    margin: 20px 0;
+}
+
+/* ==========================================================================
+   Toggle Trigger del Mapa
+   ========================================================================== */
+
+.restohub-map-toggle-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, border-radius 0.15s ease;
+    text-align: left;
+}
+
+.restohub-map-toggle-trigger:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 152, 0, 0.35);
+}
+
+.restohub-map-toggle-trigger[aria-expanded="true"] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-color: rgba(255, 152, 0, 0.45);
+    background: rgba(255, 152, 0, 0.06);
+}
+
+.restohub-map-trigger-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.restohub-map-trigger-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.restohub-map-trigger-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit;
+    line-height: 1.3;
+}
+
+.restohub-map-trigger-subtitle {
+    font-size: 12px;
+    opacity: 0.55;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.restohub-map-trigger-subtitle--confirmed {
+    opacity: 0.75;
+    color: #4caf50;
+}
+
+.restohub-map-trigger-chevron {
+    font-size: 22px;
+    opacity: 0.5;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: transform 0.25s ease;
+    display: flex;
+    align-items: center;
+}
+
+.restohub-map-toggle-trigger[aria-expanded="true"] .restohub-map-trigger-chevron {
+    transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   Contenido Colapsable del Mapa
+   ========================================================================== */
+
+.restohub-map-collapsible {
+    display: none;
+    padding: 16px;
+    border: 1px solid rgba(255, 152, 0, 0.45);
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.restohub-map-collapsible.open {
+    display: block;
+}
+
+.restohub-map-description {
+    margin: 0 0 14px 0;
+    font-size: 0.9em;
+    opacity: 0.65;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Contenedor de Búsqueda
+   ========================================================================== */
+
+.restohub-search-container {
+    position: relative;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.restohub-address-search {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.2s ease;
+}
+
+.restohub-address-search:focus {
+    outline: none;
+    border-color: #0073aa;
+    box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.1);
+}
+
+.restohub-locate-btn {
+    padding: 12px 15px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.restohub-locate-btn:hover {
+    background: #f5f5f5;
+    border-color: #0073aa;
+}
+
+.restohub-locate-btn.restohub-locating {
+    background: #f0f0f0;
+    pointer-events: none;
+}
+
+.restohub-locate-btn.restohub-locating .restohub-locate-icon {
+    animation: restohub-pulse 1s infinite;
+}
+
+.restohub-locate-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   Resultados de Búsqueda
+   ========================================================================== */
+
+.restohub-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 50px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    max-height: 250px;
+    overflow-y: auto;
+    display: none;
+}
+
+.restohub-search-result-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.15s ease;
+}
+
+.restohub-search-result-item:last-child {
+    border-bottom: none;
+}
+
+.restohub-search-result-item:hover {
+    background: #f5f9fc;
+}
+
+.restohub-result-icon {
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+.restohub-result-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.restohub-search-loading,
+.restohub-search-no-results,
+.restohub-search-error {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.restohub-search-error {
+    color: #dc3545;
+}
+
+/* ==========================================================================
+   Mapa
+   ========================================================================== */
+
+.restohub-delivery-map {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    overflow: hidden;
+    background: #e8e8e8;
+}
+
+/* Asegurar que los controles de Leaflet se vean bien */
+.restohub-delivery-map .leaflet-control-zoom {
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.restohub-delivery-map .leaflet-control-zoom a {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 18px;
+}
+
+/* ==========================================================================
+   Marcador Personalizado
+   ========================================================================== */
+
+.restohub-marker-icon {
+    background: transparent;
+    border: none;
+}
+
+.restohub-marker-pin {
+    width: 30px;
+    height: 30px;
+    background: #0073aa;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    animation: restohub-marker-bounce 0.3s ease;
+}
+
+.restohub-marker-pin-inner {
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.restohub-marker-pulse {
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 115, 170, 0.3);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    left: 5px;
+    animation: restohub-pulse 2s infinite;
+}
+
+@keyframes restohub-marker-bounce {
+    0% {
+        transform: rotate(-45deg) translateY(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(-45deg) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes restohub-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   Ubicación Seleccionada
+   ========================================================================== */
+
+.restohub-selected-location {
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.restohub-location-icon {
+    color: #28a745;
+    font-size: 18px;
+}
+
+.restohub-selected-address {
+    flex: 1;
+    font-size: 14px;
+    color: #155724;
+}
+
+/* ==========================================================================
+   Estado de Cobertura
+   ========================================================================== */
+
+.restohub-coverage-status {
+    margin-top: 12px;
+}
+
+.restohub-coverage-ok {
+    padding: 10px 15px;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    color: #155724;
+    font-size: 14px;
+}
+
+.restohub-coverage-warning {
+    padding: 10px 15px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+    color: #856404;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Selector de Direcciones Guardadas
+   ========================================================================== */
+
+.restohub-address-selector {
+    margin-bottom: 20px;
+}
+
+.restohub-address-selector-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: inherit;
+}
+
+.restohub-address-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.restohub-address-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    background: transparent;
+}
+
+.restohub-address-option:hover {
+    border-color: #ff9800;
+    background: rgba(255, 152, 0, 0.05);
+}
+
+.restohub-address-option-active,
+.restohub-address-option:has(input:checked) {
+    border-color: #ff9800;
+    background: rgba(255, 152, 0, 0.08);
+}
+
+.restohub-address-option input[type="radio"] {
+    display: none;
+}
+
+.restohub-address-option-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.restohub-address-option-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.restohub-address-option-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: inherit;
+}
+
+.restohub-address-option-detail {
+    font-size: 13px;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 480px) {
+    .restohub-address-option {
+        padding: 12px 14px;
+    }
+}
+
+/* ==========================================================================
+   Campo Único de Dirección (reemplaza address_1, city, state)
+   ========================================================================== */
+
+.restohub-unified-address {
+    margin-bottom: 20px;
+}
+
+.restohub-unified-address-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: inherit;
+}
+
+.restohub-unified-address-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.restohub-unified-address-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 18px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.restohub-unified-address-input {
+    width: 100%;
+    padding: 14px 16px 14px 42px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    font-size: 15px;
+    background: transparent;
+    color: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.restohub-unified-address-input:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.15);
+}
+
+.restohub-unified-address-input::placeholder {
+    color: #888;
+}
+
+/* Resultados de autocompletado */
+.restohub-unified-address-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    max-height: 280px;
+    overflow-y: auto;
+    display: none;
+    margin-top: 4px;
+}
+
+.restohub-unified-address-results.show {
+    display: block;
+}
+
+.restohub-unified-result-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s ease;
+}
+
+.restohub-unified-result-item:last-child {
+    border-bottom: none;
+}
+
+.restohub-unified-result-item:hover {
+    background: #f5f9fc;
+}
+
+.restohub-unified-result-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.restohub-unified-result-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.restohub-unified-result-main {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.restohub-unified-result-secondary {
+    display: block;
+    font-size: 13px;
+    color: #888;
+    margin-top: 2px;
+}
+
+.restohub-unified-loading,
+.restohub-unified-no-results {
+    padding: 16px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Campos Ocultos de WC (address_1, city, state)
+   ========================================================================== */
+
+.restohub-hidden-field {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Tip Select (Propina) en Order Review tfoot
+   ========================================================================== */
+
+.restohub-tip-row th {
+    font-weight: 400;
+    vertical-align: middle;
+}
+
+.restohub-tip-row td {
+    text-align: right;
+}
+
+.restohub-tip-select {
+    padding: 6px 28px 6px 10px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    appearance: auto;
+    max-width: 140px;
+}
+
+.restohub-tip-select:focus {
+    outline: none;
+    border-color: #ff9800;
+}
+
+.restohub-tip-select option {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+/* Inline: select + monto en la misma celda */
+.restohub-tip-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   Campos Ocultos de Coordenadas
+   ========================================================================== */
+
+.restohub-coordinate-field {
+    display: none !important;
+}
+
+#billing_latitude_field,
+#billing_longitude_field,
+#shipping_latitude_field,
+#shipping_longitude_field {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    .restohub-map-collapsible {
+        padding: 12px;
+    }
+
+    .restohub-delivery-map {
+        height: 250px;
+    }
+
+    .restohub-search-container {
+        flex-direction: column;
+    }
+
+    .restohub-locate-btn {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .restohub-locate-btn::after {
+        content: 'Usar mi ubicación';
+        font-size: 14px;
+    }
+
+    .restohub-search-results {
+        right: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .restohub-delivery-map {
+        height: 220px;
+    }
+
+    .restohub-map-trigger-title {
+        font-size: 14px;
+    }
+
+    .restohub-map-trigger-chevron {
+        font-size: 18px;
+    }
+}
+
+/* ==========================================================================
+   Tema Oscuro (si WooCommerce/theme lo soporta)
+   ========================================================================== */
+
+/* ==========================================================================
+   Control del Botón de Pago
+   ========================================================================== */
+
+/* Botón de pago deshabilitado */
+#place_order.restohub-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Sección de pago: la clase se mantiene en el DOM para control JS,
+   pero no aplica overlay visual. Solo el botón #place_order se deshabilita. */
+.restohub-payment-disabled {
+    /* sin overlay — ver #place_order.restohub-disabled para el estado visual */
+}
+
+/* Aviso de ubicación requerida */
+.restohub-location-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: #fff8e1;
+    border: 1px solid #ffcc02;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.restohub-location-notice .restohub-notice-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.restohub-location-notice .restohub-notice-text {
+    flex: 1;
+    font-size: 14px;
+    color: #5d4e00;
+    line-height: 1.5;
+}
+
+.restohub-location-notice a {
+    color: #0073aa;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.restohub-location-notice a:hover {
+    color: #005177;
+}
+
+/* ==========================================================================
+   Métodos de Envío - Ocultar según modo
+   ========================================================================== */
+
+/* Estilo para método de envío oculto */
+.woocommerce-shipping-methods li.restohub-hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Tema Oscuro (si WooCommerce/theme lo soporta)
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .restohub-address-search,
+    .restohub-locate-btn {
+        background: #3d3d3d;
+        border-color: #555;
+        color: #fff;
+    }
+
+    .restohub-search-results {
+        background: #3d3d3d;
+        border-color: #555;
+    }
+
+    .restohub-search-result-item {
+        border-color: #555;
+    }
+
+    .restohub-search-result-item:hover {
+        background: #4d4d4d;
+    }
+
+    .restohub-result-text {
+        color: #fff;
+    }
+
+    .restohub-delivery-map {
+        border-color: #555;
+    }
+
+    .restohub-unified-address-input {
+        background: #3d3d3d;
+        border-color: #555;
+        color: #fff;
+    }
+
+    .restohub-unified-address-results {
+        background: #3d3d3d;
+        border-color: #555;
+    }
+
+    .restohub-unified-result-item {
+        border-color: #555;
+    }
+
+    .restohub-unified-result-item:hover {
+        background: #4d4d4d;
+    }
+
+    .restohub-unified-result-main {
+        color: #fff;
+    }
+}
+
+/* ==========================================================================
+   Scheduling: Selector de Horarios
+   ========================================================================== */
+
+.restohub-checkout-schedule {
+    margin-bottom: 24px;
+}
+
+/* Banner de tienda cerrada */
+.restohub-schedule-closed-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255, 152, 0, 0.1);
+    border: 1px solid rgba(255, 152, 0, 0.3);
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.restohub-schedule-closed-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.restohub-schedule-closed-text {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #ff9800;
+}
+
+/* Toggle ASAP / Programar */
+.restohub-schedule-toggle {
+    display: flex;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 16px;
+}
+
+.restohub-schedule-toggle-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+}
+
+.restohub-schedule-toggle-btn:hover:not(:disabled) {
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.restohub-schedule-toggle-btn.active {
+    background: #ff9800;
+    color: #000;
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+}
+
+.restohub-schedule-toggle-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.restohub-schedule-toggle-icon {
+    font-size: 18px;
+}
+
+.restohub-schedule-toggle-label {
+    font-size: 14px;
+}
+
+/* Info ASAP */
+.restohub-schedule-asap-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.restohub-schedule-asap-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.restohub-schedule-asap-text {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Date tabs */
+.restohub-schedule-picker {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.restohub-schedule-date-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.restohub-schedule-date-tab {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+    text-align: center;
+    border-bottom: 3px solid transparent;
+}
+
+.restohub-schedule-date-tab:hover {
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.restohub-schedule-date-tab.active {
+    opacity: 1;
+    border-bottom-color: #ff9800;
+    background: rgba(255, 152, 0, 0.05);
+}
+
+.restohub-schedule-date-tab.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.restohub-schedule-date-tab-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.restohub-schedule-date-tab-day {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+/* Slots grid */
+.restohub-schedule-slots {
+    padding: 16px;
+}
+
+.restohub-schedule-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.restohub-schedule-slot {
+    padding: 10px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.restohub-schedule-slot:hover {
+    border-color: #ff9800;
+    background: rgba(255, 152, 0, 0.05);
+}
+
+.restohub-schedule-slot.selected {
+    background: #ff9800;
+    color: #000;
+    border-color: #ff9800;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+}
+
+.restohub-schedule-slots-empty {
+    text-align: center;
+    padding: 24px 16px;
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+/* Ocultar schedule en modo pickup SI se quiere (por ahora se mantiene visible) */
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+    .restohub-schedule-toggle-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .restohub-schedule-toggle-icon {
+        font-size: 16px;
+    }
+
+    .restohub-schedule-slots-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .restohub-schedule-slot {
+        padding: 8px 6px;
+        font-size: 13px;
+    }
+
+    .restohub-schedule-date-tab {
+        padding: 10px 12px;
+    }
+
+    .restohub-schedule-date-tab-label {
+        font-size: 13px;
+    }
+
+    .restohub-schedule-date-tab-day {
+        font-size: 11px;
+    }
+}
